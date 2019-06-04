@@ -1,9 +1,11 @@
+'use strict';
+
 class Model {
 
   /**
-   * 
-   * registrar 
-   * 
+   *
+   * registrar
+   *
    * Constructor for a registrar object. Create a registrar 
    * which contains details about the location where you are voting in. 
    * @param distinguishedName - name of registrar
@@ -143,29 +145,6 @@ class Model {
     return this;
   
   }
-
-  /**
-   * 
-   * vote 
-   * 
-   * Records each voter's vote minus their voter information, 
-   * as a fair election is an anonymous election. Votes created
-   * by the castBallot transaction.   
-   * @param voter - id of a voter 
-   * @param election - which election we are talking about
-   * @param election - which election we are talking about
-   * @returns - vote object
-   */
-  async votingRecord (ballot, election, choices) {
-
-    this.ballot = ballot;
-    this.election = election;
-    this.choices = choices;
-    this.voteId = Math.random().toString(36).substring(3);
-    return this;
-  
-  }
-
   /**
    * 
    * vote 
@@ -178,7 +157,7 @@ class Model {
    * @param ballot - which ballot you are voting on.
    * @param election - which election you are voting in.
    * @param choices - choices you have made on your ballot
-   * @returns - votee object
+   * @returns - vote object
    */
   async vote(ballot, election, choices) {
 
@@ -189,14 +168,6 @@ class Model {
     return this;
   
   }
-
-
-
-
-
- 
-
-  
 
 }
 module.exports = Model;

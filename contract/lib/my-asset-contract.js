@@ -16,8 +16,8 @@ const electionData = JSON.parse(electionDataJson);
 let util = require('util');
 
 //import our file which contains our constructors and auxiliary function
-var Model = require('./models.js');
-var model = new Model();
+let Model = require('./models.js');
+let model = new Model();
 
 const voteForOffice = 'office';
 const voteForProp = 'proposition';
@@ -26,38 +26,33 @@ const voteForProp = 'proposition';
 let voteCount = 0; // all votes start at a count of zero
 class MyAssetContract extends Contract {
 
+
   async init() {
     console.log('instantiate was called!');
-
-    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0)
-    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0)
-
-    let currentElection = await model.election(electionData.electionName, electionData.electionCountry,
-      electionData.electionYear, startDate, endDate);
-
-    console.log('currentElection')
-    console.log(util.inspect(currentElection))
-
-    let currentRegistrar = await model.registrar(electionData.registrarDistinguishedName, 
-      electionData.registarOrg, electionData.registrarLocality, electionData.registrarState,
-      electionData.registrarCountry, electionData.registrarPrecinctNums)
-
-    console.log('currentRegistrar')
-    console.log(util.inspect(currentRegistrar))
-    
   }
+
+  /**
+   * 
+   * generateBallot 
+   * 
+   * Function that imports data from electionData.json and populates a ballot.
+   * Updates the world state with the ballot votables and choices.
+   * @param election - the election we are currently in
+   * @param registrar - the registrar we are signed up with
+   * @returns - none
+   */
 
   async generateBallot(ctx, election, registrar) {
 
-    console.log('generateBallot called')
+    console.log('generateBallot called');
 
-    if (election.year%4 == 0) {
+    if (election.year % 4 === 0) {
 
-      console.log('inside election.year %4 == 0 ')
+      console.log('inside election.year %4 == 0 ');
       //generate choices for federal race
-      let federalDemocratCandidate = await model.choice(electionData.fedDemocratBrief, 
+      let federalDemocratCandidate = await model.choice(electionData.fedDemocratBrief,
         electionData.fedDemocratDescription, voteCount);
-      let federalRepublicanCandidate = await model.choice(electionData.fedRepublicanBrief, 
+      let federalRepublicanCandidate = await model.choice(electionData.fedRepublicanBrief,
         electionData.fedRepublicanDescription, voteCount);
 
       //generate choices for governor race
@@ -83,7 +78,7 @@ class MyAssetContract extends Contract {
       let governorChoices = [];
       let mayorChoices = [];
       let propositionChoices = [];
-      
+
       //push federal choices to array
       federalChoices.push(federalDemocratCandidate);
       federalChoices.push(federalRepublicanCandidate);
@@ -102,7 +97,7 @@ class MyAssetContract extends Contract {
       //create votables for each race 
       let presidentalRace = await model.votable(voteForOffice, electionData.presidentialRaceTitle,
         electionData.presidentialRaceDescription, federalChoices);
-        
+
       let governorRace = await model.votable(voteForOffice, electionData.governorRaceTitle,
         electionData.governorRaceDescription, governorChoices);
 
@@ -133,78 +128,108 @@ class MyAssetContract extends Contract {
       await ctx.stub.putState(mayorRepublicanCandidate.choiceId, Buffer.from(JSON.stringify(mayorRepublicanCandidate)));
       await ctx.stub.putState(propYesChoice.choiceId, Buffer.from(JSON.stringify(propYesChoice)));
       await ctx.stub.putState(propNoChoice.choiceId, Buffer.from(JSON.stringify(propNoChoice)));
-      
+
       //update state with ballot we created
       await ctx.stub.putState(ballot.ballotId, Buffer.from(JSON.stringify(ballot)));
 
-      console.log("federalDemocratCandidate.choiceId: ")
-      console.log(federalDemocratCandidate.choiceId)
-      console.log("presidentalRace.votableId: ")
-      console.log(presidentalRace.votableId)
-      console.log("propositionRace.votableId: ")
-      console.log(propositionRace.votableId)
-      console.log("ballot.ballotId: ")
-      console.log(ballot.ballotId)
-      
-    } else if (electionYear % 4 == 2) {
+      console.log('federalDemocratCandidate.choiceId: ');
+      console.log(federalDemocratCandidate.choiceId);
+      console.log('presidentalRace.votableId: ');
+      console.log(presidentalRace.votableId);
+      console.log('propositionRace.votableId: ');
+      console.log(propositionRace.votableId);
+      console.log('ballot.ballotId: ');
+      console.log(ballot.ballotId);
+
+    } else if (election.year % 4 === 2) {
       throw new Error('Sorry, midterm elections not supported right now.');
     } else {
       throw new Error('Sorry, you have passed an invalid year for an election. Please try again.');
     }
 
+  }
 
-    // console.log(`electionYear: ${electionYear}, registrar: ${registrar}`);
 
-    // let obj = await model.votable(1,2,3,4)
-    // console.log('obj: ')
-    // console.log(`${util.inspect(obj)}`)
-    // return obj;
+
+  /**
+   * 
+   * generateElection 
+   * 
+   * Function that imports data from electionData.json and populates an election.
+   * Updates the world state with the current election and registrar.
+   * @returns - none
+   */
+  async generateElection(ctx) {
+
+    console.log('generateElection was called!');
+
+    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0)
+    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0)
+
+    let currentElection = await model.election(electionData.electionName, electionData.electionCountry,
+      electionData.electionYear, startDate, endDate);
+
+    console.log('currentElection');
+    console.log(util.inspect(currentElection));
+
+    let currentRegistrar = await model.registrar(electionData.registrarDistinguishedName,
+      electionData.registarOrg, electionData.registrarLocality, electionData.registrarState,
+      electionData.registrarCountry, electionData.registrarPrecinctNums)
+
+    console.log('currentRegistrar');
+    console.log(util.inspect(currentRegistrar));
+
+    //update state with the election and the registrar
+    await ctx.stub.putState(currentElection.electionId, Buffer.from(JSON.stringify(currentElection)));
+    await ctx.stub.putState(currentRegistrar.registrarId, Buffer.from(JSON.stringify(currentRegistrar)));
 
 
   }
 
-    async myAssetExists(ctx, myAssetId) {
-        const buffer = await ctx.stub.getState(myAssetId);
-        return (!!buffer && buffer.length > 0);
-    }
+  async myAssetExists(ctx, myAssetId) {
+    const buffer = await ctx.stub.getState(myAssetId);
+    return (!!buffer && buffer.length > 0);
+  }
 
-    async createMyAsset(ctx, myAssetId, value) {
-        const exists = await this.myAssetExists(ctx, myAssetId);
-        if (exists) {
-            throw new Error(`The my asset ${myAssetId} already exists`);
-        }
-        const asset = { value };
-        const buffer = Buffer.from(JSON.stringify(asset));
-        await ctx.stub.putState(myAssetId, buffer);
+  async createMyAsset(ctx, myAssetId, value) {
+    const exists = await this.myAssetExists(ctx, myAssetId);
+    if (exists) {
+      throw new Error(`The my asset ${myAssetId} already exists`);
     }
+    const asset = { value };
+    const buffer = Buffer.from(JSON.stringify(asset));
+    await ctx.stub.putState(myAssetId, buffer);
+  }
 
-    async readMyAsset(ctx, myAssetId) {
-        const exists = await this.myAssetExists(ctx, myAssetId);
-        if (!exists) {
-            throw new Error(`The my asset ${myAssetId} does not exist`);
-        }
-        const buffer = await ctx.stub.getState(myAssetId);
-        const asset = JSON.parse(buffer.toString());
-        return asset;
+  async readMyAsset(ctx, myAssetId) {
+    const exists = await this.myAssetExists(ctx, myAssetId);
+    if (!exists) {
+      throw new Error(`The my asset ${myAssetId} does not exist`);
     }
+    const buffer = await ctx.stub.getState(myAssetId);
+    const asset = JSON.parse(buffer.toString());
+    return asset;
+  }
 
-    async updateMyAsset(ctx, myAssetId, newValue) {
-        const exists = await this.myAssetExists(ctx, myAssetId);
-        if (!exists) {
-            throw new Error(`The my asset ${myAssetId} does not exist`);
-        }
-        const asset = { value: newValue };
-        const buffer = Buffer.from(JSON.stringify(asset));
-        await ctx.stub.putState(myAssetId, buffer);
+  async updateMyAsset(ctx, myAssetId, newValue) {
+    const exists = await this.myAssetExists(ctx, myAssetId);
+    if (!exists) {
+      throw new Error(`The my asset ${myAssetId} does not exist`);
     }
+    const asset = { value: newValue };
+    const buffer = Buffer.from(JSON.stringify(asset));
+    await ctx.stub.putState(myAssetId, buffer);
+  }
 
-    async deleteMyAsset(ctx, myAssetId) {
-        const exists = await this.myAssetExists(ctx, myAssetId);
-        if (!exists) {
-            throw new Error(`The my asset ${myAssetId} does not exist`);
-        }
-        await ctx.stub.deleteState(myAssetId);
+  async deleteMyAsset(ctx, myAssetId) {
+    const exists = await this.myAssetExists(ctx, myAssetId);
+    if (!exists) {
+      throw new Error(`The my asset ${myAssetId} does not exist`);
     }
+    await ctx.stub.deleteState(myAssetId);
+  }
+
+
 
 }
 
