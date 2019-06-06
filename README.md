@@ -1,3 +1,3 @@
 # blockVote
 
-A voting application using Hyperledger Fabric. 
+A voting application using Hyperledger Fabric.
