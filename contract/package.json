@@ -1,6 +1,6 @@
 {
-    "name": "contract",
-    "version": "0.2.2",
+    "name": "voteChain",
+    "version": "0.0.3",
     "description": "My Smart Contract",
     "main": "index.js",
     "engines": {

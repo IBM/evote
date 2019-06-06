@@ -1,6 +1,30 @@
 'use strict';
 
-class Model {
+
+
+class Ballot {
+
+  /**
+   *
+   * Ballot
+   *
+   * Constructor for a Ballot object. This is what the point of the application is - create 
+   * ballots, have a voter fill them out, and then tally the ballots. 
+   *  
+   * @param items - an array of choices 
+   * @param election - what election you are making ballots for 
+   * @param voterId - the unique Id which corresponds to a registered voter
+   * @returns - registrar object
+   */
+  constructor(items, election, voterId) {
+
+    this.items = items;
+    this.election = election;
+    this.voterId = voterId;
+    return this;
+
+  }
+
 
   /**
    *
@@ -170,4 +194,4 @@ class Model {
   }
 
 }
-module.exports = Model;
+module.exports = Ballot;

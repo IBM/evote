@@ -16,19 +16,17 @@ const electionData = JSON.parse(electionDataJson);
 let util = require('util');
 
 //import our file which contains our constructors and auxiliary function
-let Model = require('./models.js');
-let model = new Model();
+let Ballot = require('./Ballot.js/index.js');
 
 const voteForOffice = 'office';
 const voteForProp = 'proposition';
 
-
 let voteCount = 0; // all votes start at a count of zero
 class MyAssetContract extends Contract {
 
-
   async init() {
     console.log('instantiate was called!');
+    //call registerVoter();
   }
 
   /**
@@ -111,7 +109,7 @@ class MyAssetContract extends Contract {
       let items = [presidentalRace, governorRace, mayorRace, propositionRace];
 
       //generate ballot with the items to vote on, the election, and the registrar
-      let ballot = await model.ballot(items, election, registrar);
+      let ballot = await new Ballot(items, election, registrar);
 
       //update state with all races we've created
       await ctx.stub.putState(presidentalRace.votableId, Buffer.from(JSON.stringify(presidentalRace)));
@@ -149,8 +147,6 @@ class MyAssetContract extends Contract {
 
   }
 
-
-
   /**
    * 
    * generateElection 
@@ -163,8 +159,46 @@ class MyAssetContract extends Contract {
 
     console.log('generateElection was called!');
 
-    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0)
-    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0)
+    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0);
+    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0);
+
+    let currentElection = await new model.election(electionData.electionName, electionData.electionCountry,
+      electionData.electionYear, startDate, endDate);
+
+    console.log('currentElection');
+    console.log(util.inspect(currentElection));
+
+    let currentRegistrar = await new model.registrar(electionData.registrarDistinguishedName,
+      electionData.registrarOrg, electionData.registrarLocality, electionData.registrarState,
+      electionData.registrarCountry, electionData.registrarPrecinctNums);
+
+    console.log('currentRegistrar');
+    console.log(util.inspect(currentRegistrar));
+
+    //update state with the election and the registrar
+    await ctx.stub.putState(currentElection.electionId, Buffer.from(JSON.stringify(currentElection)));
+    await ctx.stub.putState(currentRegistrar.registrarId, Buffer.from(JSON.stringify(currentRegistrar)));
+
+  }
+
+  /**
+   * 
+   * castBallot 
+   * 
+   * Function that defines and stores a vote in the world state, and then 
+   * tallies the votes.
+   * @param ballot - the election we are currently in
+   * @param election - the election we are currently in
+   * @param voter - the election we are currently in
+   * @param voterChoices - an array of choices that the voter has recorded. 
+   * @returns - none
+   */
+  async castBallot(ctx) {
+
+    console.log('generateElection was called!');
+
+    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0);
+    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0);
 
     let currentElection = await model.election(electionData.electionName, electionData.electionCountry,
       electionData.electionYear, startDate, endDate);
@@ -174,7 +208,7 @@ class MyAssetContract extends Contract {
 
     let currentRegistrar = await model.registrar(electionData.registrarDistinguishedName,
       electionData.registarOrg, electionData.registrarLocality, electionData.registrarState,
-      electionData.registrarCountry, electionData.registrarPrecinctNums)
+      electionData.registrarCountry, electionData.registrarPrecinctNums);
 
     console.log('currentRegistrar');
     console.log(util.inspect(currentRegistrar));
@@ -185,6 +219,47 @@ class MyAssetContract extends Contract {
 
 
   }
+
+   /**
+   * 
+   * castBallot 
+   * 
+   * Function that defines and stores a vote in the world state, and then 
+   * tallies the votes.
+   * @param name - the election we are currently in
+   * @param stateId - the state Id that the voter registers with
+   * @param voter - the election we are currently in
+   * @param voterChoices - an array of choices that the voter has recorded. 
+   * @returns - none
+   */
+  async registerVoter(ctx) {
+
+    console.log('generateElection was called!');
+
+    let startDate = new Date(2020, 1, 1, 0, 0, 0, 0);
+    let endDate = new Date(2020, 1, 2, 0, 0, 0, 0);
+
+    let currentElection = await model.election(electionData.electionName, electionData.electionCountry,
+      electionData.electionYear, startDate, endDate);
+
+    console.log('currentElection');
+    console.log(util.inspect(currentElection));
+
+    let currentRegistrar = await model.registrar(electionData.registrarDistinguishedName,
+      electionData.registarOrg, electionData.registrarLocality, electionData.registrarState,
+      electionData.registrarCountry, electionData.registrarPrecinctNums);
+
+    console.log('currentRegistrar');
+    console.log(util.inspect(currentRegistrar));
+
+    //update state with the election and the registrar
+    await ctx.stub.putState(currentElection.electionId, Buffer.from(JSON.stringify(currentElection)));
+    await ctx.stub.putState(currentRegistrar.registrarId, Buffer.from(JSON.stringify(currentRegistrar)));
+
+
+  }
+
+  
 
   async myAssetExists(ctx, myAssetId) {
     const buffer = await ctx.stub.getState(myAssetId);
@@ -228,9 +303,6 @@ class MyAssetContract extends Contract {
     }
     await ctx.stub.deleteState(myAssetId);
   }
-
-
-
 }
 
 module.exports = MyAssetContract;
