@@ -1,23 +1,8 @@
 'use strict';
 
-class Voter {
+const { Contract } = require('fabric-contract-api');
 
-  /**
-   *
-   * Voter
-   *
-   * Constructor for a Voter object. Voter has a voterId and registrar that the
-   * voter is . 
-   *  
-   * @param voterId - an array of choices 
-   * @returns - yes if valid Voter, no if invalid
-   */
-  async validateVoter(voterId) {
-
-    return true;
-
-  }
-
+class Voter extends Contract {
   /**
    *
    * Voter
@@ -30,19 +15,62 @@ class Voter {
    * @param voterId - the unique Id which corresponds to a registered voter
    * @returns - registrar object
    */
-  constructor(items, election, voterId) {
+  constructor(voterId, registrarId, firstName, lastName) {
 
-    if (this.validateVoter(voterId)) {
+    super();
 
-      this.items = items;
-      this.election = election;
+    if (this.validateVoter(voterId) && this.validateRegistrar(registrarId)) {
+
       this.voterId = voterId;
+      this.registrarId = registrarId;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.ballotCreated = false;
       return this;
 
-    } else {
+    } else if (!this.validateVoter(voterId)){
       throw new Error('the voterId is not valid.');
+    } else {
+      throw new Error('the registrarId is not valid.');
     }
 
+  }
+
+  /**
+   *
+   * validateVoter
+   *
+   * check for valid ID card - stateID or drivers License.
+   *  
+   * @param voterId - an array of choices 
+   * @returns - yes if valid Voter, no if invalid
+   */
+  async validateVoter(voterId) {
+    //VoterId error checking here, i.e. check if valid drivers License, or state ID
+    if (voterId) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   *
+   * validateRegistrar
+   *
+   * check for valid registrarId, should be cross checked with government
+   *  
+   * @param voterId - an array of choices 
+   * @returns - yes if valid Voter, no if invalid
+   */
+  async validateRegistrar(registrarId) {
+
+    //registrarId error checking here, i.e. check if valid drivers License, or state ID
+    if (registrarId) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

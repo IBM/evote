@@ -1,0 +1,11 @@
+{
+  "registrarDistinguishedName": "San Francisco Municipality Registrar",
+  "registrarOrg": "San Francisco Org",
+  "registrarLocality": "Northern California",
+  "registrarState": "California",
+  "registrarCountry": "United States of America",
+  "registrarPrecinctNums": [1,2,3],
+  "electionName": "2020 Election",
+  "electionCountry": "United States of America",
+  "electionYear": 2020
+}
