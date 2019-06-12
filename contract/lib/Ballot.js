@@ -11,7 +11,6 @@ const { Contract } = require('fabric-contract-api');
 
 class Ballot extends Contract {
 
-
   /**
    *
    * Ballot
@@ -28,19 +27,19 @@ class Ballot extends Contract {
 
     super();
 
-    console.log('voterId in Ballot.js: ');
-    console.log(voterId);
-
-    // console.log('ctx in Ballot.js constructor: ');
-    // console.log(ctx);
-
     if (this.validateBallot(ctx, voterId)) {
 
       this.votableItems = items;
       this.election = election;
       this.voterId = voterId;
-      console.log('about to return this in Ballot.js this:' );
-      console.log(this);
+      this.ballotId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      this.type = 'ballot';
+      if (this.__isContract) {
+        delete this.__isContract;
+      }
+      if (this.name) {
+        delete this.name;
+      }
       return this;
 
     } else {
@@ -61,11 +60,6 @@ class Ballot extends Contract {
    */
   async validateBallot(ctx, voterId) {
 
-    // console.log('ctx in validateBallot: ');
-    // console.log(ctx);
-
-    console.log('voterId in validateBallot: ');
-    console.log(voterId);
     const buffer = await ctx.stub.getState(voterId);
     
     if (!!buffer && buffer.length > 0) {

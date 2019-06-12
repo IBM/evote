@@ -36,6 +36,10 @@ class VotableItem extends Contract {
     this.description = description;
     this.isProp = isProp;
     this.choices = this.generateChoices(ctx, votableTitle);
+    this.type = 'votableItem';
+    if (this.__isContract) {
+      delete this.__isContract;
+    }
     return this;
 
   }

@@ -26,6 +26,13 @@ class Voter extends Contract {
       this.firstName = firstName;
       this.lastName = lastName;
       this.ballotCreated = false;
+      this.type = 'voter';
+      if (this.__isContract) {
+        delete this.__isContract;
+      }
+      if (this.name) {
+        delete this.name;
+      }
       return this;
 
     } else if (!this.validateVoter(voterId)){
