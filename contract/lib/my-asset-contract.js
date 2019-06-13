@@ -19,6 +19,9 @@ const ballotDataPath = path.join(process.cwd(), './lib/data/ballotData.json');
 const ballotDataJson = fs.readFileSync(ballotDataPath, 'utf8');
 const ballotData = JSON.parse(ballotDataJson);
 
+const firstChoice = 0;
+const secondChoice = 1;
+
 let util = require('util');
 
 //import our file which contains our constructors and auxiliary function
@@ -43,20 +46,15 @@ class MyAssetContract extends Contract {
     let voter3 = await new Voter('V3', '456', 'Mark', 'Ashla');
     let voter4 = await new Voter('V4', '567', 'Danny', 'Powell');
 
-    console.log('voter1: ');
-    console.log(voter1);
-    console.log(util.inspect(voter1));
-
     //add the voters to the world state, the election class checks for registered voters 
     await this.updateMyAsset(ctx, voter1.voterId, voter1);
     await this.updateMyAsset(ctx, voter2.voterId, voter2);
     await this.updateMyAsset(ctx, voter3.voterId, voter3);
     await this.updateMyAsset(ctx, voter4.voterId, voter4);
 
-
     //election day is always on a tuesday, and lasts a full day
-    let electionStartDate = new Date(2020, 11, 3);
-    let electionEndDate = new Date(2020, 11, 4);
+    let electionStartDate = await new Date(2020, 11, 3);
+    let electionEndDate = await new Date(2020, 11, 4);
 
     //create the election
     let election = await new Election(electionData.electionName, electionData.electionCountry,
@@ -128,8 +126,6 @@ class MyAssetContract extends Contract {
 
   }
 
-
-
   async castVote(ctx, electionId, voterId) {
 
     //check to make sure the election exists
@@ -142,36 +138,76 @@ class MyAssetContract extends Contract {
 
       //make sure we have an election
       let electionAsBytes = await ctx.stub.getState(electionId);
+      let election = await JSON.parse(electionAsBytes);
+      let voterAsBytes = await ctx.stub.getState(voterId);
+      let voter = await JSON.parse(voterAsBytes);
+
+      if (!voter.ballot) {
+        throw new Error('this voter does not have a ballot! ');
+      }
+
+      if (voter.ballotCast) {
+        throw new Error('this voter has already cast this ballot!');
+      }
+
+      console.log(`voter ${voter}, and voters ballot ${voter.ballot}`);
 
       //check the date of the election, to make sure the election is still open
-      let election = JSON.parse(electionAsBytes);
-      let currentTime = new Date();
+      let currentTime = await new Date(2020, 11, 3);
 
       console.log('election: ');
       console.log(election);
 
       //parse date objects
-      let parsedCurrentTime = Date.parse(currentTime);
-      let electionStart = Date.parse(election.startDate);
-      let electionEnd = Date.parse(election.endDate);
+      let parsedCurrentTime = await Date.parse(currentTime);
+      let electionStart = await Date.parse(election.startDate);
+      let electionEnd = await Date.parse(election.endDate);
 
       console.log(`parsedCurTime ${parsedCurrentTime}, electionStart: ${electionStart},
-      , and electionEnd: ${electionEnd}`);
+        and electionEnd: ${electionEnd}`);
 
 
       if (parsedCurrentTime >= electionStart && parsedCurrentTime < electionEnd) {
 
-        console.log('this is our logic to cast a ballot now');
-        return 1;
+        for (let i = 0; i < voter.ballot.votableItems.length; i++) {
+          console.log('util.inspect');
+          console.log(util.inspect(voter.ballot.votableItems[i].choices[firstChoice]));
+          await voter.ballot.votableItems[i].choices[firstChoice].count++;
+        }
+
+        let results = await this.sort(voter.ballot.votableItems);
+
+        for (let i = 0; i < results; i++) {
+          console.log(`winning results ${results[i]}`);
+        }
+        return results;
 
       } else {
-        return 2;
+        throw new Error('the election is not open now!');
       }
 
     } else {
-      console.log('doesnt exist');
-      return 3;
+      throw new Error('the election or the voter does not exist!');
     }
+  }
+
+  //a function to tally and sort the winning choices of the ballot 
+  async sort(dictToSort) {
+
+    let winningChoices = [];
+
+    for (let i = 0; i < dictToSort.length; i++) {
+      console.log('inside for loopp');
+      if (dictToSort[i].choices[firstChoice].count > dictToSort[i].choices[secondChoice].count) {
+        console.log('in if');
+        winningChoices.push(dictToSort[i].choices[firstChoice].brief);
+      } else {
+        console.log('in else');
+        winningChoices.push(dictToSort[i].choices[secondChoice].brief);
+      }
+    }
+    return winningChoices;
+
   }
 
 
@@ -183,11 +219,6 @@ class MyAssetContract extends Contract {
   }
 
   async createMyAsset(ctx, myAssetId, value) {
-
-    console.log('myAssetId: ');
-    console.log(myAssetId);
-    console.log('value: ');
-    console.log(value);
 
     const exists = await this.myAssetExists(ctx, myAssetId);
 
@@ -221,16 +252,7 @@ class MyAssetContract extends Contract {
   }
 
   async updateMyAsset(ctx, myAssetId, newValue) {
-    console.log('updateAsset');
 
-    // const exists = await this.myAssetExists(ctx, myAssetId);
-
-    // if (!exists) {
-    //   throw new Error(`The my asset ${myAssetId} does not exist`);
-    // }
-
-    console.log('after exists');
-    // const asset = { value: newValue };
     const buffer = Buffer.from(JSON.stringify(newValue));
 
     console.log(`putState in updateMyAsset with key ${myAssetId} 
