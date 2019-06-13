@@ -6,7 +6,7 @@
 
 const MyAssetContract = require('./lib/my-asset-contract');
 const MyQueryContract = require('./lib/query');
-const MyHelperContract = require('./lib/helperFunctions');
+const MyHelperContract = require('./lib/HelperFunctions');
 
 
 module.exports.MyAssetContract = MyAssetContract;

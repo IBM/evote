@@ -29,7 +29,7 @@ let Ballot = require('./Ballot.js');
 let Election = require('./Election.js');
 let Voter = require('./Voter.js');
 let VotableItem = require('./VotableItem.js');
-let HelperFunctions = require('./helperFunctions.js');
+let HelperFunctions = require('./HelperFunctions.js');
 let helperFunctions = new HelperFunctions();
 
 
