@@ -46,17 +46,22 @@ class MyAssetContract extends Contract {
     console.log('voter1: ');
     console.log(voter1);
     console.log(util.inspect(voter1));
-  
+
     //add the voters to the world state, the election class checks for registered voters 
     await this.updateMyAsset(ctx, voter1.voterId, voter1);
     await this.updateMyAsset(ctx, voter2.voterId, voter2);
     await this.updateMyAsset(ctx, voter3.voterId, voter3);
     await this.updateMyAsset(ctx, voter4.voterId, voter4);
 
+
+    //election day is always on a tuesday, and lasts a full day
+    let electionStartDate = new Date(2020, 11, 3);
+    let electionEndDate = new Date(2020, 11, 4);
+
     //create the election
-    let election = await new Election('E1', electionData.electionName,
-      electionData.electionCountry, electionData.electionYear, 'now', 'forever');
-    
+    let election = await new Election(electionData.electionName, electionData.electionCountry,
+      electionData.electionYear, electionStartDate, electionEndDate);
+
     //update voters array
     voters.push(voter1);
     voters.push(voter2);
@@ -65,6 +70,8 @@ class MyAssetContract extends Contract {
 
     //update elections array
     elections.push(election);
+    console.log(`***************************************************
+      election.electionId: ${election.electionId} and election: ${election}`);
     await this.updateMyAsset(ctx, election.electionId, election);
 
     //create votableItems for the ballots
@@ -108,7 +115,7 @@ class MyAssetContract extends Contract {
         console.log('these voters already have ballots');
         break;
       }
-      
+
     }
 
     //update the voters with their ballots before they vote.
@@ -120,6 +127,53 @@ class MyAssetContract extends Contract {
     return voters;
 
   }
+
+
+
+  async castVote(ctx, electionId, voterId) {
+
+    //check to make sure the election exists
+    let electionExists = await this.myAssetExists(ctx, electionId);
+    let voterExists = await this.myAssetExists(ctx, voterId);
+
+    if (electionExists && voterExists) {
+
+      console.log('inside exists...');
+
+      //make sure we have an election
+      let electionAsBytes = await ctx.stub.getState(electionId);
+
+      //check the date of the election, to make sure the election is still open
+      let election = JSON.parse(electionAsBytes);
+      let currentTime = new Date();
+
+      console.log('election: ');
+      console.log(election);
+
+      //parse date objects
+      let parsedCurrentTime = Date.parse(currentTime);
+      let electionStart = Date.parse(election.startDate);
+      let electionEnd = Date.parse(election.endDate);
+
+      console.log(`parsedCurTime ${parsedCurrentTime}, electionStart: ${electionStart},
+      , and electionEnd: ${electionEnd}`);
+
+
+      if (parsedCurrentTime >= electionStart && parsedCurrentTime < electionEnd) {
+
+        console.log('this is our logic to cast a ballot now');
+        return 1;
+
+      } else {
+        return 2;
+      }
+
+    } else {
+      console.log('doesnt exist');
+      return 3;
+    }
+  }
+
 
   async myAssetExists(ctx, myAssetId) {
 
@@ -145,7 +199,7 @@ class MyAssetContract extends Contract {
 
       const asset = { value };
       const buffer = Buffer.from(JSON.stringify(asset));
-  
+
       console.log(`about to put this assetId ${myAssetId} with the following value: ${value}`);
       await ctx.stub.putState(myAssetId, buffer);
 
