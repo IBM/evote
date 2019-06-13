@@ -13,6 +13,16 @@ let util = require('util');
 
 class HelperFunctions extends Contract {
 
+  /**
+   *
+   * updateMyAsset
+   *
+   * Updates the world state.  
+   *  
+   * @param myAssetId - the key of the asset to update
+   * @param newValue - the value to store at a certain key 
+   * @returns - nothing - but updates the world state
+   */
   async updateMyAsset(ctx, myAssetId, newValue) {
 
     const buffer = Buffer.from(JSON.stringify(newValue));
@@ -24,6 +34,15 @@ class HelperFunctions extends Contract {
   }
 
 
+  /**
+   *
+   * deleteMyAsset
+   *
+   * Deletes a key-value pair from the world state, based on the key given.
+   *  
+   * @param myAssetId - the key of the asset to delete
+   * @returns - nothing - but deletes the value in the world state
+   */
   async deleteMyAsset(ctx, myAssetId) {
 
     const exists = await this.myAssetExists(ctx, myAssetId);
@@ -35,6 +54,15 @@ class HelperFunctions extends Contract {
 
   }
 
+  /**
+   *
+   * readMyAsset
+   *
+   * Reads a key-value pair from the world state, based on the key given.
+   *  
+   * @param myAssetId - the key of the asset to read
+   * @returns - nothing - but reads the value in the world state
+   */
   async readMyAsset(ctx, myAssetId) {
 
     const exists = await this.myAssetExists(ctx, myAssetId);
@@ -48,6 +76,16 @@ class HelperFunctions extends Contract {
     return asset;
   }
 
+  /**
+   *
+   * createMyAsset
+   *
+   * Creates a key-value pair from the world state, based on the key given. 
+   * Checks if the asset exists first, and if so, throws an error. 
+   *  
+   * @param myAssetId - the key of the asset to read
+   * @returns - nothing - but creates the value in the world state
+   */
   async createMyAsset(ctx, myAssetId, value) {
 
 
@@ -69,6 +107,14 @@ class HelperFunctions extends Contract {
 
   }
 
+  /**
+   *
+   * myAssetExists
+   *
+   * Checks to see if a key exists in the world state. 
+   * @param myAssetId - the key of the asset to read
+   * @returns boolean indicating if the asset exists or not. 
+   */
   async myAssetExists(ctx, myAssetId) {
 
     const buffer = await ctx.stub.getState(myAssetId);
@@ -76,6 +122,14 @@ class HelperFunctions extends Contract {
 
   }
 
+  /**
+   *
+   * sort
+   *
+   * Checks to see if a key exists in the world state. 
+   * @param dictToSort - the dictionary of values to sort on the ballot
+   * @returns an array which has the winning briefs of the ballot. 
+   */
   async sort(dictToSort) {
 
     let winningChoices = [];
@@ -94,6 +148,15 @@ class HelperFunctions extends Contract {
 
   }
 
+  /**
+   *
+   * sort
+   *
+   * Checks to see if a key exists in the world state. 
+   * @param electionId - the electionId of the election we want to vote in
+   * @param voterId - the voterId of the voter that wants to vote
+   * @returns an array which has the winning briefs of the ballot. 
+   */
   async castVote(ctx, electionId, voterId) {
     //check to make sure the election exists
     let electionExists = await this.myAssetExists(ctx, electionId);

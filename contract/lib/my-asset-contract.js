@@ -35,6 +35,19 @@ let helperFunctions = new HelperFunctions();
 
 class MyAssetContract extends Contract {
 
+  
+  /**
+   *
+   * init
+   *
+   * This function does most of the heavy lifting of the application. It registers 
+   * voters, makes sure they are ok to vote, creates the election, creates the 
+   * ballots for the election, and then assigns the ballots to the voters, after doing 
+   * some error checks. After that, the voters are ready with their ballots to cast 
+   * a vote. 
+   * @param ctx - the context of the transaction
+   * @returns the voters which are registered and ready to vote in the election
+   */
   async init(ctx) {
 
     console.log('instantiate was called!');
