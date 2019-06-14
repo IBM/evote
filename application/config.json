@@ -1,0 +1,9 @@
+{
+  "connection_file": "ibpConnection.json",
+  "appAdmin": "voterApp-admin",
+  "appAdminSecret": "voterApp-adminpw",
+  "orgMSPID": "votermsp",
+  "caName": "https://173.193.112.109:31837",
+  "userName": "V4",
+  "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+}
