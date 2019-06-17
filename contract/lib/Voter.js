@@ -1,8 +1,8 @@
 'use strict';
 
-const { Contract } = require('fabric-contract-api');
+// const { Contract } = require('fabric-contract-api');
 
-class Voter extends Contract {
+class Voter {
   /**
    *
    * Voter
@@ -17,7 +17,7 @@ class Voter extends Contract {
    */
   constructor(voterId, registrarId, firstName, lastName) {
 
-    super();
+    // super();
 
     if (this.validateVoter(voterId) && this.validateRegistrar(registrarId)) {
 

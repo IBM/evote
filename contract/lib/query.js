@@ -9,7 +9,7 @@ const { Contract } = require('fabric-contract-api');
 
 // let util = require('util');
 
-class Query extends Contract {
+class Query extends Contract{
 
   /**
    * Evaluate a queryString

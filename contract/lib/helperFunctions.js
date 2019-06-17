@@ -11,7 +11,7 @@ const secondChoice = 1;
 
 let util = require('util');
 
-class HelperFunctions extends Contract {
+class HelperFunctions extends Contract{
 
   /**
    *

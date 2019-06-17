@@ -36,6 +36,8 @@ class Election {
     console.log('************************************** Election Constructor' +
       '***********************************************************************');
 
+    // super();
+    
     this.electionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
     if (this.validateElection(this.electionId)) {
