@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import CreateCar from '@/components/CreateCar'
 import ChangeCarOwner from '@/components/ChangeCarOwner'
-import QueryAllCars from '@/components/QueryAllCars'
+import QueryAll from '@/components/QueryAll'
 import QueryWithQueryString from '@/components/QueryWithQueryString'
 
 Vue.use(Router)
@@ -27,9 +27,9 @@ export default new Router({
       component: ChangeCarOwner
     },
     {
-      path: '/queryAllCars',
-      name: 'QueryAllCars',
-      component: QueryAllCars
+      path: '/queryAll',
+      name: 'QueryAll',
+      component: QueryAll
     },
     {
       path: '/queryWithQueryString',

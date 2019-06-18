@@ -17,7 +17,7 @@ const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
-exports.queryAllCars = async function () {
+exports.queryAll = async function () {
   try {
 
     let response = {};

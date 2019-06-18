@@ -15,8 +15,8 @@ export default {
       owner: owner
     })
   },
-  queryAllCars() {
-    return Api().get('queryAllCars')
+  queryAll() {
+    return Api().get('queryAll')
   },
   queryByObjectType() {
     return Api().get('queryByObjectType')

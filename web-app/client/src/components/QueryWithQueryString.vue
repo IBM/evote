@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h1>Get object by type</h1>  
+    <h1>Select the type of object to query for</h1>  
   <select v-model="selected">
   <option disabled value="">Please select one</option>
   <option>ballot</option>

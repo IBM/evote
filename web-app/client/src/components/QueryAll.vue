@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h1>Query All Cars</h1>    
+    <h1>Current State: All Key-Value Pairs in World State</h1>    
     <div v-bind:key="carEntry.Key" v-for="carEntry in response" >
       <p> {{ carEntry.Key }} | {{ carEntry.Record }}  </p>
     </div>
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async load () {
-      const apiResponse = await PostsService.queryAllCars()
+      const apiResponse = await PostsService.queryAll()
       this.response = apiResponse.data
     }
   }

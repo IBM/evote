@@ -21,9 +21,9 @@ app.get('/queryByObjectType', (req, res) => {
     });
 });
 
-app.get('/queryAllCars', (req, res) => {
+app.get('/queryAll', (req, res) => {
   console.log('queryALL CARS WOOO');
-  network.queryAllCars()
+  network.queryAll()
     .then((response) => {
       let carsRecord = JSON.parse(response);
       res.send(carsRecord);
