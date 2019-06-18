@@ -1,34 +1,30 @@
 <template>
-  <div class="home">
-    <h1>Fab Car</h1>
-    <p>
-      <br>Welcome to FabCar from Hyperledger Fabric Samples      
-    </p> 
+  <div class="posts">
+    <h1>Home</h1>    
+    <div v-bind:key="carEntry.Key" v-for="carEntry in response" >
+      <p> {{ carEntry.Key }} | {{ carEntry.Record }}  </p>
+    </div>
+    
   </div>
 </template>
 
 <script>
+import PostsService from '@/services/apiService'
 export default {
-  name: 'Home',
-  props: {
+  name: 'response',
+  data () {
+    return {
+      response: {}
+    }
+  },
+  mounted () {
+    this.load()
+  },
+  methods: {
+    async load () {
+      const apiResponse = await PostsService.queryByObjectType()
+      this.response = apiResponse.data
+    }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

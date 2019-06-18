@@ -6,6 +6,7 @@
         <router-link to="/createCar">Create Car</router-link>&nbsp;
         <router-link to="/changeCarOwner">Change Car Owner</router-link>&nbsp;
         <router-link to="/QueryAllCars">Query All Cars</router-link></p>
+        <router-link to="/queryWithQueryString">Query with Query String</router-link>&nbsp;
       
       <router-view></router-view>
     </div>

@@ -17,5 +17,13 @@ export default {
   },
   queryAllCars() {
     return Api().get('queryAllCars')
+  },
+  queryByObjectType() {
+    return Api().get('queryByObjectType')
+  },
+  queryWithQueryString(selected) {
+    return Api().post('queryWithQueryString', {
+      selected: selected
+    }) 
   }
 }
