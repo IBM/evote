@@ -146,6 +146,7 @@ class MyAssetContract extends Contract {
     return voters;
 
   }
+  
   async updateMyAsset(ctx, myAssetId, newValue) {
 
     const buffer = Buffer.from(JSON.stringify(newValue));
@@ -280,19 +281,30 @@ class MyAssetContract extends Contract {
    * @param voterId - the voterId of the voter that wants to vote
    * @returns an array which has the winning briefs of the ballot. 
    */
-  async castVote(ctx, electionId, voterId) {
+  async castVote(ctx, args) {
+    console.log('castvote called');
+    console.log(args);
+    console.log(util.inspect(args));
+    args = JSON.parse(args);
+    console.log('args are now parsed: ');
+    console.log(args);
+    // async castVote(ctx, electionId, voterId) {
+
     //check to make sure the election exists
-    let electionExists = await this.myAssetExists(ctx, electionId);
-    let voterExists = await this.myAssetExists(ctx, voterId);
+    let electionExists = await this.myAssetExists(ctx, args.electionId);
+    let voterExists = await this.myAssetExists(ctx, args.voterId);
+
+    console.log(electionExists);
+    console.log(voterExists);
 
     if (electionExists && voterExists) {
 
       console.log('inside exists...');
 
       //make sure we have an election
-      let electionAsBytes = await ctx.stub.getState(electionId);
+      let electionAsBytes = await ctx.stub.getState(args.electionId);
       let election = await JSON.parse(electionAsBytes);
-      let voterAsBytes = await ctx.stub.getState(voterId);
+      let voterAsBytes = await ctx.stub.getState(args.voterId);
       let voter = await JSON.parse(voterAsBytes);
 
       if (!voter.ballot) {
@@ -303,11 +315,14 @@ class MyAssetContract extends Contract {
         throw new Error('this voter has already cast this ballot!');
       }
 
+      let ballotAsBytes = await ctx.stub.getState(voter.ballot.ballotId);
+      let currBallot = await JSON.parse(ballotAsBytes);
+
       console.log(`voter ${voter}, and voters ballot ${voter.ballot}`);
 
       //check the date of the election, to make sure the election is still open
       let currentTime = await new Date(2020, 11, 3);
-
+      //usng7j5ck0q33vkzdjuevd
       console.log('election: ');
       console.log(election);
 
@@ -319,13 +334,18 @@ class MyAssetContract extends Contract {
       console.log(`parsedCurTime ${parsedCurrentTime}, electionStart: ${electionStart},
         and electionEnd: ${electionEnd}`);
 
+      let userChoices = [0,1,0,1];
 
       if (parsedCurrentTime >= electionStart && parsedCurrentTime < electionEnd) {
 
         for (let i = 0; i < voter.ballot.votableItems.length; i++) {
+          let currentChoice = await helperFunctions.readMyAsset(ctx, currBallot.votableItems[i].votableId);
           console.log('util.inspect');
-          console.log(util.inspect(voter.ballot.votableItems[i].choices[firstChoice]));
-          await voter.ballot.votableItems[i].choices[firstChoice].count++;
+          console.log(util.inspect(voter.ballot.votableItems[i].choices[userChoices[i]]));
+          await currentChoice.choices[userChoices[i]].count++;
+          await helperFunctions.updateMyAsset(ctx, currentChoice.votableId, currentChoice);
+          console.log(util.inspect('currentChoice: '));
+          console.log(util.inspect(currentChoice));
         }
 
         let results = await this.sort(voter.ballot.votableItems);

@@ -1,18 +1,14 @@
 <template>
   <div class="posts">
-    <h1>Create Car</h1>    
+    <h1>Cast Ballot</h1>    
     <!--span><b>{{ response }}</b></span><br /-->
     <form v-on:submit="addCar">
-      <input type="text" v-model="newCar.make" placeholder="Enter Make">
+      <input type="text" v-model="newCar.electionId" placeholder="Enter ElectionId">
       <br />
-      <input type="text" v-model="newCar.model" placeholder="Enter Model">
-      <br />
-      <input type="text" v-model="newCar.color" placeholder="Enter Color">
-      <br />
-      <input type="text" v-model="newCar.owner" placeholder="Enter Owner">
+      <input type="text" v-model="newCar.voterId" placeholder="Enter VoterId">
       <br />
 
-      <input type="submit" value="Submit">
+      <input type="submit" value="Cast Vote">
       
     </form>
 
@@ -33,7 +29,7 @@ export default {
   },
   methods: {    
     async addCar() {
-        const apiResponse = await PostsService.createCar(this.newCar.make, this.newCar.model, this.newCar.color, this.newCar.owner)
+        const apiResponse = await PostsService.createCar(this.newCar.electionId, this.newCar.voterId)
         this.response = apiResponse.data
         
         console.log('add car');

@@ -7,12 +7,10 @@ export default {
       newOwner: newOwner
     })
   },
-  createCar(make, model, color, owner) {
+  createCar(electionId, voterId) {
     return Api().post('createCar', {       
-      make: make,
-      model: model,
-      color: color,
-      owner: owner
+      electionId: electionId,
+      voterId: voterId
     })
   },
   queryAll() {

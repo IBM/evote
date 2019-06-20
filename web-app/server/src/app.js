@@ -12,35 +12,44 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/queryByObjectType', (req, res) => {
-  console.log('query by object');
-  network.queryByObjectType('ballot')
-    .then((response) => {
-      let carsRecord = JSON.parse(response);
-      res.send(carsRecord);
-    });
-});
-
 app.get('/queryAll', (req, res) => {
-  console.log('queryALL CARS WOOO');
-  network.queryAll()
-    .then((response) => {
-      let carsRecord = JSON.parse(response);
-      res.send(carsRecord);
+  console.log('queryALL CARS ');
+  network.connectToNetwork()
+    .then((networkObj) => {
+      network.invoke(networkObj, true, 'queryAll', '')
+        .then((response) => {
+          let carsRecord = JSON.parse(response);
+          res.send(carsRecord);
+        });
     });
 });
 
 app.post('/createCar', (req, res) => {
-  network.queryAllCars()
-    .then((response) => {
-      let carsRecord = JSON.parse(JSON.parse(response));
-      let numCars = carsRecord.length;
-      let newKey = 'CAR' + numCars;
-      network.createCar(newKey, req.body.make, req.body.model, req.body.color, req.body.owner)
+
+  console.log('req.body: ');
+  console.log(req.body);
+  req.body = JSON.stringify(req.body);
+  let args = [req.body];
+  network.connectToNetwork()
+    .then((networkObj) => {
+      network.invoke(networkObj, false, 'castVote', args)
         .then((response) => {
-          res.send(response);
+          let carsRecord = JSON.parse(response);
+          res.send(carsRecord);
         });
     });
+  
+  // network.queryAll()
+  //   .then((response) => {
+  //     let carsRecord = JSON.parse(JSON.parse(response));
+  //     let numCars = carsRecord.length;
+  //     let newKey = 'CAR' + numCars;
+  //     network.createCar(newKey, req.body.make, req.body.model, req.body.color, req.body.owner)
+  //       .then((response) => {
+  //         res.send(response);
+  //       });
+  //   });
+
 });
 
 app.post('/changeCarOwner', (req, res) => {
@@ -53,9 +62,13 @@ app.post('/changeCarOwner', (req, res) => {
 app.post('/queryWithQueryString', (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
-  network.queryWithQueryString(req.body.selected)
-    .then((response) => {
-      res.send(response);
+  network.connectToNetwork()
+    .then((networkObj) => {
+      network.invoke(networkObj, true, 'queryByObjectType', req.body.selected)
+        .then((response) => {
+          let carsRecord = JSON.parse(response);
+          res.send(carsRecord);
+        });
     });
 });
 

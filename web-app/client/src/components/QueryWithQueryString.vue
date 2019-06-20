@@ -14,8 +14,6 @@
 
       <button v-on:click="queryByQueryString()">Query the world State</button>
 
-    </form>
-
     <br />
     <span v-if="response"><b>{{ response }}</b></span><br />
   </div>

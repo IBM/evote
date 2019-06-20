@@ -17,102 +17,200 @@ const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
-exports.queryAll = async function () {
+const walletPath = path.join(process.cwd(), '/wallet');
+const wallet = new FileSystemWallet(walletPath);
+console.log(`Wallet path: ${walletPath}`);
+
+const util = require('util');
+
+exports.connectToNetwork = async function () {
+  
+  const gateway = new Gateway();
+
   try {
 
-    let response = {};
-
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), '/wallet');
-    const wallet = new FileSystemWallet(walletPath);
-    console.log(`Wallet path: ${walletPath}`);
-
-    // Check to see if we've already enrolled the user.
     const userExists = await wallet.exists(userName);
     if (!userExists) {
       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
       console.log('Run the registerUser.js application before retrying');
-      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      let response = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
       return response;
     }
 
-    // Create a new gateway for connecting to our peer node.
-    const gateway = new Gateway();
     await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
 
-    // Get the network (channel) our contract is deployed to.
+    // Connect to our local fabric
     const network = await gateway.getNetwork('mychannel');
 
-    // Get the contract from the network.
-    const contract = network.getContract('voteChainDemo');
 
-    // Submit the specified transaction.
-    response = await contract.evaluateTransaction('queryAll');
-    console.log(response);
-    console.log('Transaction has been submitted');
+    console.log('Connected to mychannel. ');
 
-    // Disconnect from the gateway.
-    await gateway.disconnect();
+    // Get the contract we have installed on the peer
+    const contract = await network.getContract('voteChainDemo');
 
-    response.msg = 'createCar Transaction has been submitted';
-    return response;
+
+    let networkObj = {
+      contract: contract,
+      network: network,
+      gateway: gateway
+    };
+
+    return networkObj;
 
   } catch (error) {
-    let response;
-    console.error(`Failed to submit transaction: ${error}`);
-    response.error = error.message;
-    return response;
+    console.log(`Error processing transaction. ${error}`);
+    console.log(error.stack);
+  } finally {
+    console.log('Done connecting to network.');
+    // gateway.disconnect();
   }
 };
 
-exports.queryWithQueryString = async function (args) {
+exports.invoke = async function (networkObj, isQuery, func, args) {
   try {
+    console.log('inside invoke');
+    console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
 
-    console.log('args in queryWithQueryString: ');
-    console.log(args);
-    args = args.toString();
 
-    let response = {};
+    // console.log(util.inspect(JSON.parse(args[0])));
 
-    // Create a new file system based wallet for managing identities.
-    const walletPath = path.join(process.cwd(), '/wallet');
-    const wallet = new FileSystemWallet(walletPath);
-    console.log(`Wallet path: ${walletPath}`);
+    if (isQuery === true) {
+      console.log('inside isQuery');
 
-    // Check to see if we've already enrolled the user.
-    const userExists = await wallet.exists(userName);
-    if (!userExists) {
-      console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-      console.log('Run the registerUser.js application before retrying');
-      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-      return response;
+      if (args) {
+        console.log('inside isQuery, args');
+        console.log(args);
+        let response = await networkObj.contract.evaluateTransaction(func, args);
+        console.log(response);
+        console.log(`Transaction ${func} with args ${args} has been evaluated`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+        
+      } else {
+
+        let response = await networkObj.contract.evaluateTransaction(func);
+        console.log(response);
+        console.log(`Transaction ${func} without args has been evaluated`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+      }
+    } else {
+      console.log('notQuery');
+      if (args) {
+        console.log('notQuery, args');
+        console.log('$$$$$$$$$$$$$ args: ');
+        console.log(args);
+        console.log(func);
+        console.log(typeof args);
+
+
+        // args = args.toString();
+        // args = JSON.stringify(args);
+        args = JSON.parse(args[0]);
+
+        console.log(util.inspect(args));
+        args = JSON.stringify(args);
+        console.log(util.inspect(args));
+
+        let response = await networkObj.contract.submitTransaction(func, args);
+        console.log(response);
+        console.log(`Transaction ${func} with args ${args} has been submitted`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+
+
+      } else {
+        let response = await networkObj.contract.submitTransaction(func);
+        console.log(response);
+        console.log(`Transaction ${func} with args has been submitted`);
+  
+        await networkObj.gateway.disconnect();
+  
+        return response;
+      }
     }
 
-    // Create a new gateway for connecting to our peer node.
-    const gateway = new Gateway();
-    await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
-
-    // Get the network (channel) our contract is deployed to.
-    const network = await gateway.getNetwork('mychannel');
-
-    // Get the contract from the network.
-    const contract = network.getContract('voteChainDemo');
-
-    // Submit the specified transaction.
-    response = await contract.submitTransaction('queryByObjectType', args);
-    console.log(response);
-    console.log('Transaction has been submitted');
-
-    // Disconnect from the gateway.
-    await gateway.disconnect();
-
-    response.msg = 'createCar Transaction has been submitted';
-    return response;
-
   } catch (error) {
-    let response;
     console.error(`Failed to submit transaction: ${error}`);
-    response.error = error.message;
-    return response;
+    return error;
   }
 };
+
+
+// exports.queryWithQueryString = async function (contractObj, args) {
+//   try {
+
+//     args = args.toString();
+//     // Submit the specified transaction.
+//     let response = await contractObj.contract.evaluateTransaction('queryByObjectType', args);
+//     console.log(response);
+//     console.log('Transaction has been submitted');
+
+//     // Disconnect from the gateway.
+//     await contractObj.gateway.disconnect();
+
+//     response.msg = 'queryByObjectType has been submitted';
+//     return response;
+
+//   } catch (error) {
+//     let response;
+//     console.error(`Failed to submit transaction: ${error}`);
+//     response.error = error.message;
+//     return response;
+//   }
+// };
+
+// exports.castVote = async function (electionId, voterId) {
+
+//   try {
+
+//     let response = {};
+
+//     // Create a new file system based wallet for managing identities.
+//     const walletPath = path.join(process.cwd(), '/wallet');
+//     const wallet = new FileSystemWallet(walletPath);
+//     console.log(`Wallet path: ${walletPath}`);
+
+//     // Check to see if we've already enrolled the user.
+//     const userExists = await wallet.exists(userName);
+//     if (!userExists) {
+//       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
+//       console.log('Run the registerUser.js application before retrying');
+//       response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+//       return response;
+//     }
+
+//     // Create a new gateway for connecting to our peer node.
+//     const gateway = new Gateway();
+//     await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
+
+//     // Get the network (channel) our contract is deployed to.
+//     const network = await gateway.getNetwork('mychannel');
+
+//     // Get the contract from the network.
+//     const contract = network.getContract('voteChainDemo');
+
+//     // Submit the specified transaction.
+//     response = await contract.submitTransaction('queryByObjectType', args);
+//     console.log(response);
+//     console.log('Transaction has been submitted');
+
+//     // Disconnect from the gateway.
+//     await gateway.disconnect();
+
+//     response.msg = 'createCar Transaction has been submitted';
+//     return response;
+
+//   } catch (error) {
+//     let response;
+//     console.error(`Failed to submit transaction: ${error}`);
+//     response.error = error.message;
+//     return response;
+//   }
+// };

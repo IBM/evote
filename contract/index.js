@@ -5,14 +5,15 @@
 'use strict';
 
 const MyAssetContract = require('./lib/my-asset-contract.js');
-const MyQueryContract = require('./lib/query.js');
-const MyHelperContract = require('./lib/HelperFunctions.js');
+// const MyQueryContract = require('./lib/query.js');
+// const MyHelperContract = require('./lib/HelperFunctions.js');
 
 module.exports.MyAssetContract = MyAssetContract;
-module.exports.MyQueryContract = MyQueryContract;
-module.exports.MyHelperContract = MyHelperContract;
+// module.exports.MyQueryContract = MyQueryContract;
+// module.exports.MyHelperContract = MyHelperContract;
 
-module.exports.contracts = [ MyAssetContract, MyHelperContract, MyQueryContract];
+module.exports.contracts = [ MyAssetContract];
+// module.exports.contracts = [ MyAssetContract, MyHelperContract, MyQueryContract];
 
 // const Ballot = require('./lib/Ballot.js');
 // const Election = require('./lib/Election.js');
