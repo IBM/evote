@@ -1,10 +1,33 @@
 <template>
   <div class="posts">
-    <h1>Home</h1>    
-    <div v-bind:key="carEntry.Key" v-for="carEntry in response" >
-      <p> {{ carEntry.Key }} | {{ carEntry.Record }}  </p>
-    </div>
-    
+    <h1>2020 Presidential Election</h1>    
+    <h3>If you are a registered voter, enter your voterId below</h3>    
+    <!--span><b>{{ response }}</b></span><br /-->
+    <form v-on:submit="registerVoter">
+
+      <input type="text" v-model="loginData.voterId" placeholder="Enter VoterId">
+      <br />
+
+      <input type="submit" value="Login">
+          <span v-if="response"><b>{{ response }}</b></span><br />
+
+    </form>
+
+    <br />
+    <h3>Otherwise, fill out the form below to register! </h3>
+    <form v-on:submit="registerVoter">
+      <input type="text" v-model="registerData.voterId" placeholder="Enter Drivers License">
+      <br />
+      <input type="text" v-model="registerData.registrarId" placeholder="Enter Registrar ID">
+      <br />
+      <input type="text" v-model="registerData.voterId" placeholder="Enter first name">
+      <br />
+      <input type="text" v-model="registerData.voterId" placeholder="Enter last name">
+      <br />    
+    <input type="submit" value="Register">
+    </form>
+
+    <span v-if="response"><b>{{ response }}</b></span><br />
   </div>
 </template>
 
@@ -14,16 +37,18 @@ export default {
   name: 'response',
   data () {
     return {
-      response: {}
+        loginData: {},
+        registerData: {},
+        response: null
     }
   },
-  mounted () {
-    this.load()
-  },
-  methods: {
-    async load () {
-      const apiResponse = await PostsService.queryByObjectType()
-      this.response = apiResponse.data
+  methods: {    
+
+    async registerVoter() {
+        const apiResponse = await PostsService.registerVoter(this.loginData.voterId);
+
+        console.log(apiResponse)
+        this.loginData = apiResponse;
     }
   }
 }

@@ -7,8 +7,8 @@ export default {
       newOwner: newOwner
     })
   },
-  createCar(electionId, voterId) {
-    return Api().post('createCar', {       
+  castBallot(electionId, voterId) {
+    return Api().post('castBallot', {       
       electionId: electionId,
       voterId: voterId
     })
@@ -22,6 +22,11 @@ export default {
   queryWithQueryString(selected) {
     return Api().post('queryWithQueryString', {
       selected: selected
+    }) 
+  },
+  registerVoter(voterId) {
+    return Api().post('registerVoter', {
+      voterId: voterId
     }) 
   }
 }

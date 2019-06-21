@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/Home'
-import CreateCar from '@/components/CreateCar'
+import CastBallot from '@/components/CastBallot'
 import ChangeCarOwner from '@/components/ChangeCarOwner'
 import QueryAll from '@/components/QueryAll'
 import QueryWithQueryString from '@/components/QueryWithQueryString'
@@ -17,9 +17,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/createCar',
-      name: 'CreateCar',
-      component: CreateCar
+      path: '/castBallot',
+      name: 'CastBallot',
+      component: CastBallot
     },
     {
       path: '/changeCarOwner',

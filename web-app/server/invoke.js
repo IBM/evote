@@ -1,4 +1,6 @@
 //Import Hyperledger Fabric 1.4 programming model - fabric-network
+'use strict';
+
 const { FileSystemWallet, Gateway } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
@@ -46,7 +48,7 @@ async function queryAll() {
 
     //connect to our insurance contract that has been installed / instantiated on IBM Blockchain Platform
     const contract = await network.getContract('voteChainDemo'); 
-  //submit transaction to the smart contract that is installed / instnatiated on the peers
+    //submit transaction to the smart contract that is installed / instnatiated on the peers
     console.log('calling contract.evaluateTransaction, with args');
     response = await contract.submitTransaction('queryAll');
     response = JSON.parse(response.toString());
@@ -64,4 +66,4 @@ async function queryAll() {
 }
 // let args = ["V1"]
 // args = args.toString();
-// main('queryByObjectType', 'voter', 'V1');
+queryAll();

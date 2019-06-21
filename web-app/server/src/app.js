@@ -24,7 +24,7 @@ app.get('/queryAll', (req, res) => {
     });
 });
 
-app.post('/createCar', (req, res) => {
+app.post('/castBallot', (req, res) => {
 
   console.log('req.body: ');
   console.log(req.body);
@@ -38,18 +38,6 @@ app.post('/createCar', (req, res) => {
           res.send(carsRecord);
         });
     });
-  
-  // network.queryAll()
-  //   .then((response) => {
-  //     let carsRecord = JSON.parse(JSON.parse(response));
-  //     let numCars = carsRecord.length;
-  //     let newKey = 'CAR' + numCars;
-  //     network.createCar(newKey, req.body.make, req.body.model, req.body.color, req.body.owner)
-  //       .then((response) => {
-  //         res.send(response);
-  //       });
-  //   });
-
 });
 
 app.post('/changeCarOwner', (req, res) => {
@@ -69,6 +57,16 @@ app.post('/queryWithQueryString', (req, res) => {
           let carsRecord = JSON.parse(response);
           res.send(carsRecord);
         });
+    });
+});
+
+app.post('/registerVoter', (req, res) => {
+  console.log('req.body: ');
+  console.log(req.body);
+  network.registerVoter(req.body.voterId)
+    .then((response) => {
+      let voter = JSON.parse(response);
+      res.send(voter);
     });
 });
 
