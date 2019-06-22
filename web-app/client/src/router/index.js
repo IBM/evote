@@ -6,6 +6,7 @@ import CastBallot from '@/components/CastBallot'
 import ChangeCarOwner from '@/components/ChangeCarOwner'
 import QueryAll from '@/components/QueryAll'
 import QueryWithQueryString from '@/components/QueryWithQueryString'
+import QueryByKey from '@/components/QueryByKey'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/queryWithQueryString',
       name: 'QueryWithQueryString',
       component: QueryWithQueryString
+    },
+    {
+      path: '/queryByKey',
+      name: 'QueryByKey',
+      component: QueryByKey
     }
   ]
 })

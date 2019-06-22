@@ -157,6 +157,24 @@ class MyAssetContract extends Contract {
 
   }
 
+  async createVoter(ctx, args) {
+
+    args = JSON.parse(args);
+
+    console.log('args after createVoter and jsonparse: ');
+    console.log(util.inspect(args));
+
+    let newVoter = await new Voter(args.voterId, args.registrarId, args.firstName, args.lastName);
+    console.log(`voterId ${args.voterId} `);
+    console.log(util.inspect(newVoter));
+
+    //add the voters to the world state, the election class checks for registered voters 
+    await helperFunctions.updateMyAsset(ctx, newVoter.voterId, newVoter);
+
+    let response = `voter with voterId ${newVoter.voterId} is updated in the world state`;
+    return response;
+  }
+
 
   /**
    *
@@ -192,7 +210,10 @@ class MyAssetContract extends Contract {
     const exists = await this.myAssetExists(ctx, myAssetId);
 
     if (!exists) {
-      throw new Error(`The my asset ${myAssetId} does not exist`);
+      // throw new Error(`The my asset ${myAssetId} does not exist`);
+      let response = {};
+      response.error = `The my asset ${myAssetId} does not exist`;
+      return response;
     }
 
     const buffer = await ctx.stub.getState(myAssetId);

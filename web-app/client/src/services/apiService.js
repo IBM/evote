@@ -24,9 +24,23 @@ export default {
       selected: selected
     }) 
   },
-  registerVoter(voterId) {
+  registerVoter(voterId, registrarId, firstName, lastName) {
     return Api().post('registerVoter', {
+      voterId: voterId,
+      registrarId: registrarId,
+      firstName: firstName,
+      lastName: lastName,
+      
+    }) 
+  },
+  validateVoter(voterId) {
+    return Api().post('validateVoter', {
       voterId: voterId
+    }) 
+  },
+  queryByKey(key) {
+    return Api().post('queryByKey', {
+      key: key
     }) 
   }
 }

@@ -1,7 +1,7 @@
 //Import Hyperledger Fabric 1.4 programming model - fabric-network
 'use strict';
 
-const { FileSystemWallet, Gateway } = require('fabric-network');
+const { FileSystemWallet, Gateway, X509WalletMixin } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,6 +12,9 @@ const config = JSON.parse(configJSON);
 let connection_file = config.connection_file;
 let userName = config.userName;
 let gatewayDiscovery = config.gatewayDiscovery;
+let appAdmin = config.appAdmin;
+let orgMSPID = config.orgMSPID;
+
 // connect to the connection file
 const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
@@ -60,6 +63,9 @@ exports.connectToNetwork = async function () {
   } catch (error) {
     console.log(`Error processing transaction. ${error}`);
     console.log(error.stack);
+    let response = {};
+    response.error = error;
+    return response;
   } finally {
     console.log('Done connecting to network.');
     // gateway.disconnect();
@@ -142,27 +148,19 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   }
 };
 
-exports.registerVoter = async function (userName) {
+exports.registerVoter = async function (voterId, registrarId, firstName, lastName) {
 
-  const { FileSystemWallet, Gateway, X509WalletMixin } = require('fabric-network');
-  const fs = require('fs');
-  const path = require('path');
+  console.log('registrarId');
+  console.log(registrarId);
 
-  // capture network variables from config.json
-  // const configPath = path.join(process.cwd(), './www/blockchain/config.json');
-  const configPath = path.join(process.cwd(), './config.json');
-  const configJSON = fs.readFileSync(configPath, 'utf8');
-  const config = JSON.parse(configJSON);
-  // let connection_file = config.connection_file;
-  let appAdmin = config.appAdmin;
-  let orgMSPID = config.orgMSPID;
-  // let userName = config.userName;
-  let gatewayDiscovery = config.gatewayDiscovery;
+  console.log('voterId ');
+  console.log(voterId);
 
-  // const ccpPath = path.join(process.cwd(), './www/blockchain/ibpConnection.json');
-  const ccpPath = path.join(process.cwd(), './ibpConnection.json');
-  const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
-  const ccp = JSON.parse(ccpJSON);
+  if (!registrarId || !voterId || !firstName || !lastName) {
+    let response = {};
+    response.error = 'Error! You need to fill all fields before you can register!';
+    return response;
+  }
 
   try {
 
@@ -172,10 +170,13 @@ exports.registerVoter = async function (userName) {
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the user.
-    const userExists = await wallet.exists(userName);
+    const userExists = await wallet.exists(voterId);
     if (userExists) {
-      console.log(`An identity for the user ${userName} already exists in the wallet`);
-      return;
+      let response = {};
+      console.log(`An identity for the user ${voterId} already exists in the wallet`);
+      response.error = `Error! An identity for the user ${voterId} already exists in the wallet. Please enter
+        a different license number.`;
+      return response;
     }
 
     // Check to see if we've already enrolled the admin user.
@@ -183,7 +184,10 @@ exports.registerVoter = async function (userName) {
     if (!adminExists) {
       console.log(`An identity for the admin user ${appAdmin} does not exist in the wallet`);
       console.log('Run the enrollAdmin.js application before retrying');
-      return;
+      let response = {};
+      response.error = `An identity for the admin user ${appAdmin} does not exist in the wallet. 
+        Run the enrollAdmin.js application before retrying`;
+      return response;
     }
 
     // Create a new gateway for connecting to our peer node.
@@ -196,87 +200,18 @@ exports.registerVoter = async function (userName) {
     console.log(`AdminIdentity: + ${adminIdentity}`);
 
     // Register the user, enroll the user, and import the new identity into the wallet.
-    const secret = await ca.register({ affiliation: 'org1', enrollmentID: userName, role: 'client' }, adminIdentity);
+    const secret = await ca.register({ affiliation: 'org1', enrollmentID: voterId, role: 'client' }, adminIdentity);
 
-    const enrollment = await ca.enroll({ enrollmentID: userName, enrollmentSecret: secret });
+    const enrollment = await ca.enroll({ enrollmentID: voterId, enrollmentSecret: secret });
     const userIdentity = X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
-    wallet.import(userName, userIdentity);
-    return userIdentity;
+    wallet.import(voterId, userIdentity);
+    let response = `Successfully registered voter ${firstName} ${lastName}. Use voterId ${voterId} to login above.`;
+    return response;
   } catch (error) {
-    console.error(`Failed to register user + ${userName} + : ${error}`);
+    console.error(`Failed to register user + ${voterId} + : ${error}`);
     process.exit(1);
+    let response = {};
+    response.error = error;
+    return response;
   }
 };
-
-
-// exports.queryWithQueryString = async function (contractObj, args) {
-//   try {
-
-//     args = args.toString();
-//     // Submit the specified transaction.
-//     let response = await contractObj.contract.evaluateTransaction('queryByObjectType', args);
-//     console.log(response);
-//     console.log('Transaction has been submitted');
-
-//     // Disconnect from the gateway.
-//     await contractObj.gateway.disconnect();
-
-//     response.msg = 'queryByObjectType has been submitted';
-//     return response;
-
-//   } catch (error) {
-//     let response;
-//     console.error(`Failed to submit transaction: ${error}`);
-//     response.error = error.message;
-//     return response;
-//   }
-// };
-
-// exports.castVote = async function (electionId, voterId) {
-
-//   try {
-
-//     let response = {};
-
-//     // Create a new file system based wallet for managing identities.
-//     const walletPath = path.join(process.cwd(), '/wallet');
-//     const wallet = new FileSystemWallet(walletPath);
-//     console.log(`Wallet path: ${walletPath}`);
-
-//     // Check to see if we've already enrolled the user.
-//     const userExists = await wallet.exists(userName);
-//     if (!userExists) {
-//       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-//       console.log('Run the registerUser.js application before retrying');
-//       response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-//       return response;
-//     }
-
-//     // Create a new gateway for connecting to our peer node.
-//     const gateway = new Gateway();
-//     await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
-
-//     // Get the network (channel) our contract is deployed to.
-//     const network = await gateway.getNetwork('mychannel');
-
-//     // Get the contract from the network.
-//     const contract = network.getContract('voteChainDemo');
-
-//     // Submit the specified transaction.
-//     response = await contract.submitTransaction('queryByObjectType', args);
-//     console.log(response);
-//     console.log('Transaction has been submitted');
-
-//     // Disconnect from the gateway.
-//     await gateway.disconnect();
-
-//     response.msg = 'createCar Transaction has been submitted';
-//     return response;
-
-//   } catch (error) {
-//     let response;
-//     console.error(`Failed to submit transaction: ${error}`);
-//     response.error = error.message;
-//     return response;
-//   }
-// };
