@@ -1,12 +1,6 @@
 import Api from '@/services/api'
 
 export default {
-  changeCarOwner(key, newOwner) {
-    return Api().post('changeCarOwner', {       
-      key: key,
-      newOwner: newOwner
-    })
-  },
   castBallot(electionId, voterId) {
     return Api().post('castBallot', {       
       electionId: electionId,

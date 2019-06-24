@@ -33,11 +33,14 @@
       <b>{{ registerReponse.data }}</b>
     </span>
     <br>
+    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
 <script>
 import PostsService from "@/services/apiService";
+import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
+
 export default {
   name: "response",
   data() {
@@ -52,8 +55,12 @@ export default {
       },
     };
   },
+  components: {
+    VueInstantLoadingSpinner
+  },
   methods: {
     async registerVoter() {
+      await this.runSpinner();
       const apiResponse = await PostsService.registerVoter(
         this.registerData.voterId,
         this.registerData.registrarId,
@@ -63,15 +70,24 @@ export default {
 
       console.log(apiResponse);
       this.registerReponse = apiResponse;
+      await this.hideSpinner();
     },
 
     async validateVoter() {
+      await this.runSpinner();
       const apiResponse = await PostsService.registerVoter(
         this.loginData.voterId
       );
 
       console.log(apiResponse);
       this.loginReponse = apiResponse;
+      await this.hideSpinner();
+    },
+    async runSpinner() {
+      this.$refs.Spinner.show();
+    },
+    async hideSpinner() {
+      this.$refs.Spinner.hide();
     }
   }
 };

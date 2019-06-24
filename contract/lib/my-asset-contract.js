@@ -329,11 +329,15 @@ class MyAssetContract extends Contract {
       let voter = await JSON.parse(voterAsBytes);
 
       if (!voter.ballot) {
-        throw new Error('this voter does not have a ballot! ');
+        let response = {};
+        response.error = 'this voter does not have a ballot!';
+        return response;
       }
 
       if (voter.ballotCast) {
-        throw new Error('this voter has already cast this ballot!');
+        let response = {};
+        response.error = 'this voter has already cast this ballot!';
+        return response;
       }
 
       let ballotAsBytes = await ctx.stub.getState(voter.ballot.ballotId);
@@ -377,11 +381,15 @@ class MyAssetContract extends Contract {
         return results;
 
       } else {
-        throw new Error('the election is not open now!');
+        let response = {};
+        response.error = 'the election is not open now!';
+        return response;
       }
 
     } else {
-      throw new Error('the election or the voter does not exist!');
+      let response = {};
+      response.error = 'the election or the voter does not exist!';
+      return response;
     }
   }
   async queryAll(ctx) {

@@ -14,11 +14,14 @@
 
     <br />
     <span v-if="response"><b>{{ response }}</b></span><br />
+    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
 <script>
 import PostsService from '@/services/apiService'
+import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
+
 export default {
   name: 'response',
   data () {
@@ -27,14 +30,26 @@ export default {
         response: null
     }
   },
+  components: {
+    VueInstantLoadingSpinner
+  },
   methods: {    
     async castBallot() {
-        const apiResponse = await PostsService.castBallot(this.input.electionId, this.input.voterId)
-        this.response = apiResponse.data
-        
-        console.log('cast ballot');
-        console.log(this.input);
-      }
+      this.response = null;
+      await this.runSpinner();
+      const apiResponse = await PostsService.castBallot(this.input.electionId, this.input.voterId)
+      this.response = apiResponse.data
+      
+      console.log('cast ballot');
+      console.log(this.input);
+      await this.hideSpinner();
+    },
+    async runSpinner() {
+      this.$refs.Spinner.show();
+    },
+    async hideSpinner() {
+      this.$refs.Spinner.hide();
+    }
   }
 }
 </script>

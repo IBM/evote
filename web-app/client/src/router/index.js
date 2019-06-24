@@ -3,7 +3,6 @@ import Router from 'vue-router'
 
 import Home from '@/components/Home'
 import CastBallot from '@/components/CastBallot'
-import ChangeCarOwner from '@/components/ChangeCarOwner'
 import QueryAll from '@/components/QueryAll'
 import QueryWithQueryString from '@/components/QueryWithQueryString'
 import QueryByKey from '@/components/QueryByKey'
@@ -21,11 +20,6 @@ export default new Router({
       path: '/castBallot',
       name: 'CastBallot',
       component: CastBallot
-    },
-    {
-      path: '/changeCarOwner',
-      name: 'ChangeCarOwner',
-      component: ChangeCarOwner
     },
     {
       path: '/queryAll',
