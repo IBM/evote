@@ -20,9 +20,9 @@ const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
-const walletPath = path.join(process.cwd(), '/wallet');
-const wallet = new FileSystemWallet(walletPath);
-console.log(`Wallet path: ${walletPath}`);
+// const walletPath = path.join(process.cwd(), '/wallet');
+// const wallet = new FileSystemWallet(walletPath);
+// console.log(`Wallet path: ${walletPath}`);
 
 const util = require('util');
 
@@ -31,14 +31,35 @@ exports.connectToNetwork = async function (userName) {
   const gateway = new Gateway();
 
   try {
+    const walletPath = path.join(process.cwd(), 'wallet');
+    const wallet = new FileSystemWallet(walletPath);
+    console.log(`Wallet path: ${walletPath}`);
+    console.log('userName: ');
+    console.log(userName);
 
+    console.log('wallet: ');
+    console.log(util.inspect(wallet));
+    console.log('ccp: ');
+    console.log(util.inspect(ccp));
+    // userName = 'V123412';
     const userExists = await wallet.exists(userName);
     if (!userExists) {
+      setTimeout(2000);
+      // console.log('An identity for the user ' + userName + ' does not exist in the wallet');
+      // console.log('Run the registerUser.js application before retrying');
+      // let response = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      // return response;
+    }
+    const userExistsAgain = await wallet.exists(userName);
+    if (!userExistsAgain) {
+      // setTimeout(2000);
       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
       console.log('Run the registerUser.js application before retrying');
       let response = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
       return response;
     }
+
+    console.log('before gateway.connect: ');
 
     await gateway.connect(ccp, { wallet, identity: userName, discovery: gatewayDiscovery });
 
@@ -76,6 +97,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   try {
     console.log('inside invoke');
     console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
+    console.log(util.inspect(networkObj));
 
 
     // console.log(util.inspect(JSON.parse(args[0])));
@@ -122,7 +144,11 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         args = JSON.stringify(args);
         console.log(util.inspect(args));
 
+        console.log('before submit');
+        console.log(util.inspect(networkObj));
         let response = await networkObj.contract.submitTransaction(func, args);
+        console.log('after submit');
+
         console.log(response);
         console.log(`Transaction ${func} with args ${args} has been submitted`);
   
@@ -168,6 +194,7 @@ exports.registerVoter = async function (voterId, registrarId, firstName, lastNam
     const walletPath = path.join(process.cwd(), 'wallet');
     const wallet = new FileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
+    console.log(wallet);
 
     // Check to see if we've already enrolled the user.
     const userExists = await wallet.exists(voterId);
@@ -203,8 +230,9 @@ exports.registerVoter = async function (voterId, registrarId, firstName, lastNam
     const secret = await ca.register({ affiliation: 'org1', enrollmentID: voterId, role: 'client' }, adminIdentity);
 
     const enrollment = await ca.enroll({ enrollmentID: voterId, enrollmentSecret: secret });
-    const userIdentity = X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
-    wallet.import(voterId, userIdentity);
+    const userIdentity = await X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
+    await wallet.import(voterId, userIdentity);
+    console.log(`Successfully registered voter ${firstName} ${lastName}. Use voterId ${voterId} to login above.`);
     let response = `Successfully registered voter ${firstName} ${lastName}. Use voterId ${voterId} to login above.`;
     return response;
   } catch (error) {

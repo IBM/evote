@@ -36,7 +36,7 @@ export default {
   methods: {
     async getCurrentStanding() {
       this.response = null;
-      this.chartOptionsBar.series = null;
+      
       this.runSpinner();
 
       // console.log(`this.selected ${this.selected}`);

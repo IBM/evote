@@ -68,16 +68,27 @@ app.post('/registerVoter', async (req, res) => {
 
   //first create the identity for the voter and add to wallet
   let response = await network.registerVoter(req.body.voterId, req.body.registrarId, req.body.firstName, req.body.lastName);
+  console.log('response from registerVoter: ');
+  console.log(response);
   if (response.error) {
     res.send(response.error);
   } else {
-    req.body = JSON.stringify(req.body);
-    let args = [req.body];
-    //connect to network and update the state with voterId  
+    console.log('req.body.voterId');
+    console.log(req.body.voterId);
     let networkObj = await network.connectToNetwork(req.body.voterId);
+    console.log('networkobj: ');
+    console.log(networkObj);
+
     if (networkObj.error) {
       res.send(networkObj.error);
     }
+    console.log('network obj');
+    console.log(util.inspect(networkObj));
+
+
+    req.body = JSON.stringify(req.body);
+    let args = [req.body];
+    //connect to network and update the state with voterId  
 
     let invokeResponse = await network.invoke(networkObj, false, 'createVoter', args);
     if (invokeResponse.error) {
