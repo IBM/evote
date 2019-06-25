@@ -6,7 +6,7 @@
     <div v-bind:key="carEntry.Key" v-for="carEntry in response">
       <p>{{ carEntry.Key }} | {{ carEntry.Record }}</p>
     </div>
-    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
+    <vue-instant-loading-spinner id = 'loader' ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 

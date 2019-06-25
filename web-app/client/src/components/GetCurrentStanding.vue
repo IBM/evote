@@ -9,7 +9,7 @@
       <b>{{ response }}</b>
     </span>
     <br>
-    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
+    <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
     <div class="chart-wrapper">
       <chart :options="chartOptionsBar"></chart>
     </div>

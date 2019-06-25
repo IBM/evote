@@ -65,6 +65,7 @@ app.post('/queryWithQueryString', async (req, res) => {
 app.post('/registerVoter', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
+  let voterId = req.body.voterId;
 
   //first create the identity for the voter and add to wallet
   let response = await network.registerVoter(req.body.voterId, req.body.registrarId, req.body.firstName, req.body.lastName);
@@ -91,12 +92,16 @@ app.post('/registerVoter', async (req, res) => {
     //connect to network and update the state with voterId  
 
     let invokeResponse = await network.invoke(networkObj, false, 'createVoter', args);
+    
     if (invokeResponse.error) {
       res.send(invokeResponse.error);
     } else {
+
       console.log('after network.invoke ');
-      // let parsedResponse = await JSON.parse(response);
-      res.send(invokeResponse);
+      let parsedResponse = JSON.parse(invokeResponse);
+      parsedResponse += '. Use voterId to login above.';
+      res.send(parsedResponse);
+
     }
 
   }
@@ -108,6 +113,28 @@ app.post('/registerVoter', async (req, res) => {
 app.post('/validateVoter', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
+  let networkObj = await network.connectToNetwork(req.body.voterId);
+  console.log('networkobj: ');
+  console.log(util.inspect(networkObj));
+
+  if (networkObj.error) {
+    res.send(networkObj);
+  }
+
+  let invokeResponse = await network.invoke(networkObj, true, 'readMyAsset', req.body.voterId);
+  if (invokeResponse.error) {
+    res.send(invokeResponse);
+  } else {
+    console.log('after network.invoke ');
+    let parsedResponse = await JSON.parse(invokeResponse);
+    if (parsedResponse.ballotCast) {
+      let response = {};
+      response.error = 'This voter has already cast a ballot, we cannot allow double-voting!';
+      res.send(response);
+    }
+    // let response = `Voter with voterId ${parsedResponse.voterId} is ready to cast a ballot.`  
+    res.send(parsedResponse);
+  }
 
 });
 

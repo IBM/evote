@@ -29,17 +29,18 @@
       <br>
       <input type="submit" value="Register">
     </form>
+    <br>
     <span v-if="registerReponse">
       <b>{{ registerReponse.data }}</b>
     </span>
     <br>
-    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
+    <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
 <script>
 import PostsService from "@/services/apiService";
-import VueInstantLoadingSpinner from 'vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue'
+import VueInstantLoadingSpinner from "vue-instant-loading-spinner/src/components/VueInstantLoadingSpinner.vue";
 
 export default {
   name: "response",
@@ -48,11 +49,11 @@ export default {
       loginData: {},
       registerData: {},
       registerReponse: {
-        data: ''
+        data: ""
       },
       loginReponse: {
-        data: ''
-      },
+        data: ""
+      }
     };
   },
   components: {
@@ -75,13 +76,32 @@ export default {
 
     async validateVoter() {
       await this.runSpinner();
-      const apiResponse = await PostsService.registerVoter(
-        this.loginData.voterId
-      );
 
-      console.log(apiResponse);
-      this.loginReponse = apiResponse;
-      await this.hideSpinner();
+      if (!this.loginData.voterId) {
+        console.log("!thislogin");
+        let response = 'Please enter a VoterId';
+        this.loginReponse.data = response;
+        await this.hideSpinner();
+      } else {
+        const apiResponse = await PostsService.validateVoter(
+          this.loginData.voterId
+        );
+        console.log("apiResponse");
+        console.log(apiResponse.data);
+
+        if (apiResponse.data.error) {
+          // console.log(apiResponse);
+          console.log(apiResponse.data.error);
+          this.loginReponse = apiResponse.data.error;
+        } else {
+          this.$router.push("castBallot");
+        }
+
+        console.log(apiResponse);
+        this.loginReponse = apiResponse;
+        // this.$router.push('castBallot')
+        await this.hideSpinner();
+      }
     },
     async runSpinner() {
       this.$refs.Spinner.show();

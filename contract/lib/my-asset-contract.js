@@ -306,25 +306,21 @@ class MyAssetContract extends Contract {
    * @returns an array which has the winning briefs of the ballot. 
    */
   async castVote(ctx, args) {
-    console.log('castvote called');
-    console.log(args);
+    console.log('castvote called, with args: ');
     console.log(util.inspect(args));
     args = JSON.parse(args);
     console.log('args are now parsed: ');
     console.log(args);
+
+    //get the political party the voter voted for, also the key
     let votableId = args.picked;
-    console.log(votableId);
-    console.log(args.picked);
-    // async castVote(ctx, electionId, voterId) {
 
     //check to make sure the election exists
     let electionExists = await this.myAssetExists(ctx, args.electionId);
-    let voterExists = await this.myAssetExists(ctx, args.voterId);
 
     console.log(electionExists);
-    console.log(voterExists);
 
-    if (electionExists && voterExists) {
+    if (electionExists) {
 
       console.log('inside exists...');
 
@@ -334,22 +330,11 @@ class MyAssetContract extends Contract {
       let voterAsBytes = await ctx.stub.getState(args.voterId);
       let voter = await JSON.parse(voterAsBytes);
 
-      // if (!voter.ballot) {
-      //   let response = {};
-      //   response.error = 'this voter does not have a ballot!';
-      //   return response;
-      // }
-
       if (voter.ballotCast) {
         let response = {};
         response.error = 'this voter has already cast this ballot!';
         return response;
       }
-
-      // let ballotAsBytes = await ctx.stub.getState(voter.ballot.ballotId);
-      // let currBallot = await JSON.parse(ballotAsBytes);
-
-      // console.log(`voter ${voter}, and voters ballot ${voter.ballot}`);
 
       //check the date of the election, to make sure the election is still open
       let currentTime = await new Date(2020, 11, 3);
@@ -385,11 +370,13 @@ class MyAssetContract extends Contract {
         await votable.count++;
         console.log('about to util inspect the votable');
         console.log(util.inspect(votable));
-        let result = await helperFunctions.updateMyAsset(ctx, votableId, votable);
+        // let result = await helperFunctions.updateMyAsset(ctx, votableId, votable);
+        let result = await ctx.stub.putState(votableId, Buffer.from(JSON.stringify(votable)));
         console.log(result);
         //make sure this voter cannot vote again! 
         voter.ballotCast = true;
-        let response = await helperFunctions.updateMyAsset(ctx, voter.voterId, voter);
+        // let response = await helperFunctions.updateMyAsset(ctx, voter.voterId, voter);
+        let response = await ctx.stub.putState(voter.voterId, Buffer.from(JSON.stringify(voter)));
         console.log(response);
         return voter;
 

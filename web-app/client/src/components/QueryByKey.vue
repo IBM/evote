@@ -11,23 +11,11 @@
       <span v-if="input">
         <b>{{ input.data }}</b>
       </span>  
-     
-
       <br>
     </form>
-     <!-- <span v-if="input">        
-        <b>{{ input.data }}</b>
-      </span> -->
-      <!-- <span v-if=!input.data> -->
-        <!-- <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner> -->
-      <!-- </span> 
-      <span v-else>
-        <b>{{ input.data }}</b>
-      </span>  -->
-      <!-- <button @click="test()">Run Spinner</button> -->
 
     <br>
-      <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
+      <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
@@ -39,8 +27,9 @@ export default {
   name: "response",
   data() {
     return {
-      input: {},
-
+     input: {
+        data: ""
+      }
     };
   },
   name: 'app',
@@ -49,12 +38,14 @@ export default {
   },
   methods: {
     async queryByKey() {
-      // this.input.data = null;
+        this.runSpinner();
       console.log('this.input: ');
       console.log(this.input);
       if (!this.input.key) {
-        this.input.data = await `Error! You must enter a key to query!`;
-        // this.hideSpinner();
+        console.log('this.input$#: ');
+        let response = 'Please enter a Key to query for.';
+        this.input.data = response;
+        this.hideSpinner();
       } else {
         this.runSpinner();
         const apiResponse = await PostsService.queryByKey(this.input.key);

@@ -44,18 +44,10 @@ exports.connectToNetwork = async function (userName) {
     // userName = 'V123412';
     const userExists = await wallet.exists(userName);
     if (!userExists) {
-      setTimeout(2000);
-      // console.log('An identity for the user ' + userName + ' does not exist in the wallet');
-      // console.log('Run the registerUser.js application before retrying');
-      // let response = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
-      // return response;
-    }
-    const userExistsAgain = await wallet.exists(userName);
-    if (!userExistsAgain) {
-      // setTimeout(2000);
       console.log('An identity for the user ' + userName + ' does not exist in the wallet');
       console.log('Run the registerUser.js application before retrying');
-      let response = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
+      let response = {};
+      response.error = 'An identity for the user ' + userName + ' does not exist in the wallet. Register ' + userName + ' first';
       return response;
     }
 
@@ -66,9 +58,7 @@ exports.connectToNetwork = async function (userName) {
     // Connect to our local fabric
     const network = await gateway.getNetwork('mychannel');
 
-
     console.log('Connected to mychannel. ');
-
     // Get the contract we have installed on the peer
     const contract = await network.getContract('voteChainDemo');
 
@@ -135,9 +125,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         console.log(func);
         console.log(typeof args);
 
-
-        // args = args.toString();
-        // args = JSON.stringify(args);
         args = JSON.parse(args[0]);
 
         console.log(util.inspect(args));

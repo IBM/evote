@@ -15,11 +15,13 @@
     <button v-on:click="queryByQueryString()">Query the world State</button>
 
     <br>
+    <br>
+    <br>
     <span v-if="response">
       <b>{{ response }}</b>
     </span>
     <br>
-    <vue-instant-loading-spinner ref="Spinner"></vue-instant-loading-spinner>
+    <vue-instant-loading-spinner id='loader' ref="Spinner"></vue-instant-loading-spinner>
   </div>
 </template>
 
@@ -31,7 +33,9 @@ export default {
   name: "response",
   data() {
     return {
-      selected: {},
+      selected: {
+        data: ""
+      },
       response: null
     };
   },
@@ -42,14 +46,26 @@ export default {
     async queryByQueryString(selected) {
       this.response = null;
       this.runSpinner();
-      console.log(`this.selected ${this.selected}`);
-      const apiResponse = await PostsService.queryWithQueryString(
+ 
+      //check to make sure the user selected something
+      if (this.selected != 'ballot' && this.selected != 'election' 
+        && this.selected!= 'voter' && this.selected != 'votableItem') {
+
+        console.log('this . selectionesdfsdfds')
+        let result = `Please select a type of object!`;
+        this.response = result;
+        this.hideSpinner();
+
+      } else {
+        const apiResponse = await PostsService.queryWithQueryString(
         this.selected
       );
       this.response = apiResponse.data;
 
       console.log("query by object type called");
       this.hideSpinner();
+      }
+      
     },
     async runSpinner() {
       this.$refs.Spinner.show();
