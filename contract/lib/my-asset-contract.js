@@ -14,8 +14,8 @@ const electionDataPath = path.join(process.cwd(), './lib/data/electionData.json'
 const electionDataJson = fs.readFileSync(electionDataPath, 'utf8');
 const electionData = JSON.parse(electionDataJson);
 
-// connect to the ballot data file
-const ballotDataPath = path.join(process.cwd(), './lib/data/ballotData.json');
+// connect to the pres election file
+const ballotDataPath = path.join(process.cwd(), './lib/data/presElection.json');
 const ballotDataJson = fs.readFileSync(ballotDataPath, 'utf8');
 const ballotData = JSON.parse(ballotDataJson);
 
@@ -102,20 +102,22 @@ class MyAssetContract extends Contract {
     }
 
     //create votableItems for the ballots
-    let presVotable = await new VotableItem(ctx, 'VI1', ballotData.presidentialRaceTitle,
-      ballotData.presidentialRaceDescription, false);
-    let governorVotable = await new VotableItem(ctx, 'VI2', ballotData.governorRaceTitle,
-      ballotData.governorRaceDescription, false);
-    let mayorVotable = await new VotableItem(ctx, 'VI3', ballotData.mayorRaceTitle,
-      ballotData.mayorRaceDescription, false);
-    let propVotable = await new VotableItem(ctx, 'VI4', ballotData.propositionTitle,
-      ballotData.propositionDescription, true);
+    let repVotable = await new VotableItem(ctx, 'Republican', ballotData.fedDemocratBrief);
+
+    let demVotable = await new VotableItem(ctx, 'Democrat', ballotData.republicanBrief);
+
+    let indVotable = await new VotableItem(ctx, 'Green', ballotData.greenBrief);
+
+    let grnVotable = await new VotableItem(ctx, 'Independent', ballotData.independentBrief);
+
+    let libVotable = await new VotableItem(ctx, 'Libertarian', ballotData.libertarianBrief);
 
     //populate choices array so that the ballots can have all of these choices 
-    votableItems.push(presVotable);
-    votableItems.push(governorVotable);
-    votableItems.push(mayorVotable);
-    votableItems.push(propVotable);
+    votableItems.push(repVotable);
+    votableItems.push(demVotable);
+    votableItems.push(indVotable);
+    votableItems.push(grnVotable);
+    votableItems.push(libVotable);
 
     //save choices in world state
     for (let i = 0; i < votableItems.length; i++) {
@@ -295,11 +297,12 @@ class MyAssetContract extends Contract {
 
   /**
    *
-   * sort
+   * sort 2sww593dc034wb2twdk91r
    *
    * Checks to see if a key exists in the world state. 
    * @param electionId - the electionId of the election we want to vote in
    * @param voterId - the voterId of the voter that wants to vote
+   * @param votableId - the Id of the candidate the voter has selected.
    * @returns an array which has the winning briefs of the ballot. 
    */
   async castVote(ctx, args) {
@@ -309,6 +312,9 @@ class MyAssetContract extends Contract {
     args = JSON.parse(args);
     console.log('args are now parsed: ');
     console.log(args);
+    let votableId = args.picked;
+    console.log(votableId);
+    console.log(args.picked);
     // async castVote(ctx, electionId, voterId) {
 
     //check to make sure the election exists
@@ -328,11 +334,11 @@ class MyAssetContract extends Contract {
       let voterAsBytes = await ctx.stub.getState(args.voterId);
       let voter = await JSON.parse(voterAsBytes);
 
-      if (!voter.ballot) {
-        let response = {};
-        response.error = 'this voter does not have a ballot!';
-        return response;
-      }
+      // if (!voter.ballot) {
+      //   let response = {};
+      //   response.error = 'this voter does not have a ballot!';
+      //   return response;
+      // }
 
       if (voter.ballotCast) {
         let response = {};
@@ -340,10 +346,10 @@ class MyAssetContract extends Contract {
         return response;
       }
 
-      let ballotAsBytes = await ctx.stub.getState(voter.ballot.ballotId);
-      let currBallot = await JSON.parse(ballotAsBytes);
+      // let ballotAsBytes = await ctx.stub.getState(voter.ballot.ballotId);
+      // let currBallot = await JSON.parse(ballotAsBytes);
 
-      console.log(`voter ${voter}, and voters ballot ${voter.ballot}`);
+      // console.log(`voter ${voter}, and voters ballot ${voter.ballot}`);
 
       //check the date of the election, to make sure the election is still open
       let currentTime = await new Date(2020, 11, 3);
@@ -359,26 +365,33 @@ class MyAssetContract extends Contract {
       console.log(`parsedCurTime ${parsedCurrentTime}, electionStart: ${electionStart},
         and electionEnd: ${electionEnd}`);
 
-      let userChoices = [0,1,0,1];
+      // let userChoices = [0,1,0,1];
 
       if (parsedCurrentTime >= electionStart && parsedCurrentTime < electionEnd) {
+        console.log('inside valid eleciton clause');
+        console.log(votableId);
 
-        for (let i = 0; i < voter.ballot.votableItems.length; i++) {
-          let currentChoice = await helperFunctions.readMyAsset(ctx, currBallot.votableItems[i].votableId);
-          console.log('util.inspect');
-          console.log(util.inspect(voter.ballot.votableItems[i].choices[userChoices[i]]));
-          await currentChoice.choices[userChoices[i]].count++;
-          await helperFunctions.updateMyAsset(ctx, currentChoice.votableId, currentChoice);
-          console.log(util.inspect('currentChoice: '));
-          console.log(util.inspect(currentChoice));
+        let votableExists = await this.myAssetExists(ctx, votableId);
+        if (!votableExists) {
+          let response = {};
+          response.error = 'VotableId does not exist!';
+          return response;
         }
 
-        let results = await this.sort(voter.ballot.votableItems);
-
-        for (let i = 0; i < results; i++) {
-          console.log(`winning results ${results[i]}`);
-        }
-        return results;
+        let votable = await helperFunctions.readMyAsset(ctx, votableId);
+        console.log('votable: ');
+        console.log(util.inspect(votable));
+        // let votable = await JSON.parse(votableAsBytes);
+        await votable.count++;
+        console.log('about to util inspect the votable');
+        console.log(util.inspect(votable));
+        let result = await helperFunctions.updateMyAsset(ctx, votableId, votable);
+        console.log(result);
+        //make sure this voter cannot vote again! 
+        voter.ballotCast = true;
+        let response = await helperFunctions.updateMyAsset(ctx, voter.voterId, voter);
+        console.log(response);
+        return voter;
 
       } else {
         let response = {};

@@ -6,6 +6,7 @@ import CastBallot from '@/components/CastBallot'
 import QueryAll from '@/components/QueryAll'
 import QueryWithQueryString from '@/components/QueryWithQueryString'
 import QueryByKey from '@/components/QueryByKey'
+import GetCurrentStanding from '@/components/GetCurrentStanding'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/queryByKey',
       name: 'QueryByKey',
       component: QueryByKey
+    },
+    {
+      path: '/getCurrentStanding',
+      name: 'GetCurrentStanding',
+      component: GetCurrentStanding
     }
   ]
 })

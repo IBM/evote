@@ -10,7 +10,7 @@ const configPath = path.join(process.cwd(), './config.json');
 const configJSON = fs.readFileSync(configPath, 'utf8');
 const config = JSON.parse(configJSON);
 let connection_file = config.connection_file;
-let userName = config.userName;
+// let userName = config.userName;
 let gatewayDiscovery = config.gatewayDiscovery;
 let appAdmin = config.appAdmin;
 let orgMSPID = config.orgMSPID;
@@ -26,7 +26,7 @@ console.log(`Wallet path: ${walletPath}`);
 
 const util = require('util');
 
-exports.connectToNetwork = async function () {
+exports.connectToNetwork = async function (userName) {
   
   const gateway = new Gateway();
 

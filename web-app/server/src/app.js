@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
+const util = require('util');
 
 let network = require('./fabric/network.js');
 
@@ -15,29 +16,45 @@ app.use(cors());
 //get all assets in world state
 app.get('/queryAll', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork();
+  let networkObj = await network.connectToNetwork('voterApp-admin');
   let response = await network.invoke(networkObj, true, 'queryAll', '');
   let parsedResponse = await JSON.parse(response);
   res.send(parsedResponse);
 
 });
 
+app.get('/getCurrentStanding', async (req, res) => {
+
+  let networkObj = await network.connectToNetwork('voterApp-admin');
+  let response = await network.invoke(networkObj, true, 'queryByObjectType', 'votableItem');
+  let parsedResponse = await JSON.parse(response);
+  console.log(parsedResponse);
+  res.send(parsedResponse);
+
+});
+
 //vote for some candidates. This will increase the vote count for the votable objects
 app.post('/castBallot', async (req, res) => {
-
+  let networkObj = await network.connectToNetwork(req.body.voterId);
+  console.log('util inspecting');
+  console.log(util.inspect(networkObj));
   req.body = JSON.stringify(req.body);
+  console.log('req.body');
+  console.log(req.body);
   let args = [req.body];
-  let networkObj = await network.connectToNetwork();
+
   let response = await network.invoke(networkObj, false, 'castVote', args);
-  let parsedResponse = await JSON.parse(response);
-  res.send(parsedResponse);
+  console.log('response: ');
+  console.log(response);
+  // let parsedResponse = await JSON.parse(response);
+  res.send(response);
 
 });
 
 //query for certain objects within the world state
 app.post('/queryWithQueryString', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork();
+  let networkObj = await network.connectToNetwork('voterApp-admin');
   let response = await network.invoke(networkObj, true, 'queryByObjectType', req.body.selected);
   let parsedResponse = await JSON.parse(response);
   res.send(parsedResponse);
@@ -57,7 +74,7 @@ app.post('/registerVoter', async (req, res) => {
     req.body = JSON.stringify(req.body);
     let args = [req.body];
     //connect to network and update the state with voterId  
-    let networkObj = await network.connectToNetwork();
+    let networkObj = await network.connectToNetwork(req.body.voterId);
     if (networkObj.error) {
       res.send(networkObj.error);
     }
@@ -87,7 +104,7 @@ app.post('/queryByKey', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
 
-  let networkObj = await network.connectToNetwork();
+  let networkObj = await network.connectToNetwork('voterApp-admin');
   console.log('after network OBj');
   let response = await network.invoke(networkObj, true, 'readMyAsset', req.body.key);
   response = JSON.parse(response);

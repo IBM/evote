@@ -1,10 +1,11 @@
 import Api from '@/services/api'
 
 export default {
-  castBallot(electionId, voterId) {
+  castBallot(electionId, voterId, picked) {
     return Api().post('castBallot', {       
       electionId: electionId,
-      voterId: voterId
+      voterId: voterId,
+      picked: picked
     })
   },
   queryAll() {
@@ -36,5 +37,8 @@ export default {
     return Api().post('queryByKey', {
       key: key
     }) 
+  },
+  getCurrentStanding() {
+    return Api().get('getCurrentStanding')
   }
 }
