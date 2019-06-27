@@ -30,8 +30,8 @@ let helperFunctions = new HelperFunctions();
 let Query = require('./query.js');
 let query = new Query();
 
-let firstChoice = 0;
-let secondChoice = 1;
+// let firstChoice = 0;
+// let secondChoice = 1;
 
 const util = require('util');
 
@@ -271,32 +271,6 @@ class MyAssetContract extends Contract {
 
   /**
    *
-   * sort
-   *
-   * Checks to see if a key exists in the world state. 
-   * @param dictToSort - the dictionary of values to sort on the ballot
-   * @returns an array which has the winning briefs of the ballot. 
-   */
-  async sort(dictToSort) {
-
-    let winningChoices = [];
-
-    for (let i = 0; i < dictToSort.length; i++) {
-      console.log('inside for loopp');
-      if (dictToSort[i].choices[firstChoice].count > dictToSort[i].choices[secondChoice].count) {
-        console.log('in if');
-        winningChoices.push(dictToSort[i].choices[firstChoice].brief);
-      } else {
-        console.log('in else');
-        winningChoices.push(dictToSort[i].choices[secondChoice].brief);
-      }
-    }
-    return winningChoices;
-
-  }
-
-  /**
-   *
    * sort 2sww593dc034wb2twdk91r
    *
    * Checks to see if a key exists in the world state. 
@@ -363,14 +337,17 @@ class MyAssetContract extends Contract {
           return response;
         }
 
+        //get the votable object from the state - with the votableId the user picked
         let votable = await helperFunctions.readMyAsset(ctx, votableId);
         console.log('votable: ');
         console.log(util.inspect(votable));
-        // let votable = await JSON.parse(votableAsBytes);
+
+        //increase the vote of the political party that was picked by the voter
         await votable.count++;
         console.log('about to util inspect the votable');
         console.log(util.inspect(votable));
-        // let result = await helperFunctions.updateMyAsset(ctx, votableId, votable);
+
+        //update the state with the new vote count
         let result = await ctx.stub.putState(votableId, Buffer.from(JSON.stringify(votable)));
         console.log(result);
         //make sure this voter cannot vote again! 

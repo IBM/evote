@@ -60,14 +60,13 @@ export default {
   },
   methods: {
     async castBallot() {
-      let electionId = "2sww593dc034wb2twdk91r";
+      let electionId = "hicqxzfxly7rlsugukop";
       console.log("picked: ");
       console.log(this.picked);
       console.log("voterId: ");
       console.log(this.input.voterId);
       this.response = null;
       await this.runSpinner();
-
 
       //error checking for making sure to vote for a valid party
       if (this.picked === null ) {
@@ -89,6 +88,10 @@ export default {
           this.input.voterId,
           this.picked
         );
+
+        console.log('apiResponse: &&&&&&&&&&&&&&&&&&&&&&&');
+        console.log(apiResponse);
+
         let response = `Successfully recorded vote for ${this.picked} party 
         for voter with voterId ${apiResponse.data.voterId}. Thanks for 
         doing your part and voting!`;
