@@ -60,7 +60,7 @@ exports.connectToNetwork = async function (userName) {
 
     console.log('Connected to mychannel. ');
     // Get the contract we have installed on the peer
-    const contract = await network.getContract('voteChainDemo');
+    const contract = await network.getContract('voterContract');
 
 
     let networkObj = {

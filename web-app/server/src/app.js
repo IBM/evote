@@ -13,10 +13,12 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
+const appAdmin = 'app-admin';
+
 //get all assets in world state
 app.get('/queryAll', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork('app-admin');
+  let networkObj = await network.connectToNetwork(appAdmin);
   let response = await network.invoke(networkObj, true, 'queryAll', '');
   let parsedResponse = await JSON.parse(response);
   res.send(parsedResponse);
@@ -25,7 +27,7 @@ app.get('/queryAll', async (req, res) => {
 
 app.get('/getCurrentStanding', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork('app-admin');
+  let networkObj = await network.connectToNetwork(appAdmin);
   let response = await network.invoke(networkObj, true, 'queryByObjectType', 'votableItem');
   let parsedResponse = await JSON.parse(response);
   console.log(parsedResponse);
@@ -54,7 +56,7 @@ app.post('/castBallot', async (req, res) => {
 //query for certain objects within the world state
 app.post('/queryWithQueryString', async (req, res) => {
 
-  let networkObj = await network.connectToNetwork('app-admin');
+  let networkObj = await network.connectToNetwork(appAdmin);
   let response = await network.invoke(networkObj, true, 'queryByObjectType', req.body.selected);
   let parsedResponse = await JSON.parse(response);
   res.send(parsedResponse);
@@ -142,7 +144,7 @@ app.post('/queryByKey', async (req, res) => {
   console.log('req.body: ');
   console.log(req.body);
 
-  let networkObj = await network.connectToNetwork('app-admin');
+  let networkObj = await network.connectToNetwork(appAdmin);
   console.log('after network OBj');
   let response = await network.invoke(networkObj, true, 'readMyAsset', req.body.key);
   response = JSON.parse(response);

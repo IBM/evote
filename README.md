@@ -44,13 +44,13 @@ and query the world state to see current poll standings.
 + [Node.js](https://nodejs.org) is an open source, cross-platform JavaScript run-time environment that executes server-side JavaScript code.
 + [Vue.js](https://vuejs.org/) Vue.js is an open-source JavaScript framework for building user interfaces and single-page applications.
 
-# Watch the Video - Create a fair trade supply network with Hyperledger Fabric 1.4 (Cloud)
+# Watch the Video - COMING SOON! (Cloud)
 
-[![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=8wtHsD7-kS4)
+<!-- [![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=8wtHsD7-kS4) -->
 
-# Watch the Video - Create a fair trade supply network with Hyperledger Fabric 1.4 (Local)
+# Watch the Video - COMING SOON! (Local)
 
-[![](docs/local.png)](https://www.youtube.com/watch?v=mG2TCIPlvk0)
+<!-- [![](docs/local.png)](https://www.youtube.com/watch?v=mG2TCIPlvk0) -->
 
 ## Prerequisites
 
@@ -75,10 +75,6 @@ This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blo
 Git clone this repo onto your computer in the destination of your choice, then go into the web-app folder:
 ```
 HoreaPorutiu$ git clone https://github.com/horeaporutiu/chainVote
-```
-Navigate to the `web-app/client` directory:
-```
-HoreaPorutiu$ cd blockchainbean2/web-app/client
 ```
 
 ## Step 2. Create IBM Cloud services
