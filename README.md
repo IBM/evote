@@ -271,7 +271,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 </p>
 <br>
 
-## Step 6. Deploy Blockchainbean2 Smart Contract on the network
+## Step 4. Deploy voterContract Smart Contract on the network
 
 * #### Install a smart contract
   - Click the <b>Smart contracts</b> tab to install the smart contract.
@@ -300,7 +300,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 </p>
 <br>
 
-## Step 7. Connect application to the network
+## Step 5. Connect application to the network
 
 * #### Connect with sdk through connection profile
   - Under the Instantiated Smart Contract, click on `Connect with SDK` from the overflow menu on the right side of the row.
@@ -366,7 +366,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 ```
 
 
-## Step 8. Run the application
+## Step 6. Run the application
 
 * #### Enroll admin
   - First, navigate to the `web-app/server` directory, and install the node dependencies.
