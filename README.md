@@ -1,5 +1,11 @@
 # Create a fair evoting application to ensure correct election results with Hyperledger Fabric and IBM Blockchain Platform
 
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/demo.gif">
+</p>
+<br>
+
 Have you ever wondered how exactly the votes in a presidential election 
 counted? What if instead of having volunteers that are spending hours a 
 day counting votes manually, we have an app that was backed by blockchain, 
@@ -110,9 +116,6 @@ blockchain network by clicking on *Launch the IBM Blockchain Platform*.
 We will build a network as provided by the IBM Blockchain Platform [documentation](https://console.bluemix.net/docs/services/blockchain/howto/ibp-console-build-network.html#ibp-console-build-network).  This will include creating a channel with a single peer organization with its own MSP and CA (Certificate Authority), and an orderer organization with its own MSP and CA. We will create the respective identities to deploy peers and operate nodes.
 
 ### Create your organization and your entry point to your blockchain
-
-* #### Note: the gifs below show the creation of *Org 1* but we will
-create *Voter Org* instead.
 
 * #### Create your Voter Organization CA
   - Click <b>Add Certificate Authority</b>.
@@ -462,7 +465,7 @@ something like this: http://blockchainbeans2.mybluemix.net/
 
 To do this, please follow the guide [here:](https://github.com/horeaporutiu/blockchainbean2/blob/master/docs/deploy.md)
 
-## Conclusion
+<!-- ## Conclusion
 
  So now, you are 
  officially done with this tutorial. So what did you learn?
@@ -478,11 +481,11 @@ So at this point, you know more than me! Hopefully you feel pretty good at this 
 
 GREAT JOB! YOU DID IT! :) 
 
-And when you create the cool new startup unicorn after learning a bunch from this tutorial, don't forget to give me, or IBM Developer some credit :) 
+And when you create the cool new startup unicorn after learning a bunch from this tutorial, don't forget to give me, or IBM Developer some credit :)  -->
 
-## Troubleshooting
+<!-- ## Troubleshooting
 If you are getting errors with your IBM Blockchain VSCode extension, ensure 
-you have all prerequisites installed here: https://github.com/IBM-Blockchain/blockchain-vscode-extension#requirements
+you have all prerequisites installed here: https://github.com/IBM-Blockchain/blockchain-vscode-extension#requirements -->
 
 ## Related Links
 * [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
