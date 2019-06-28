@@ -20,9 +20,6 @@ const ccpPath = path.join(process.cwd(), connection_file);
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
-// const walletPath = path.join(process.cwd(), '/wallet');
-// const wallet = new FileSystemWallet(walletPath);
-// console.log(`Wallet path: ${walletPath}`);
 
 const util = require('util');
 
@@ -224,7 +221,6 @@ exports.registerVoter = async function (voterId, registrarId, firstName, lastNam
     return response;
   } catch (error) {
     console.error(`Failed to register user + ${voterId} + : ${error}`);
-    process.exit(1);
     let response = {};
     response.error = error;
     return response;

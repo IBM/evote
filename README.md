@@ -431,13 +431,26 @@ election for 2020, we can choose the party of our liking. Once we are done, we
 can choose submit, and then our vote is cast. As long as this voterId hasn't 
 voted before, all is well. Next, we can view the poll standings by clicking
 `Get Poll Standings` and clicking `Check Poll`. This will query the world 
-state and get the current number of votes for each political party. If we 
-want to query for a particular voterId, we can do so in the `Query by Key` tab.
+state and get the current number of votes for each political party.
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/demo.gif">
+</p>
+<br>
+
+If we want to query for a particular voterId, we can do so in the `Query by Key` tab.
 If we want to query by object, we can do so by clicking on the `Query by Type` 
 tab, and entering a type, such as `voter`. This will return all voter objects 
 that are currently in the state. `QueryAll` will return all objects in the state.
 
-That's it for the app. It can be imporoved in a myriad of ways, but hopefully
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/query.gif">
+</p>
+<br>
+
+That's it for the app. It can be improved in a myriad of ways, but hopefully
 this gives you inspiration to create apps that improve our current proccesses.
 Thank you SO MUCH for taking the time to go through this pattern, and hopefully
 you learned something.
