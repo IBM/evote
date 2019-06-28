@@ -115,9 +115,6 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 ### Create your organization and your entry point to your blockchain
 
-* #### Note: the gifs below show the creation of *Org 1* but we will
-create *Voter Org* instead.
-
 * #### Create your Voter Organization CA
   - Click <b>Add Certificate Authority</b>.
   - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
@@ -127,7 +124,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/voterCa.gif">
+  <img src="docs/doc-gifs/voterCA.gif">
 </p>
 <br>
 
