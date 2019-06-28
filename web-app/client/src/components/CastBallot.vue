@@ -60,12 +60,18 @@ export default {
   },
   methods: {
     async castBallot() {
-      let electionId = "hicqxzfxly7rlsugukop";
+
+      const electionRes = await PostsService.queryWithQueryString('election');
+      
+      let electionId = electionRes.data[0].Key;
+
       console.log("picked: ");
       console.log(this.picked);
       console.log("voterId: ");
       console.log(this.input.voterId);
       this.response = null;
+
+ 
       await this.runSpinner();
 
       //error checking for making sure to vote for a valid party

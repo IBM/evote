@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     async registerVoter() {
+
       await this.runSpinner();
       const apiResponse = await PostsService.registerVoter(
         this.registerData.voterId,
