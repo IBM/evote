@@ -64,10 +64,8 @@ This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blo
 # Steps (Cloud Deployment)
 > To run a local network, you can find steps [here](./docs/run-local.md).
 1. [Clone the Repo](#step-1-clone-the-repo)
-<!-- 2. [Install Dependencies](#step-2-install-dependencies)
-3. [Package Contract](#step-3-package-contract) -->
-4. [Create IBM Cloud services](#step-4-create-ibm-cloud-services)
-5. [Build a network](#step-5-build-a-network)
+2. [Create IBM Cloud services](#step-2-create-ibm-cloud-services)
+3. [Build a network](#step-3-build-a-network)
 6. [Deploy blockchainbean2 Smart Contract on the network](#step-6-deploy-blockchainbean2-smart-contract-on-the-network)
 7. [Connect application to the network](#step-7-connect-application-to-the-network)
 8. [Run the application](#step-8-run-the-application)
@@ -90,33 +88,26 @@ minutes to provision, so please be patient!</b>
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/create-ibm-kubernetes-service.gif">
+  <img src="docs/doc-gifs/createIKS.gif">
 </p>
 <br>
 
 * Create the [IBM Blockchain Platform](https://console.bluemix.net/catalog/services/blockchain/) service on the IBM Cloud.  You can find the service in the `Catalog`, and give a name.
 
-<br>
-<p align="center">
-  <img src="docs/doc-gifs/create-ibm-blockchain-2-service.gif">
-</p>
-<br>
-
 * After your Kubernetes cluster is up and running, you can deploy your IBM Blockchain Platform service on the cluster. The service walks through few steps and finds your cluster on the IBM Cloud to deploy the service on.
 
-<br>
-<p align="center">
-  <img src="docs/doc-gifs/deploy-blockchain-on-cluster.gif">
-</p>
-<br>
+* In the gif below, you can see me choosing my free cluster to deploy my IBM Blockchain Platform.
 
-* Once the Blockchain Platform is deployed on the Kubernetes cluster, you can launch the console to start operating on your blockchain network.
+* Once the Blockchain Platform is deployed on the Kubernetes cluster (which can 
+take a couple of minutes, you can launch the console to start operating on your
+blockchain network by clicking on *Launch the IBM Blockchain Platform*.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/launch-ibm-blockchain.gif">
+  <img src="docs/doc-gifs/createIBP.gif">
 </p>
 <br>
+
 
 ## Step 5. Build a network
 
@@ -136,7 +127,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/create-peer-org1-ca.gif">
+  <img src="docs/doc-gifs/voterCa.gif">
 </p>
 <br>
 
@@ -148,7 +139,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/org1-ca-register-identities.gif">
+  <img src="docs/doc-gifs/registerIdentities.gif">
 </p>
 <br>
 
@@ -162,7 +153,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/peer-org-msp-def.gif">
+  <img src="docs/doc-gifs/voterMSP.gif">
 </p>
 <br>
 
@@ -178,7 +169,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/create-peer.gif">
+  <img src="docs/doc-gifs/voterPeer.gif">
 </p>
 <br>
 
@@ -192,7 +183,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/orderer-org-ca.gif">
+  <img src="docs/doc-gifs/ordererCA.gif">
 </p>
 <br>
 
@@ -203,7 +194,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/orderer-ca-register-identities.gif">
+  <img src="docs/doc-gifs/ordererIdentities.gif">
 </p>
 <br>
 
@@ -217,7 +208,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/orderer-org-msp-def.gif">
+  <img src="docs/doc-gifs/ordererMSP.gif">
 </p>
 <br>
 
@@ -232,7 +223,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/create-orderer.gif">
+  <img src="docs/doc-gifs/createOrderer.gif">
 </p>
 <br>
 
@@ -244,7 +235,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/add-org-orderer.gif">
+  <img src="docs/doc-gifs/consortium.gif">
 </p>
 <br>
 
@@ -263,7 +254,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/create-channel.gif">
+  <img src="docs/doc-gifs/createChannel.gif">
 </p>
 <br>
 
@@ -277,7 +268,7 @@ create *Voter Org* instead.
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/join-channel.gif">
+  <img src="docs/doc-gifs/joinChannel.gif">
 </p>
 <br>
 
@@ -417,7 +408,7 @@ create *Voter Org* instead.
     ```
 
 
-You can find the app running at http://localhost:8080/?#/  If all goes well, you should see something like the picture below: 
+You can find the app running at http://localhost:8080/  If all goes well, you should see something like the picture below: 
 
 Now, we can start interacting with the app.
 
