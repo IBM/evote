@@ -66,9 +66,9 @@ This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blo
 1. [Clone the Repo](#step-1-clone-the-repo)
 2. [Create IBM Cloud services](#step-2-create-ibm-cloud-services)
 3. [Build a network](#step-3-build-a-network)
-6. [Deploy blockchainbean2 Smart Contract on the network](#step-6-deploy-blockchainbean2-smart-contract-on-the-network)
-7. [Connect application to the network](#step-7-connect-application-to-the-network)
-8. [Run the application](#step-8-run-the-application)
+4. [Deploy voterContract Smart Contract on the network](#step-4-deploy-voterContract-smart-contract-on-the-network)
+5. [Connect application to the network](#step-5-connect-application-to-the-network)
+6. [Run the application](#step-6-run-the-application)
 
 ## Step 1. Clone the Repo
 
@@ -80,6 +80,48 @@ Navigate to the `web-app/client` directory:
 ```
 HoreaPorutiu$ cd blockchainbean2/web-app/client
 ```
+
+## Step 2. Install Dependencies
+
+Install required dependencies using NPM:
+```
+client$ npm install
+```
+
+Next, navigate to the `web-app/server` directory:
+Install required dependencies using NPM:
+```
+server$ npm install
+```
+<!-- 
+## Step 3. Package Contract
+
+
+![packageFile](/docs/rightClick.png)
+Right-click under your folders in your workspace area and then click *Add Folder to Workspace* and then highlight the 
+`blockchainbean/lib` directory as shown in the picture below, and then click on *add*:
+
+![packageFile](/docs/addSmartContract.png)
+
+ Next, we have to package the smart contract. Click on the *F1* button on your keyboard,
+ which will bring up the VSCode command palette. From there, navigate and click on `Package a Smart Contract Project`.
+![packageFile](/docs/pack.png)
+
+
+ Next, the extension will ask the following question:
+ ```
+ Choose a workspace folder to package
+ ```
+ Click on the *lib* folder - note we do not want to package our client (i.e. our web-app directory).
+
+  ![packageFile](/docs/lib.png)
+
+ If all went well, you should see the following. 
+
+  ![packageFile](/docs/packageSuccess.png)
+ 
+ Note that this `.cds` file is extremely important if we want to run 
+ our smart contract on the cloud.  -->
 
 ## Step 2. Create IBM Cloud services
 
@@ -109,11 +151,14 @@ blockchain network by clicking on *Launch the IBM Blockchain Platform*.
 <br>
 
 
-## Step 5. Build a network
+## Step 3. Build a network
 
 We will build a network as provided by the IBM Blockchain Platform [documentation](https://console.bluemix.net/docs/services/blockchain/howto/ibp-console-build-network.html#ibp-console-build-network).  This will include creating a channel with a single peer organization with its own MSP and CA (Certificate Authority), and an orderer organization with its own MSP and CA. We will create the respective identities to deploy peers and operate nodes.
 
 ### Create your organization and your entry point to your blockchain
+
+* #### Note: the gifs below show the creation of *Org 1* but we will
+create *Voter Org* instead.
 
 * #### Create your Voter Organization CA
   - Click <b>Add Certificate Authority</b>.
@@ -281,7 +326,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/install-smart-contract.gif">
+  <img src="docs/doc-gifs/installContract.gif">
 </p>
 <br>
 
@@ -294,7 +339,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/instantiate-smart-contract.gif">
+  <img src="docs/doc-gifs/instantiateContract.gif">
 </p>
 <br>
 
@@ -309,7 +354,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/connect-with-sdk.gif">
+  <img src="docs/doc-gifs/downloadCCP.gif">
 </p>
 <br>
 
@@ -324,26 +369,14 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/register-app-admin.gif">
+  <img src="docs/doc-gifs/appAdmin.gif">
 </p>
 <br>
 
 
 * #### Update application connection
   - Copy the connection profile you downloaded into [server folder](server)
-  - Name the connection profile you downloaded **ibpConnection.json**
-  - Your new folder structure should look like below (i.e. should have your newly downloaded and newly renamed file **ibpConnection.json**: 
-
-  <p align="center">
-    <img src="docs/ibpConnection.png">
-  </p>
-
-  - The **ibpConnection.json** file should look something like this: 
-
-   <p align="center">
-    <img src="docs/ibpConnectionCode.png">
-  </p>
-
+  - Rename the connection profile you downloaded **ibpConnection.json**
   - Update the [config.json](server/config.json) file with:
     - The connection json file name you downloaded.
     - The <b>enroll id</b> and <b>enroll secret</b> for your app admin, which we earlier provided as `app-admin` and `app-adminpw`.
@@ -355,6 +388,12 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 > the current default setup is to connect to a local fabric instance from VS Code
 
 - Once you are done, the final version of the **config.json** should look something like this (note that I took the caName from the above pic):
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/updateConfig.gif">
+</p>
+<br>
 
 ```js
 {
@@ -375,6 +414,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - First, navigate to the `web-app/server` directory, and install the node dependencies.
     ```bash
     cd web-app/server
+    npm install
     ```
   
   - Run the `enrollAdmin.js` script
@@ -392,6 +432,11 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
     npm start
     ```
 
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/startServer.gif">
+</p>
+<br>
 
 * #### Start the web client
   - In a new terminal, open the web-app folder from the room blockchainbean2 directory.
