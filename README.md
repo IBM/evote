@@ -64,8 +64,8 @@ This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blo
 # Steps (Cloud Deployment)
 > To run a local network, you can find steps [here](./docs/run-local.md).
 1. [Clone the Repo](#step-1-clone-the-repo)
-2. [Install Dependencies](#step-2-install-dependencies)
-3. [Package Contract](#step-3-package-contract)
+<!-- 2. [Install Dependencies](#step-2-install-dependencies)
+3. [Package Contract](#step-3-package-contract) -->
 4. [Create IBM Cloud services](#step-4-create-ibm-cloud-services)
 5. [Build a network](#step-5-build-a-network)
 6. [Deploy blockchainbean2 Smart Contract on the network](#step-6-deploy-blockchainbean2-smart-contract-on-the-network)
@@ -83,49 +83,7 @@ Navigate to the `web-app/client` directory:
 HoreaPorutiu$ cd blockchainbean2/web-app/client
 ```
 
-## Step 2. Install Dependencies
-
-Install required dependencies using NPM:
-```
-client$ npm install
-```
-
-Next, navigate to the `web-app/server` directory:
-Install required dependencies using NPM:
-```
-server$ npm install
-```
-<!-- 
-## Step 3. Package Contract
-
-
-![packageFile](/docs/rightClick.png)
-Right-click under your folders in your workspace area and then click *Add Folder to Workspace* and then highlight the 
-`blockchainbean/lib` directory as shown in the picture below, and then click on *add*:
-
-![packageFile](/docs/addSmartContract.png)
-
- Next, we have to package the smart contract. Click on the *F1* button on your keyboard,
- which will bring up the VSCode command palette. From there, navigate and click on `Package a Smart Contract Project`.
-![packageFile](/docs/pack.png)
-
-
- Next, the extension will ask the following question:
- ```
- Choose a workspace folder to package
- ```
- Click on the *lib* folder - note we do not want to package our client (i.e. our web-app directory).
-
-  ![packageFile](/docs/lib.png)
-
- If all went well, you should see the following. 
-
-  ![packageFile](/docs/packageSuccess.png)
- 
- Note that this `.cds` file is extremely important if we want to run 
- our smart contract on the cloud.  -->
-
-## Step 4. Create IBM Cloud services
+## Step 2. Create IBM Cloud services
 
 * Create the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/catalog/infrastructure/containers-kubernetes).  You can find the service in the `Catalog`.  For this code pattern, we can use the `Free` cluster, and give it a name.  Note, that the IBM Cloud allows one instance of a free cluster and expires after 30 days. <b>The cluster takes around 10-15
 minutes to provision, so please be patient!</b>
