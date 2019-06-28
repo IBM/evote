@@ -81,48 +81,6 @@ Navigate to the `web-app/client` directory:
 HoreaPorutiu$ cd blockchainbean2/web-app/client
 ```
 
-## Step 2. Install Dependencies
-
-Install required dependencies using NPM:
-```
-client$ npm install
-```
-
-Next, navigate to the `web-app/server` directory:
-Install required dependencies using NPM:
-```
-server$ npm install
-```
-<!-- 
-## Step 3. Package Contract
-
-
-![packageFile](/docs/rightClick.png)
-Right-click under your folders in your workspace area and then click *Add Folder to Workspace* and then highlight the 
-`blockchainbean/lib` directory as shown in the picture below, and then click on *add*:
-
-![packageFile](/docs/addSmartContract.png)
-
- Next, we have to package the smart contract. Click on the *F1* button on your keyboard,
- which will bring up the VSCode command palette. From there, navigate and click on `Package a Smart Contract Project`.
-![packageFile](/docs/pack.png)
-
-
- Next, the extension will ask the following question:
- ```
- Choose a workspace folder to package
- ```
- Click on the *lib* folder - note we do not want to package our client (i.e. our web-app directory).
-
-  ![packageFile](/docs/lib.png)
-
- If all went well, you should see the following. 
-
-  ![packageFile](/docs/packageSuccess.png)
- 
- Note that this `.cds` file is extremely important if we want to run 
- our smart contract on the cloud.  -->
-
 ## Step 2. Create IBM Cloud services
 
 * Create the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/catalog/infrastructure/containers-kubernetes).  You can find the service in the `Catalog`.  For this code pattern, we can use the `Free` cluster, and give it a name.  Note, that the IBM Cloud allows one instance of a free cluster and expires after 30 days. <b>The cluster takes around 10-15
@@ -387,13 +345,14 @@ create *Voter Org* instead.
 
 > the current default setup is to connect to a local fabric instance from VS Code
 
-- Once you are done, the final version of the **config.json** should look something like this (note that I took the caName from the above pic):
 
 <br>
 <p align="center">
   <img src="docs/doc-gifs/updateConfig.gif">
 </p>
 <br>
+
+- Once you are done, the final version of the **config.json** should look something like this (note that I took the caName from the above pic):
 
 ```js
 {
@@ -439,9 +398,11 @@ create *Voter Org* instead.
 <br>
 
 * #### Start the web client
-  - In a new terminal, open the web-app folder from the room blockchainbean2 directory.
+  - In a new terminal, open the `web-app/client` folder from the root directory. 
+  Install the required dependencies with `npm install`.
     ```bash
     cd web-app/client
+    npm install
     ```
 
   - Start the client:
@@ -449,6 +410,14 @@ create *Voter Org* instead.
     npm run serve
     ```
 
+  - In a broswer of your choice, go to http://localhost:8080/#/.  If all goes well, you should see 
+  something like the gif below:
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/runClient.gif">
+</p>
+<br>
 
 You can find the app running at http://localhost:8080/  If all goes well, you should see something like the picture below: 
 
