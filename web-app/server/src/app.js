@@ -13,6 +13,7 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
 
+//use this identity to query
 const appAdmin = 'app-admin';
 
 //get all assets in world state
