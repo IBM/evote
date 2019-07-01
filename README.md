@@ -6,8 +6,6 @@
 </p>
 <br>
 
-Test 
-
 Have you ever wondered how exactly the votes in a presidential election 
 counted? What if instead of having volunteers that are spending hours a 
 day counting votes manually, we have an app that was backed by blockchain, 
@@ -82,7 +80,7 @@ This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blo
 
 Git clone this repo onto your computer in the destination of your choice, then go into the web-app folder:
 ```
-HoreaPorutiu$ git clone https://github.com/horeaporutiu/chainVote
+HoreaPorutiu$ git clone https://github.com/IBM/evote
 ```
 
 ## Step 2. Create IBM Cloud services
