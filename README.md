@@ -275,7 +275,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Install a smart contract
   - Click the <b>Smart contracts</b> tab to install the smart contract.
-  - Click <b>Install smart contract</b> to upload the blockchainbean smart contract package file, which is in the root of the repo we cloned - the file
+  - Click <b>Install smart contract</b> to upload the voterContract smart contract package file, which is in the root of the repo we cloned - the file
   is called `voterContract.cds`.
   - Click on <b>Add file</b> and find your packaged smart contract.  
   - Once the contract is uploaded, click <b>Install</b>.
