@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //use this identity to query
-const appAdmin = 'app-admin2';
+const appAdmin = 'app-admin';
 
 //get all assets in world state
 app.get('/queryAll', async (req, res) => {
