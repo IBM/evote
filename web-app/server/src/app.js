@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //use this identity to query
-const appAdmin = 'app-admin';
+const appAdmin = 'app-admin2';
 
 //get all assets in world state
 app.get('/queryAll', async (req, res) => {
@@ -47,11 +47,14 @@ app.post('/castBallot', async (req, res) => {
   let args = [req.body];
 
   let response = await network.invoke(networkObj, false, 'castVote', args);
-  console.log('response: ');
-  console.log(response);
-  // let parsedResponse = await JSON.parse(response);
-  res.send(response);
-
+  if (response.error) {
+    res.send(response.error);
+  } else {
+    console.log('response: ');
+    console.log(response);
+    // let parsedResponse = await JSON.parse(response);
+    res.send(response);
+  }
 });
 
 //query for certain objects within the world state
