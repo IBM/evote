@@ -50,13 +50,13 @@ and query the world state to see current poll standings.
 + [Node.js](https://nodejs.org) is an open source, cross-platform JavaScript run-time environment that executes server-side JavaScript code.
 + [Vue.js](https://vuejs.org/) Vue.js is an open-source JavaScript framework for building user interfaces and single-page applications.
 
-# Watch the Video - COMING SOON! (Cloud)
+# Watch the Video - Intro (Cloud)
 
-<!-- [![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=8wtHsD7-kS4) -->
+[![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=ny8iif6ZXRU)
 
-# Watch the Video - COMING SOON! (Local)
+# Watch the Video - Build and Run the App (Cloud)
 
-<!-- [![](docs/local.png)](https://www.youtube.com/watch?v=mG2TCIPlvk0) -->
+[![](docs/ibpVideo2.png)](https://www.youtube.com/watch?v=mkVUW1KroTI)
 
 ## Prerequisites
 

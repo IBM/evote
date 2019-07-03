@@ -149,10 +149,17 @@ class MyAssetContract extends Contract {
     console.log(util.inspect(voter));
 
     //generate ballot
-    voter.ballot = await new Ballot(ctx, votableItems, election, voter.voterId);
+    let ballot = await new Ballot(ctx, votableItems, election, voter.voterId);
+    
+    //set reference to voters ballot
+    voter.ballot = ballot.ballotId;
     voter.ballotCreated = true;
-    // //update state with ballots, and update the voter object
-    await ctx.stub.putState(voter.ballot.ballotId, Buffer.from(JSON.stringify(voter.ballot)));
+
+    // //update voter object to have reference to ballotId
+    // await ctx.stub.putState(voter.ballot, Buffer.from(JSON.stringify(voter.ballot.ballotId)));
+    
+    // //update state with ballot object we just created
+    await ctx.stub.putState(ballot.ballotId, Buffer.from(JSON.stringify(ballot)));
 
     await ctx.stub.putState(voter.voterId, Buffer.from(JSON.stringify(voter)));
 
@@ -391,6 +398,7 @@ class MyAssetContract extends Contract {
         console.log(result);
         //make sure this voter cannot vote again! 
         voter.ballotCast = true;
+        voter.picked = args.picked;
         // let response = await helperFunctions.updateMyAsset(ctx, voter.voterId, voter);
         let response = await ctx.stub.putState(voter.voterId, Buffer.from(JSON.stringify(voter)));
         console.log(response);
