@@ -24,7 +24,8 @@ Build a web-based blockchain evoting app using IBM Blockchain Platform and IBM K
 
 ### Other URLs
 
-* Demo URL - coming soon!
+* Demo URL (Intro) - https://www.youtube.com/watch?v=ny8iif6ZXRU
+* Demo URL (Run app) - https://www.youtube.com/watch?v=mkVUW1KroTI
 
 # Summary
 
