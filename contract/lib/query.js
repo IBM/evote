@@ -5,11 +5,11 @@
 'use strict';
 
 //import Hyperledger Fabric 1.4 SDK
-// const { Contract } = require('fabric-contract-api');
+const { Contract } = require('fabric-contract-api');
 
 // let util = require('util');
 
-class Query {
+class Query extends Contract {
 
   /**
    * Evaluate a queryString

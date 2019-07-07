@@ -25,8 +25,6 @@ let Election = require('./Election.js');
 let Voter = require('./Voter.js');
 let VotableItem = require('./VotableItem.js');
 
-let HelperFunctions = require('./HelperFunctions.js');
-let helperFunctions = new HelperFunctions();
 let Query = require('./query.js');
 let query = new Query();
 
@@ -145,9 +143,6 @@ class MyAssetContract extends Contract {
    */
   async generateBallot(ctx, votableItems, election, voter) {
 
-    console.log('inside generateBallot, voter: ');
-    console.log(util.inspect(voter));
-
     //generate ballot
     let ballot = await new Ballot(ctx, votableItems, election, voter.voterId);
     
@@ -155,9 +150,6 @@ class MyAssetContract extends Contract {
     voter.ballot = ballot.ballotId;
     voter.ballotCreated = true;
 
-    // //update voter object to have reference to ballotId
-    // await ctx.stub.putState(voter.ballot, Buffer.from(JSON.stringify(voter.ballot.ballotId)));
-    
     // //update state with ballot object we just created
     await ctx.stub.putState(ballot.ballotId, Buffer.from(JSON.stringify(ballot)));
 
@@ -182,23 +174,9 @@ class MyAssetContract extends Contract {
 
     args = JSON.parse(args);
 
-    console.log('args after createVoter and jsonparse: ');
-    console.log(util.inspect(args));
-
     let newVoter = await new Voter(args.voterId, args.registrarId, args.firstName, args.lastName);
-    console.log(`voterId ${newVoter.voterId} `);
-    console.log(util.inspect(newVoter));
-    console.log('beofre newVoter.voterId');
-    console.log(newVoter.voterId);
-    console.log('ctx: ');
-    console.log(ctx);
-    // newVoter = JSON.parse(newVoter);
 
-    //add the voters to the world state, the election class checks for registered voters 
-    // await helperFunctions.updateMyAsset(ctx, newVoter.voterId, newVoter);
-    console.log('beofre put sttae');
     await ctx.stub.putState(newVoter.voterId, Buffer.from(JSON.stringify(newVoter)));
-    console.log('after put state');
 
     let currElections = JSON.parse(await query.queryByObjectType(ctx, 'election'));
 
@@ -209,14 +187,12 @@ class MyAssetContract extends Contract {
     }
 
     let currElection = currElections[0];
-    console.log('before parsing votable items put state');
 
     let votableItems = JSON.parse(await query.queryByObjectType(ctx, 'votableItem'));
     
     //what is the voter
     await this.generateBallot(ctx, votableItems, currElection, newVoter);
 
-    console.log('before response');
     let response = `voter with voterId ${newVoter.voterId} is updated in the world state`;
     return response;
   }
@@ -369,11 +345,7 @@ class MyAssetContract extends Contract {
       console.log(`parsedCurTime ${parsedCurrentTime}, electionStart: ${electionStart},
         and electionEnd: ${electionEnd}`);
 
-      // let userChoices = [0,1,0,1];
-
       if (parsedCurrentTime >= electionStart && parsedCurrentTime < electionEnd) {
-        console.log('inside valid eleciton clause');
-        console.log(votableId);
 
         let votableExists = await this.myAssetExists(ctx, votableId);
         if (!votableExists) {
@@ -383,7 +355,9 @@ class MyAssetContract extends Contract {
         }
 
         //get the votable object from the state - with the votableId the user picked
-        let votable = await helperFunctions.readMyAsset(ctx, votableId);
+
+        let votableAsBytes = await ctx.stub.getState(votableId);
+        let votable = await JSON.parse(votableAsBytes);
 
         console.log('votable: ');
         console.log(util.inspect(votable));
@@ -398,8 +372,11 @@ class MyAssetContract extends Contract {
         console.log(result);
         //make sure this voter cannot vote again! 
         voter.ballotCast = true;
+        voter.picked = {};
         voter.picked = args.picked;
-        // let response = await helperFunctions.updateMyAsset(ctx, voter.voterId, voter);
+
+        console.log(util.inspect(voter));
+
         let response = await ctx.stub.putState(voter.voterId, Buffer.from(JSON.stringify(voter)));
         console.log(response);
         return voter;
@@ -415,80 +392,6 @@ class MyAssetContract extends Contract {
       response.error = 'the election or the voter does not exist!';
       return response;
     }
-  }
-  async queryAll(ctx) {
-
-    let queryString = {
-      selector: {}
-    };
-
-    let queryResults = await this.queryWithQueryString(ctx, JSON.stringify(queryString));
-    return queryResults;
-
-  }
-
-  /**
-     * Evaluate a queryString
-     *
-     * @param {Context} ctx the transaction context
-     * @param {String} queryString the query string to be evaluated
-    */
-  async queryWithQueryString(ctx, queryString) {
-
-    console.log('query String');
-    console.log(JSON.stringify(queryString));
-
-    let resultsIterator = await ctx.stub.getQueryResult(queryString);
-
-    let allResults = [];
-
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      let res = await resultsIterator.next();
-
-      if (res.value && res.value.value.toString()) {
-        let jsonRes = {};
-
-        console.log(res.value.value.toString('utf8'));
-
-        jsonRes.Key = res.value.key;
-
-        try {
-          jsonRes.Record = JSON.parse(res.value.value.toString('utf8'));
-        } catch (err) {
-          console.log(err);
-          jsonRes.Record = res.value.value.toString('utf8');
-        }
-
-        allResults.push(jsonRes);
-      }
-      if (res.done) {
-        console.log('end of data');
-        await resultsIterator.close();
-        console.info(allResults);
-        console.log(JSON.stringify(allResults));
-        return JSON.stringify(allResults);
-      }
-    }
-  }
-
-  /**
-  * Evaluate a queryString
-  *
-  * @param {Context} ctx the transaction context
-  * @param {String} queryString the query string to be evaluated
-  */
-  async queryByObjectType(ctx, objectType) {
-
-    let queryString = {
-      selector: {
-        type: objectType
-      }
-    };
-
-    let queryResults = await this.queryWithQueryString(ctx, JSON.stringify(queryString));
-    return queryResults;
-
   }
 }
 module.exports = MyAssetContract;
