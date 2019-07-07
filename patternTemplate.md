@@ -27,6 +27,9 @@ Build a web-based blockchain evoting app using IBM Blockchain Platform and IBM K
 * Demo URL (Intro) - https://www.youtube.com/watch?v=ny8iif6ZXRU
 * Demo URL (Run app) - https://www.youtube.com/watch?v=mkVUW1KroTI
 
+* Code walkthrough URL (User Auth) - https://www.youtube.com/watch?v=8uJSHW3Rpzs
+* Code walkthrough URL (Routes)- https://www.youtube.com/watch?v=iajsJiIC7oU
+
 # Summary
 
 > With its distributed ledger, smart contracts, and non-repudiation capabilities, blockchain is revolutionizing the way organizations do business, and the election industry is no exception. This code pattern shows you how to implement a web-based blockchain app using the IBM Blockchain Platform to facilitate voting and ensure the prevention of double-voting.

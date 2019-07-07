@@ -58,6 +58,14 @@ and query the world state to see current poll standings.
 
 [![](docs/ibpVideo2.png)](https://www.youtube.com/watch?v=mkVUW1KroTI)
 
+# Watch the Video - Code walkthrough (User Authentication)
+
+[![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=8uJSHW3Rpzs)
+
+# Watch the Video - Code walkthrough (Routes)
+
+[![](docs/ibpVideo2.png)](https://www.youtube.com/watch?v=iajsJiIC7oU)
+
 ## Prerequisites
 
 This pattern assumes you have an **IBM Cloud account**, **VSCode** and **IBM Blockchain Platform Extension for VSCode installed**
