@@ -60,11 +60,11 @@ and query the world state to see current poll standings.
 
 # Watch the Video - Code walkthrough (User Authentication)
 
-[![](docs/ibpVideo.png)](https://www.youtube.com/watch?v=8uJSHW3Rpzs)
+[![](docs/userAuth.png)](https://www.youtube.com/watch?v=8uJSHW3Rpzs)
 
 # Watch the Video - Code walkthrough (Routes)
 
-[![](docs/ibpVideo2.png)](https://www.youtube.com/watch?v=iajsJiIC7oU)
+[![](docs/routes.png)](https://www.youtube.com/watch?v=iajsJiIC7oU)
 
 ## Prerequisites
 
