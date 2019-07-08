@@ -7,12 +7,10 @@
 //import Hyperledger Fabric 1.4 SDK
 const { Contract } = require('fabric-contract-api');
 
-// let util = require('util');
-
 class Query extends Contract {
 
   /**
-   * Evaluate a queryString
+   * Query and return all key value pairs in the world state.
    *
    * @param {Context} ctx the transaction context
    * @returns - all key-value pairs in the world state
@@ -74,10 +72,11 @@ class Query extends Contract {
   }
 
   /**
-  * Evaluate a queryString
+  * Query by the main objects in this app: ballot, election, votableItem, and Voter. 
+  * Return all key-value pairs of a given type. 
   *
   * @param {Context} ctx the transaction context
-  * @param {String} queryString the query string to be evaluated
+  * @param {String} objectType the type of the object - should be either ballot, election, votableItem, or Voter
   */
   async queryByObjectType(ctx, objectType) {
 

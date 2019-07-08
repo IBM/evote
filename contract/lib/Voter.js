@@ -1,7 +1,5 @@
 'use strict';
 
-// const { Contract } = require('fabric-contract-api');
-
 class Voter {
   /**
    *
@@ -16,8 +14,6 @@ class Voter {
    * @returns - registrar object
    */
   constructor(voterId, registrarId, firstName, lastName) {
-
-    // super();
 
     if (this.validateVoter(voterId) && this.validateRegistrar(registrarId)) {
 
