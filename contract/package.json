@@ -1,6 +1,6 @@
 {
-    "name": "voteChainDemo",
-    "version": "1.6.2",
+    "name": "voterContract",
+    "version": "6.0.0",
     "description": "My Smart Contract",
     "main": "index.js",
     "engines": {
@@ -8,8 +8,6 @@
         "npm": ">=5"
     },
     "scripts": {
-        "lint": "eslint .",
-        "pretest": "npm run lint",
         "test": "nyc mocha --recursive",
         "start": "fabric-chaincode-node start"
     },
