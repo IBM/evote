@@ -43,6 +43,26 @@ Build a web-based blockchain evoting app using IBM Blockchain Platform and IBM K
 # Description
 Have you ever wondered how exactly the votes in a presidential election counted? What if instead of having volunteers that are spending hours a day counting votes manually, we have an app that was backed by blockchain, recording each vote made by a voter, ensuring double-voting is not possible? That's what this code pattern explains how to do. We aim to build a web-app in which the voter can register with their drivers license, get a unique voterId which is used to login to the app, and cast the vote. The vote is tallied on the blockchain, and the web-app shows the current standings of the polls.
 
+At the start of the application, the user registers to vote by providing their drivers license number,
+registrar district, and first and last name. In this step, we can check to see if the drivers license 
+is valid, and has not been registered previously. If all goes well, we create a private and public key 
+for the voter with our certificate authority that is running on the cloud, and add those keys to the 
+wallet. 
+
+After that, we use our drivers license number to submit our vote, during which the application checks 
+if this drivers license number has voted before and tells the user they have already submitted a vote 
+if so. If all goes well, the political party which the voter has chosen is added a vote, and the world
+state is updated. The application then updates our current standings of the election to show which 
+political party the user has voted for. 
+
+Since each transaction that is submitted to the ordering service must have a signature from a valid
+public-private key pair, we can trace back each transaction to a registered voter of the application, 
+in the case of an audit.
+
+In conclusion, although this is a simple application, the developer can see how they can implement a 
+Hyperledger Fabric web-app to decrease the chance of election-meddling, and enhance a voting application
+by using blockchain technology. 
+
 # Flow
 
 <br>
