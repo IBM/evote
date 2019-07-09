@@ -63,14 +63,14 @@ Service, and the operator installs and instantiates the smart contract on the ne
 and query the world state to see current poll standings.
 
 # Included components
-*	[IBM Blockchain Platform V2 Beta](https://console.bluemix.net/docs/services/blockchain/howto/ibp-v2-deploy-iks.html#ibp-v2-deploy-iks) gives you total control of your blockchain network with a user interface that can simplify and accelerate your journey to deploy and manage blockchain components on the IBM Cloud Kubernetes Service.
+*	[IBM Blockchain Platform](https://console.bluemix.net/docs/services/blockchain/howto/ibp-v2-deploy-iks.html#ibp-v2-deploy-iks) gives you total control of your blockchain network with a user interface that can simplify and accelerate your journey to deploy and manage blockchain components on the IBM Cloud Kubernetes Service.
 *	[IBM Cloud Kubernetes Service](https://www.ibm.com/cloud/container-service) creates a cluster of compute hosts and deploys highly available containers. A Kubernetes cluster lets you securely manage the resources that you need to quickly deploy, update, and scale applications.
 * [IBM Blockchain Platform Extension for VS Code](https://marketplace.visualstudio.com/items?itemName=IBMBlockchain.ibm-blockchain-platform) is designed to assist users in developing, testing, and deploying smart contracts -- including connecting to Hyperledger Fabric environments.
 
 ## Featured technologies
 + [Hyperledger Fabric v1.4](https://hyperledger-fabric.readthedocs.io) is a platform for distributed ledger solutions, underpinned by a modular architecture that delivers high degrees of confidentiality, resiliency, flexibility, and scalability.
 + [Node.js](https://nodejs.org) is an open source, cross-platform JavaScript run-time environment that executes server-side JavaScript code.
-+ [Vue.js](https://vuejs.org/) Vue.js is an open-source JavaScript framework for building user interfaces and single-page applications.
++ [Vue.js 2.6.10](https://vuejs.org/) Vue.js is an open-source JavaScript framework for building user interfaces and single-page applications.
 
 # Watch the Video - Intro (Cloud)
 
@@ -170,8 +170,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Use your CA to register identities
   - Select the <b>Voter CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our voter organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `voterAdmin`, and <b>Enroll Secret</b> of `voterAdminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `peer1`, and <b>Enroll Secret</b> of `peer1pw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First, we will register an admin for our voter organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `voterAdmin`, and <b>Enroll Secret</b> of `voterAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
+  click <b>Register User</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `peer1`, and <b>Enroll Secret</b> of `peer1pw`. Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
+  click <b>Register User</b>.
 
 <br>
 <p align="center">
@@ -225,8 +227,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Use your CA to register orderer and orderer admin identities
   - In the <b>Nodes</b> tab, select the <b>Orderer CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordererAdmin`, and <b>Enroll Secret</b> of `ordererAdminpw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `client` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
-  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer` and select `org1` from the affiliated organizations drop-down list. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank.
+  - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordererAdmin`, and <b>Enroll Secret</b> of `ordererAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
+  click <b>Register User</b>.
+  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
+  click <b>Register User</b>.
 
 <br>
 <p align="center">
@@ -353,10 +357,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 <br>
 
 * #### Create an application admin
-  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your organization CA, <b>Org1 CA</b>.
+  - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your organization CA, <b>Voter CA</b>.
   - Click on <b>Register user</b>.
   - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `app-admin` and `app-adminpw`.
-  - Choose `client` as <b>Type</b> and any organization for affiliation.  We can pick `org1` to be consistent.
+  - Choose `client` as <b>Type</b>.
   - You can leave the <b>Maximum enrollments</b> blank.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
   - Click <b>Register</b>.
@@ -372,7 +376,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Copy the connection profile you downloaded into [server folder](server)
   - Rename the connection profile you downloaded **ibpConnection.json**
   - Update the [config.json](server/config.json) file with:
-    - The connection json file name you downloaded.
+    - `ibpConnection.json`.
     - The <b>enroll id</b> and <b>enroll secret</b> for your app admin, which we earlier provided as `app-admin` and `app-adminpw`.
     - The orgMSP ID, which we provided as `votermsp`.
     - The caName, which can be found in your connection json file under "organization" -> "org1msp" -> certificateAuthorities". This would be like an IP address and a port. This is circled in red above.
@@ -452,7 +456,8 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 </p>
 <br>
 
-You can find the app running at http://localhost:8080/  If all goes well, you should see something like the picture below: 
+You can find the app running at http://localhost:8080/  If all goes well, you should be greeted 
+with the homepage that says <b>2020 Presidential Election</b>
 
 Now, we can start interacting with the app.
 
