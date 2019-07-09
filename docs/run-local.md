@@ -164,6 +164,6 @@ Leave the arguments blank, and hit *enter*
 
  <br>
 <p align="center">
-  <img src="/doc-gifs/demo.gif">
+  <img src="./doc-gifs/demo.gif">
 </p>
 <br>
