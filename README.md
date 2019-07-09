@@ -500,15 +500,6 @@ this application can be expanded in a couple of ways:
   Government) have to approve a vote before it is successfully recorded onto the blockchain.
   * Use ordering service which uses Raft consensus mechanism.
 
-
-## Bonus Step - Deploy your local app to the Cloud
-If you want to keep your application running all the time, 
-you'll want to deploy it to the cloud. The goal is to deploy
-something like this: http://blockchainbeans2.mybluemix.net/
-
-To do this, please follow the guide [here:](https://github.com/horeaporutiu/blockchainbean2/blob/master/docs/deploy.md)
-
-
 ## Related Links
 * [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
 * [IBM Code Patterns for Blockchain](https://developer.ibm.com/patterns/category/blockchain/)
