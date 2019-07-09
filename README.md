@@ -460,10 +460,16 @@ First, we need to register as a voter, and create our digital identity with
 which we will submit our vote with. To do this, we will need to enter 
 a uniqueId (drivers license) with a registrarId, and our first and last names.
 After we do that, and click `register` the world state will be updated with 
-our voterId and our name and registrarId. Next, we can login to the app with 
-our voterId.
+our voterId and our name and registrarId.
 
-Once we login, we can cast our vote. Since we are voting for the presidential
+If all goes well, you should see `voter with voterId {} is updated in the world state. Use voterId to login above.`
+<b>Note: on the first try, the app can take a second to start up. If you click on `register` and nothing 
+happens, try to fill in the form and click register again!<b>
+
+Next, we can login to the app with our voterId.
+
+Once we login, we can cast our vote. We will use our voterId again to cast our 
+vote. Since we are voting for the presidential
 election for 2020, we can choose the party of our liking. Once we are done, we
 can choose submit, and then our vote is cast. As long as this voterId hasn't 
 voted before, all is well. Next, we can view the poll standings by clicking
