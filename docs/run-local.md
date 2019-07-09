@@ -45,9 +45,9 @@ HoreaPorutiu$ git clone https://github.com/IBM/evote
 ## Step 3. Install Contract
 
  Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
- install. Choose *voterContract@7.0.0* which is in your `evote/contract` directory which you just
+ install. Choose *voterContract@7.0.0* which is in your `evote/contract` directory which you just cloned.
  
-  If all goes well, you should get a notification as shown 
+If all goes well, you should get a notification as shown 
  below.
 
 ![packageFile](/docs/successInstall.png)
@@ -80,7 +80,8 @@ Leave the arguments blank, and hit *enter*
 
 
  This will instantiate the smart contract. You should see the contract 
- under the *instantiated* tab on the left-hand side, as shown in the picture. 
+ under the *instantiated* tab on the left-hand side, as shown in the picture. Note: excuse 
+ the version number on the picture.
 
 <p align="center">
   <img src="instantiated.png">
@@ -89,8 +90,23 @@ Leave the arguments blank, and hit *enter*
 ## Step 5. Export Connection Details
 
 - Under *LOCAL FABRIC OPS* and Nodes, right-click on `peer0.org1.example.com` and select
-  *Export Connection Profile* and then choose the `evote/web-app/server` directory. Next,
-  update the `config.json` file so it looks like this:
+  *Export Connection Profile* and then choose the `evote/web-app/server` directory. 
+
+#### Export Wallet
+
+- Under *FABRIC WALLETS* and Nodes, right-click on `local_fabric_wallet` and select
+  *Export Wallet*. 
+
+- When asked what to save the wallet as, save it as `wallet`, and save it in the 
+  `evote/web-app/server`, the same place we saved our connection profile from earlier.
+
+<p align="center">
+  <img src="wallet.png">
+</p>
+
+#### Update Config
+
+Next, update the `config.json` file so it looks like this:
 
 ```json
 {
@@ -103,6 +119,9 @@ Leave the arguments blank, and hit *enter*
   "gatewayDiscovery": { "enabled": true, "asLocalhost": true }
 }
 ```
+This will ensure we use the admin identity that is stored in our wallet to sign transactions, 
+and let the network know that the transactions that are coming from this certain identity were 
+first signed off by the certificate authority with the name `ca.org1.example.com`.
 
 ## Step 6. Run the App
 To run the app, we will need to install dependencies for both our front-end and our back-end. 
