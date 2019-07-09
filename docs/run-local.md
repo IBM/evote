@@ -5,10 +5,11 @@
 # Steps (Local Deployment)
 
 1. [Clone the Repo](#step-1-clone-the-repo)
-2. [Install Dependencies](#step-2-install-dependencies)
-3. [Install Contract](#step-4-install-contract)
-4. [Instantiate Contract](#step-5-Instantiate-contract)
-5. [Submit Transactions](#step-6-submit-transactions)
+2. [Start the Fabric Runtime](#step-2-start-the-fabric-runtime)
+3. [Install Contract](#step-3-install-contract)
+4. [Instantiate Contract](#step-4-Instantiate-contract)
+5. [Export Connection Details](#step-5-export-connection-details)
+6. [Run the App](#step-5-run-the-app)
 
 Note: This repo assumes you have [VSCode](https://code.visualstudio.com/download) 
 and [IBM Blockchain VSCode extension](https://marketplace.visualstudio.com/items?itemName=IBMBlockchain.ibm-blockchain-platform) installed. If you don't, first install the 
@@ -23,16 +24,7 @@ Git clone this repo onto your computer in the destination of your choice, then g
 HoreaPorutiu$ git clone https://github.com/IBM/evote
 ```
 
-## Step 2. Install Dependencies
-
-Navigate to the `web-app/server` directory:
-
-Install required dependencies using NPM:
-```
-web-app$ npm install --ignore-scripts
-```
-
-## Step 3. Start the Fabric Runtime
+## Step 2. Start the Fabric Runtime
 - First, we need to go to our IBM Blockchain Extension. Click on the IBM Blockchain icon
   in the left side of VSCode (It looks like a square). 
 - Next, start your local fabric by clicking on the 
@@ -50,10 +42,10 @@ web-app$ npm install --ignore-scripts
   </p>
 
 
-## Step 4. Install Contract
+## Step 3. Install Contract
 
  Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
- install. Choose *voterContract@6.0.0* which is in your `evote/contract` directory which you just
+ install. Choose *voterContract@7.0.0* which is in your `evote/contract` directory which you just
  
   If all goes well, you should get a notification as shown 
  below.
@@ -61,7 +53,7 @@ web-app$ npm install --ignore-scripts
 ![packageFile](/docs/successInstall.png)
 
 
-## Step 5. Instantiate Contract
+## Step 4. Instantiate Contract
 You guessed it. Next, it's time to instantiate. 
  
   Click on *+ Instantiate* 
@@ -111,6 +103,9 @@ Leave the arguments blank, and hit *enter*
   "gatewayDiscovery": { "enabled": true, "asLocalhost": true }
 }
 ```
+
+## Step 6. Run the App
+To run the app, we will need to install dependencies for both our front-end and our back-end. 
 
 #### Start the Server
   - First, navigate to the `server` directory, and install the node dependencies.
