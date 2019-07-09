@@ -123,31 +123,31 @@ Leave the arguments blank, and hit *enter*
     npm start
     ```
   - If all goes well, you should see the following in your terminal:
-  ```
-    > server@1.0.0 start /Users/Horea.Porutiu@ibm.com/Workdir/testDir/July7/evote/web-app/server
-    > ./node_modules/nodemon/bin/nodemon.js src/app.js
+    ```
+      > server@1.0.0 start /Users/Horea.Porutiu@ibm.com/Workdir/testDir/July7/evote/web-app/server
+      > ./node_modules/nodemon/bin/nodemon.js src/app.js
 
-    [nodemon] 1.19.1
-    [nodemon] to restart at any time, enter `rs`
-    [nodemon] watching: *.*
-    [nodemon] starting `node src/app.js`  
-  ```
+      [nodemon] 1.19.1
+      [nodemon] to restart at any time, enter `rs`
+      [nodemon] watching: *.*
+      [nodemon] starting `node src/app.js`  
+    ```
 
 #### Start the Front-end (Client)
 
 - First, navigate to the `client` directory, and install the node dependencies.
-    ```bash
-    cd evote/web-app/client
-    npm install
-    ```
-  - Then, start the client: 
-    ```bash
-    npm run serve
-    ```
-  - If all goes well, you should see the following in your terminal:
+  ```bash
+  cd evote/web-app/client
+  npm install
   ```
-     DONE  Compiled successfully in 6803ms                                                                                             11:48:20
- 
+- Then, start the client: 
+  ```bash
+  npm run serve
+  ```
+- If all goes well, you should see the following in your terminal:
+  ```
+      DONE  Compiled successfully in 6803ms                                                                                             11:48:20
+
       App running at:
       - Local:   http://localhost:8080/ 
       - Network: unavailable
@@ -155,7 +155,6 @@ Leave the arguments blank, and hit *enter*
       Note that the development build is not optimized.
       To create a production build, run npm run build. 
   ```
-
 
  Nice. We're pretty much ready to submit transactions on our contract. Go to http://localhost:8080/ 
  to see your app.
