@@ -133,7 +133,7 @@ To run the app, we will need to install dependencies for both our front-end and 
 #### Start the Server
   - First, navigate to the `server` directory, and install the node dependencies.
     ```bash
-    cd server
+    cd evote/web-app/server
     npm install
     ```
   - Then, start the server: 
