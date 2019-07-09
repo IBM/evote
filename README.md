@@ -379,16 +379,13 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
     - The username you would like to register.
     - Update gateway discovery to `{ enabled: true, asLocalhost: false }` to connect to IBP.
 
-> the current default setup is to connect to a local fabric instance from VS Code
-
-
 <br>
 <p align="center">
   <img src="docs/doc-gifs/updateConfig.gif">
 </p>
 <br>
 
-- Once you are done, the final version of the **config.json** should look something like this (note that I took the caName from the above pic):
+- Once you are done, the final version of the **config.json** should look something like this:
 
 ```js
 {
@@ -491,9 +488,18 @@ that are currently in the state. `QueryAll` will return all objects in the state
 <br>
 
 That's it for the app. It can be improved in a myriad of ways, but hopefully
-this gives you inspiration to create apps that improve our current proccesses.
-Thank you SO MUCH for taking the time to go through this pattern, and hopefully
-you learned something.
+this gives you inspiration to create apps that improve our life.
+
+## Extending the code pattern
+Pull requests and contribution are always welcome. Remember that a code pattern is a path to a solution, 
+and not a complete solution on its own. To make this a more complete solution,
+this application can be expanded in a couple of ways:
+
+  * Use an API to verify the drivers license to make sure it is valid, and registered with the DMV.
+  * Use a more complex consensus mechanism where multiple organizations (DMV, US Federal Government, US State
+  Government) have to approve a vote before it is successfully recorded onto the blockchain.
+  * Use ordering service which uses Raft consensus mechanism.
+
 
 ## Bonus Step - Deploy your local app to the Cloud
 If you want to keep your application running all the time, 
@@ -502,27 +508,6 @@ something like this: http://blockchainbeans2.mybluemix.net/
 
 To do this, please follow the guide [here:](https://github.com/horeaporutiu/blockchainbean2/blob/master/docs/deploy.md)
 
-<!-- ## Conclusion
-
- So now, you are 
- officially done with this tutorial. So what did you learn?
-
-- How to create a smart contract project with the IBM Blockchain VSCode extension.
-- How to deploy your smart contract on a local Hyperledger Fabric network.
-- How to update the ledger by submitting transactions to the network.
-- Hyperledger stores data as key-value pairs, so to look up data on the network, you need to pass in a key that has a value associated with it. We did that by running the query method.
-- How to create a Kubernetes Cluster and IBM Blockchain Platform V2 Beta service and to connect our client Loopback application to our cloud service via the connection profile we downloaded.
-- How to view the ledger of a specific channel, by clicking on the channel, the ledger, and then the individual transactions. 
-
-So at this point, you know more than me! Hopefully you feel pretty good at this point, and can dive a bit deeper into other, more complex topics, such as how to scale your network, how to optimize performance, etc. But for now, you know all of the basics to run a supply chain network on Hyperledger Fabric, both locally, and on the Cloud.
-
-GREAT JOB! YOU DID IT! :) 
-
-And when you create the cool new startup unicorn after learning a bunch from this tutorial, don't forget to give me, or IBM Developer some credit :)  -->
-
-<!-- ## Troubleshooting
-If you are getting errors with your IBM Blockchain VSCode extension, ensure 
-you have all prerequisites installed here: https://github.com/IBM-Blockchain/blockchain-vscode-extension#requirements -->
 
 ## Related Links
 * [Hyperledger Fabric Docs](http://hyperledger-fabric.readthedocs.io/en/latest/)
