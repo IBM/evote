@@ -16,7 +16,7 @@ voterId which is used to login to the app, and cast the vote. The vote is
 tallied on the blockchain, and the web-app shows the current standings of the
 polls. 
 
-###Voting using Public Key Infrastructure
+### Voting using Public Key Infrastructure
 At the start of the application, the user registers to vote by providing their drivers license number,
 registrar district, and first and last name. In this step, we can check to see if the drivers license 
 is valid, and has not been registered previously. If all goes well, we create a private and public key 
