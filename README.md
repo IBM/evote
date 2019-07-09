@@ -464,7 +464,7 @@ our voterId and our name and registrarId.
 
 If all goes well, you should see `voter with voterId {} is updated in the world state. Use voterId to login above.`
 <b>Note: on the first try, the app can take a second to start up. If you click on `register` and nothing 
-happens, try to fill in the form and click register again!<b>
+happens, try to fill in the form and click register again!</b>
 
 Next, we can login to the app with our voterId.
 
