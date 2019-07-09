@@ -447,7 +447,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
     npm run serve
     ```
 
-  - In a broswer of your choice, go to http://localhost:8080/#/.  If all goes well, you should see 
+  - In a browser of your choice, go to http://localhost:8080/#/.  If all goes well, you should see 
   something like the gif below:
 
 <br>
@@ -497,9 +497,6 @@ that are currently in the state. `QueryAll` will return all objects in the state
   <img src="docs/doc-gifs/query.gif">
 </p>
 <br>
-
-That's it for the app. It can be improved in a myriad of ways, but hopefully
-this gives you inspiration to create apps that improve our life.
 
 ## Extending the code pattern
 Pull requests and contribution are always welcome. Remember that a code pattern is a path to a solution, 
