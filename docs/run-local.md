@@ -103,37 +103,67 @@ Leave the arguments blank, and hit *enter*
 ```json
 {
   "connection_file": "local_fabric_connection.json",
-  "appAdmin": "app-admin",
-  "appAdminSecret": "app-adminpw",
+  "appAdmin": "admin",
+  "appAdminSecret": "adminpw",
   "orgMSPID": "Org1MSP",
   "caName": "ca.org1.example.com",
   "userName": "V1",
-  "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
+  "gatewayDiscovery": { "enabled": true, "asLocalhost": true }
 }
 ```
 
-#### Enroll admin
+#### Start the Server
   - First, navigate to the `server` directory, and install the node dependencies.
     ```bash
     cd server
     npm install
     ```
+  - Then, start the server: 
+    ```bash
+    npm start
+    ```
+  - If all goes well, you should see the following in your terminal:
+  ```
+    > server@1.0.0 start /Users/Horea.Porutiu@ibm.com/Workdir/testDir/July7/evote/web-app/server
+    > ./node_modules/nodemon/bin/nodemon.js src/app.js
 
-* #### Export Wallet
-  - From your blockchain extension, go to the bottom left corner until you see **FABRIC WALLETS**.
-  Right-click on **local_fabric_wallet** and export it into the `server` directory.
+    [nodemon] 1.19.1
+    [nodemon] to restart at any time, enter `rs`
+    [nodemon] watching: *.*
+    [nodemon] starting `node src/app.js`  
+  ```
 
-  <p align="center">
-    <img src="exportWallet.png">
-  </p>
-  
-  - Go ahead and rename the wallet to be just **wallet**. This is the way we have 
-  our wallet referenced in our files. Your folder structure should look like the following,
-  with the admin private and public keys in the wallet directory. 
+#### Start the Front-end (Client)
 
-  <p align="center">
-    <img src="folderStructure.png">
-  </p>
+- First, navigate to the `client` directory, and install the node dependencies.
+    ```bash
+    cd evote/web-app/client
+    npm install
+    ```
+  - Then, start the client: 
+    ```bash
+    npm run serve
+    ```
+  - If all goes well, you should see the following in your terminal:
+  ```
+     DONE  Compiled successfully in 6803ms                                                                                             11:48:20
+ 
+      App running at:
+      - Local:   http://localhost:8080/ 
+      - Network: unavailable
+
+      Note that the development build is not optimized.
+      To create a production build, run npm run build. 
+  ```
 
 
- Nice. We're pretty much ready to submit transactions on our contract. 
+ Nice. We're pretty much ready to submit transactions on our contract. Go to http://localhost:8080/ 
+ to see your app.
+
+ Go ahead and register a voter, login with your VoterId, and submit a vote. Have fun! :) 
+
+ <br>
+<p align="center">
+  <img src="/doc-gifs/demo.gif">
+</p>
+<br>
