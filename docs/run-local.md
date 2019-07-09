@@ -97,11 +97,15 @@ Leave the arguments blank, and hit *enter*
 - Under *FABRIC WALLETS* and Nodes, right-click on `local_fabric_wallet` and select
   *Export Wallet*. 
 
+<p align="center">
+  <img src="wallet.png">
+</p>
+
 - When asked what to save the wallet as, save it as `wallet`, and save it in the 
   `evote/web-app/server`, the same place we saved our connection profile from earlier.
 
 <p align="center">
-  <img src="wallet.png">
+  <img src="saveWallet.png">
 </p>
 
 #### Update Config
