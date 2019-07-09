@@ -26,9 +26,9 @@ using this technology, go [here](https://hyperledger-fabric.readthedocs.io/en/re
 
 After that, we use our drivers license number to submit our vote, during which the application checks 
 if this drivers license number has voted before and tells the user they have already submitted a vote 
-if so. If all goes well, the political party which the voter has chosen is added a vote, and the world
-state is updated. The application then updates our current standings of the election to show which 
-political party the user has voted for. 
+if so. If all goes well, the political party which the voter has chosen is given a vote, and the world
+state is updated. The application then updates our current standings of the election to show how many 
+votes each political party currently has. 
 
 Since each transaction that is submitted to the ordering service must have a signature from a valid
 public-private key pair, we can trace back each transaction to a registered voter of the application, 
