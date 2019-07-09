@@ -283,9 +283,9 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Click <b>Create channel</b>.
   - Give the channel a name, `mychannel`.
   - Select the orderer you created, `Orderer` from the orderers drop-down list.
-  - Select the MSP identifying the organization of the channel creator from the drop-down list. This should be `Voter MSP (votermsp)`.
+  - Under *Organizations*, Click <b>Add</b> next to *Voter MSP* click *Add* and then make your organization an <b>Operator</b>.
+  - For the channel creator organization, select the MSP identifying the organization from the drop-down list. This should be `Voter MSP (votermsp)`.
   - Associate available identity as `Voter Admin`.
-  - Click <b>Add</b> next to your organization. Make your organization an <b>Operator</b>.
   - Click <b>Create</b>.
 
 <br>
