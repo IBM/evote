@@ -25,9 +25,6 @@ let Election = require('./Election.js');
 let Voter = require('./Voter.js');
 let VotableItem = require('./VotableItem.js');
 
-let Query = require('./query.js');
-let query = new Query();
-
 class MyAssetContract extends Contract {
 
   /**
@@ -62,7 +59,7 @@ class MyAssetContract extends Contract {
     await ctx.stub.putState(voter2.voterId, Buffer.from(JSON.stringify(voter2)));
 
     //query for election first before creating one.
-    let currElections = JSON.parse(await query.queryByObjectType(ctx, 'election'));
+    let currElections = JSON.parse(await this.queryByObjectType(ctx, 'election'));
 
     if (currElections.length === 0) {
 
@@ -175,7 +172,7 @@ class MyAssetContract extends Contract {
     await ctx.stub.putState(newVoter.voterId, Buffer.from(JSON.stringify(newVoter)));
 
     //query state for elections
-    let currElections = JSON.parse(await query.queryByObjectType(ctx, 'election'));
+    let currElections = JSON.parse(await this.queryByObjectType(ctx, 'election'));
 
     if (currElections.length === 0) {
       let response = {};
@@ -186,7 +183,7 @@ class MyAssetContract extends Contract {
     //get the election that is created in the init function
     let currElection = currElections[0];
 
-    let votableItems = JSON.parse(await query.queryByObjectType(ctx, 'votableItem'));
+    let votableItems = JSON.parse(await this.queryByObjectType(ctx, 'votableItem'));
     
     //generate ballot with the given votableItems
     await this.generateBallot(ctx, votableItems, currElection, newVoter);
@@ -216,6 +213,32 @@ class MyAssetContract extends Contract {
     await ctx.stub.deleteState(myAssetId);
 
   }
+
+  /**
+   *
+   * readMyAsset
+   *
+   * Reads a key-value pair from the world state, based on the key given.
+   *  
+   * @param myAssetId - the key of the asset to read
+   * @returns - nothing - but reads the value in the world state
+   */
+  async readMyAsset(ctx, myAssetId) {
+
+    const exists = await this.myAssetExists(ctx, myAssetId);
+
+    if (!exists) {
+      // throw new Error(`The my asset ${myAssetId} does not exist`);
+      let response = {};
+      response.error = `The my asset ${myAssetId} does not exist`;
+      return response;
+    }
+
+    const buffer = await ctx.stub.getState(myAssetId);
+    const asset = JSON.parse(buffer.toString());
+    return asset;
+  }
+
 
  
   /**
@@ -320,6 +343,88 @@ class MyAssetContract extends Contract {
       response.error = 'the election or the voter does not exist!';
       return response;
     }
+  }
+
+  /**
+   * Query and return all key value pairs in the world state.
+   *
+   * @param {Context} ctx the transaction context
+   * @returns - all key-value pairs in the world state
+  */
+  async queryAll(ctx) {
+
+    let queryString = {
+      selector: {}
+    };
+
+    let queryResults = await this.queryWithQueryString(ctx, JSON.stringify(queryString));
+    return queryResults;
+
+  }
+
+  /**
+     * Evaluate a queryString
+     *
+     * @param {Context} ctx the transaction context
+     * @param {String} queryString the query string to be evaluated
+    */
+  async queryWithQueryString(ctx, queryString) {
+
+    console.log('query String');
+    console.log(JSON.stringify(queryString));
+
+    let resultsIterator = await ctx.stub.getQueryResult(queryString);
+
+    let allResults = [];
+
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      let res = await resultsIterator.next();
+
+      if (res.value && res.value.value.toString()) {
+        let jsonRes = {};
+
+        console.log(res.value.value.toString('utf8'));
+
+        jsonRes.Key = res.value.key;
+
+        try {
+          jsonRes.Record = JSON.parse(res.value.value.toString('utf8'));
+        } catch (err) {
+          console.log(err);
+          jsonRes.Record = res.value.value.toString('utf8');
+        }
+
+        allResults.push(jsonRes);
+      }
+      if (res.done) {
+        console.log('end of data');
+        await resultsIterator.close();
+        console.info(allResults);
+        console.log(JSON.stringify(allResults));
+        return JSON.stringify(allResults);
+      }
+    }
+  }
+
+  /**
+  * Query by the main objects in this app: ballot, election, votableItem, and Voter. 
+  * Return all key-value pairs of a given type. 
+  *
+  * @param {Context} ctx the transaction context
+  * @param {String} objectType the type of the object - should be either ballot, election, votableItem, or Voter
+  */
+  async queryByObjectType(ctx, objectType) {
+
+    let queryString = {
+      selector: {
+        type: objectType
+      }
+    };
+
+    let queryResults = await this.queryWithQueryString(ctx, JSON.stringify(queryString));
+    return queryResults;
+
   }
 }
 module.exports = MyAssetContract;
