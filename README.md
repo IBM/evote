@@ -104,8 +104,10 @@ IBM Blockchain Platform extension.
 - [Install IBM Blockchain Platform Extension for VSCode](https://github.com/IBM-Blockchain/blockchain-vscode-extension)
 - [Node v8.x or greater and npm v5.x or greater](https://nodejs.org/en/download/)
 
-# Steps (Cloud Deployment)
+# Steps (Local Deployment)
 > To run a local network, you can find steps [here](./docs/run-local.md).
+
+# Steps (Cloud Deployment)
 1. [Clone the Repo](#step-1-clone-the-repo)
 2. [Create IBM Cloud services](#step-2-create-ibm-cloud-services)
 3. [Build a network](#step-3-build-a-network)
