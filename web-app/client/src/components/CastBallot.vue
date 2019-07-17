@@ -5,7 +5,7 @@
     <label for="one">Donald Trump (Republican)</label>
     <br>
     <input type="radio" id="two" value="Democrat" v-model="picked">
-    <label for="two">Joe Biden (Democratic)</label>
+    <label for="two">TBA (Democratic)</label>
     <br>
     <input type="radio" id="two" value="Green" v-model="picked">
     <label for="two">TBA (Green Party)</label>
