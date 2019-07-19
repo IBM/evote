@@ -89,7 +89,9 @@ and query the world state to see current poll standings.
 [![](docs/routes.png)](https://www.youtube.com/watch?v=iajsJiIC7oU)
 
 **🚧🚧Note: you will need Node 8.x to run this pattern!🚧🚧**
-To install and run Node 8.9.0
+
+For example, to install and run Node 8.9.0: 
+
 ```bash
   brew install nvm
   nvm install 8.9.0
