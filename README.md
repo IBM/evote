@@ -88,14 +88,18 @@ and query the world state to see current poll standings.
 
 [![](docs/routes.png)](https://www.youtube.com/watch?v=iajsJiIC7oU)
 
+**🚧🚧Note: you will need Node 8.x to run this pattern!🚧🚧**
+
 ## Prerequisites (Cloud)
 
 This Cloud pattern assumes you have an **IBM Cloud account**.
   - [IBM Cloud account](https://tinyurl.com/y4mzxow5)
+  - [Node v8.x or greater and npm v5.x or greater](https://nodejs.org/en/download/)
 
 You do not technically need VSCode or the IBM Blockchain Platform extension for VSCode if you are running the 
 Cloud pattern, but if you want to make any changes to the smart contract, you will need the
 extension to package your smart contract project. 
+
 
 ## Prerequisites (Local)
 If you want to run this pattern locally, without any Cloud services, then all you need is VSCode and the
