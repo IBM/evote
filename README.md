@@ -113,7 +113,7 @@ extension to package your smart contract project.
 ## Prerequisites (Local)
 If you want to run this pattern locally, without any Cloud services, then all you need is VSCode and the
 IBM Blockchain Platform extension. 
-- [Install VSCode](https://code.visualstudio.com/download)
+- [Install VSCode version 1.38.0 or greater](https://code.visualstudio.com/download)
 - [Install IBM Blockchain Platform Extension for VSCode](https://github.com/IBM-Blockchain/blockchain-vscode-extension)
 - [Node v8.x or greater and npm v5.x or greater](https://nodejs.org/en/download/)
 
@@ -137,7 +137,7 @@ HoreaPorutiu$ git clone https://github.com/IBM/evote
 
 ## Step 2. Create IBM Cloud services
 
-* Create the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/catalog/infrastructure/containers-kubernetes).  You can find the service in the `Catalog`.  For this code pattern, we can use the `Free` cluster, and give it a name.  Note, that the IBM Cloud allows one instance of a free cluster and expires after 30 days. <b>The cluster takes around 10-15
+* Create the [IBM Cloud Kubernetes Service](https://cloud.ibm.com/catalog/infrastructure/containers-kubernetes).  You can find the service in the `Catalog`.  For this code pattern, we can use the `Free` cluster, and give it a name.  Note, that the IBM Cloud allows one instance of a free cluster and expires after 30 days. <b>The cluster takes around 20
 minutes to provision, so please be patient!</b>
 
 <br>
@@ -170,11 +170,12 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 ### Create your organization and your entry point to your blockchain
 
 * #### Create your Voter Organization CA
-  - Click <b>Add Certificate Authority</b>.
-  - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
+  - Navigate to the <b>Nodes</b> tab in the left navigation and click <b>Add Certificate Authority</b>.
+  - Click <b>Create an IBM Cloud Certificate Authority</b> and <b>Next</b>. 
   - Give it a <b>Display name</b> of `Voter CA`. Note that the gif names the 
   certificate a more generic name.  
-  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
+  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw` , then click <b>Next</b>.
+  - Review the summary and click <b>Add Certificate Authority</b>
 
 <br>
 <p align="center">
@@ -182,13 +183,25 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 </p>
 <br>
 
+* #### Associate the voter organization CA admin identity
+ - In the Nodes tab, select the <b>Voter CA</b> once it is running (indicated by the green box in the tile).
+ - Click <b>Associate identity</b> on the CA overview panel.
+ - On the side panel, select <b>Enroll ID</b>.
+ - Provide an <b>Enroll ID</b> of `admin` and an <b>Enroll secret</b> of `adminpw`. Use the default value of `Voter CA Admin` for the <b>Identity display name</b>.
+ - Click <b>Associate identity</b> to add the identity into your wallet and associate the admin identity with the <b>Voter CA</b>.
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/associate-ca-identity.gif">
+</p>
+<br>
+
 
 * #### Use your CA to register identities
-  - Select the <b>Voter CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our voter organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `voterAdmin`, and <b>Enroll Secret</b> of `voterAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
+  - We will register an admin for our voter organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `voterAdmin`, and <b>Enroll Secret</b> of `voterAdminpw`. Set the <b>Type</b> for this identity as `client`. We can specify to Use root affiliation or uncheck this field and select from any of the affiliated organizations from the drop-down list. We will leave the Maximum enrollments field blank. Click <b>Next</b>.
   click <b>Register User</b>.
-  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `peer1`, and <b>Enroll Secret</b> of `peer1pw`. Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
-  click <b>Register User</b>.
+  - We will not be adding any attributes to this user. Click <b>Register user</b>.
+  - We will repeat the process to create an identity of the peer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `peer1`, and <b>Enroll Secret</b> of `peer1pw`. Set the <b>Type</b> for this identity as `peer`. We can specify to Use root affiliation or uncheck this field and select from any of the affiliated organizations from the drop-down list. We will leave the Maximum enrollments field blank. Click <b>Next</b>.  Click <b>Next</b>. Then on the next page, click <b>Register User</b>.
 
 <br>
 <p align="center">
@@ -213,12 +226,11 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * Create a peer
   - On the <b>Nodes</b> page, click <b>Add peer</b>.
-  - Click <b>IBM Cloud</b> under Create a new peer and <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Voter Peer`.
-  - On the next screen, select `Voter CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `peer1`, and `peer1pw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Voter MSP`, from the drop-down list and click <b>Next</b>.
-  - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask you to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Voter Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - Click <b>Create an IBM Cloud peer </b> and then click <b>Next</b>.
+  - Give your peer a <b>Display name</b> of `Voter Peer` and then click <b>Next</b>.
+  - On the next screen, select `Voter CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your peer, `peer1`, and `peer1pw`. Then, select the <b>Organization MSP as </b>, `Voter MSP`, from the drop-down list. Leave the <b>TLS CSR hostname</b> blank and click <b>Next</b>.
+  - The next step is to <b>Associate an identity</b> with this peer to make it the admin of your peer. Select your peer admin identity Org1 Admin and click Next.
+  - Review the summary and click <b>Add peer</b>.
 
 <br>
 <p align="center">
@@ -229,10 +241,11 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 ### Create the node that orders transactions
 
 * #### Create your orderer organization CA
-  - Click <b>Add Certificate Authority</b>.
-  - Click <b>IBM Cloud</b> under <b>Create Certificate Authority</b> and <b>Next</b>.
+  - Navigate to the <b>Nodes</b> tab in the left navigation and click <b>Add Certificate Authority</b>.
+  - Click <b>Create an IBM Cloud Certificate Authority</b> and click <b>Next</b>.
   - Give it a unique <b>Display name</b> of `Orderer CA`.  
-  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw`.
+  - Specify an <b>Admin ID</b> of `admin` and <b>Admin Secret</b> of `adminpw` and click <b>Next</b>
+  Review the summary and click Add Certificate Authority.
 
 <br>
 <p align="center">
@@ -240,12 +253,25 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 </p>
 <br>
 
+* #### Associate the orderer organization CA admin identity
+ - In the Nodes tab, select the <b>Orderer CA</b> once it is running (indicated by the green box in the tile).
+ - Click <b>Associate identity</b> on the CA overview panel.
+ - On the side panel, select <b>Enroll ID</b>.
+ - Provide an <b>Enroll ID</b> of `admin` and an <b>Enroll secret</b> of `adminpw`. Use the default value of `Orderer CA Admin` for the <b>Identity display name</b>.
+ - Click <b>Associate identity</b> to add the identity into your wallet and associate the admin identity with the <b>Orderer CA</b>.
+
+<br>
+<p align="center">
+  <img src="docs/doc-gifs/associate-ca-identity.gif">
+</p>
+<br>
+
 * #### Use your CA to register orderer and orderer admin identities
-  - In the <b>Nodes</b> tab, select the <b>Orderer CA</b> Certificate Authority that we created.
-  - First, we will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordererAdmin`, and <b>Enroll Secret</b> of `ordererAdminpw`. Set the <b>Type</b> for this identity as `client`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
-  click <b>Register User</b>.
-  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Click <b>Next</b>.  Set the <b>Type</b> for this identity as `peer`. We will leave the <b>Maximum enrollments</b> and <b>Add Attributes</b> fields blank. Click <b>Next</b>. Then on the next page,
-  click <b>Register User</b>.
+  - In the <b>Nodes</b> tab, select the <b>Orderer CA</b> Certificate Authority that we created and ensure the admin identity that was created for the CA is visible in the table.
+  - We will register an admin for our organization. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `ordererAdmin`, and <b>Enroll Secret</b> of `ordererAdminpw`. Set the <b>Type</b> for this identity as `client`. We can specify to <b>Use root affiliation</b> or uncheck this field and select from any of the affiliated organizations from the drop-down list. We will leave the <b>Maximum enrollments</b> field blank. Click Next.
+  - We will not be adding any attributes to this user. Click <b>Register user</b>.
+  - We will repeat the process to create an identity of the orderer. Click on the <b>Register User</b> button.  Give an <b>Enroll ID</b> of `orderer1`, and <b>Enroll Secret</b> of `orderer1pw`.  Set the <b>Type</b> for this identity as `orderer`. We can specify to Use root affiliation or uncheck this field and select from any of the affiliated organizations from the drop-down list. Click <b>Next</b>.
+  - We will not be adding any attributes to this user. Click <b>Register user</b>.
 
 <br>
 <p align="center">
@@ -269,12 +295,12 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Create an orderer
   - On the <b>Nodes</b> page, click <b>Add orderer</b>.
-  - Click <b>IBM Cloud</b> and proceed with <b>Next</b>.
-  - Give your peer a <b>Display name</b> of `Orderer`.
-  - On the next screen, select `Orderer CA` as your <b>Certificate Authority</b>. Then, give the <b>Enroll ID</b> and <b>Enroll secret</b> for the peer identity that you created for your orderer, `orderer1`, and `orderer1pw`. Then, select the <b>Administrator Certificate (from MSP)</b>, `Orderer MSP`, from the drop-down list and click <b>Next</b>.
+  - Click <b>IBM Cloud Orderering Service</b> and proceed with <b>Next</b>.
+  - Give <b>Ordering service Display name</b> of `Orderer` and click <b>Next</b>
+  - On the next screen, select Orderer CA as the <b>Certificate Authority</b>. Then, give the <b>Ordering service</b> enroll ID and <b>Ordering service</b> enroll secret for the peer identity that you created for your orderer, that is, `orderer1`, and `orderer1pw`. Select the <b>Organization MSP</b> as `OrdererMSP`, from the drop-down list. Leave the TLS CSR hostname blank. Click Next.
   - Give the <b>TLS Enroll ID</b>, `admin`, and <b>TLS Enroll secret</b>, `adminpw`, the same values are the Enroll ID and Enroll secret that you gave when creating the CA.  Leave the <b>TLS CSR hostname</b> blank.
-  - The last side panel will ask to <b>Associate an identity</b> and make it the admin of your peer. Select your peer admin identity `Orderer Admin`.
-  - Review the summary and click <b>Submit</b>.
+  - The next step is to <b>Associate an identity</b> with this orderer to make it the admin of your orderer. Select your peer admin identity `Orderer Admin` and click Next.
+  - Review the summary and click <b>Add ordering service</b>.
 
 <br>
 <p align="center">
@@ -283,10 +309,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 <br>
 
 * #### Add organization as Consortium Member on the orderer to transact
-  - Navigate to the <b>Nodes</b> tab, and click on the <b>Orderer</b> that we created.
+  - Navigate to the <b>Nodes</b> tab, and click on the <b>Orderer</b> that we created. Ensure it is green first.
   - Under <b>Consortium Members</b>, click <b>Add organization</b>.
-  - From the drop-down list, select `Voter MSP`, as this is the MSP that represents the peer's Voter organization.
-  - Click <b>Submit</b>.
+  - From the drop-down list, select `Voter MSP`, as this is the MSP that represents the peer's <b>Voter</b> organization.
+  - Click <b>Add Organization</b>.
 
 <br>
 <p align="center">
@@ -302,10 +328,10 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Click <b>Create channel</b>.
   - Give the channel a name, `mychannel`.
   - Select the orderer you created, `Orderer` from the orderers drop-down list.
-  - Under <b>Organizations</b>, select *Voter MSP* and then click *Add*. Next make your organization an <b>Operator</b>.
-  - For the channel creator organization, select the MSP identifying the organization from the drop-down list. This should be `Voter MSP (votermsp)`.
+  - Under <b>Organizations</b>, select *Voter MSP* and then click *Add*.  This adds the organization <b>Voter</b> as a membe of this channel.  Next make your organization an <b>Operator</b>.
+  - Scroll down to the <b>Creator organization</b>.  Select the MSP identifying the organization from the drop-down list. This should be `Voter MSP (votermsp)`.
   - Associate available identity as `Voter Admin`.
-  - Click <b>Create</b>.
+  - Click <b>Create channel</b>.
 
 <br>
 <p align="center">
@@ -319,7 +345,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Select your `Orderer` and click <b>Next</b>.
   - Enter the name of the channel you just created. `mychannel` and click <b>Next</b>.
   - Select which peers you want to join the channel, click `Voter Peer` .
-  - Click <b>Submit</b>.
+  - Click <b>Join Channel</b>.
 
 <br>
 <p align="center">
@@ -330,11 +356,11 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 ## Step 4. Deploy voterContract Smart Contract on the network
 
 * #### Install a smart contract
-  - Click the <b>Smart contracts</b> tab to install the smart contract.
+  - Navigate to the <b>Smart contracts</b> tab in the left navigation and click the <b>Smart contracts</b> tab to install the smart contract.
   - Click <b>Install smart contract</b> to upload the voterContract smart contract package file, which is in the root of the repo we cloned - the file
   is called `voterContract.cds`.
   - Click on <b>Add file</b> and find your packaged smart contract.  
-  - Once the contract is uploaded, click <b>Install</b>.
+  - Once the contract is uploaded, click <b>Install smart contract</b>.
 
 
 <br>
@@ -345,10 +371,12 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 * #### Instantiate smart contract
   - On the smart contracts tab, find the smart contract from the list installed on your peers and click <b>Instantiate</b> from the overflow menu on the right side of the row.
-  - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>.
-  - Select the organization members to be included in the policy, `votermsp`.  Click <b>Next</b>.
-  - Give <b>Function name</b> of `init` and leave <b>Arguments</b> blank.
-  - Click <b>Instantiate</b>.
+  - On the side panel that opens, select the channel, `mychannel` to instantiate the smart contract on. Click <b>Next</b>
+
+  - Select the organization members to be included in the endorsement policy, `votermsp`.  Click <b>Next</b>.
+   - We can skip the <b>Setup private data collection</b> step and simply click <b>Next</b>.
+  - Give <b>Function name</b> of `init` and leave <b>Arguments</b> blank. <b>Note: init is the method in the voteerContract.js file that initiates the smart contracts on the peer.</b>
+  - Click <b>Instantiate Smart Contact</b>.
 
 <br>
 <p align="center">
@@ -359,7 +387,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 ## Step 5. Connect application to the network
 
 * #### Connect with sdk through connection profile
-  - Under the Instantiated Smart Contract, click on `Connect with SDK` from the overflow menu on the right side of the row.
+  - Scroll down to the Instantiated smart contracts section and find "VoterContract". Click on `Connect with SDK` from the overflow menu on the right side of the row.
   - Choose from the dropdown for <b>MSP for connection</b>, `votermsp`.
   - Choose from <b>Certificate Authority</b> dropdown, `Voter CA`.
   - Download the connection profile by scrolling down and clicking <b>Download Connection Profile</b>.  This will download the connection json which we will use soon to establish connection.
@@ -375,10 +403,9 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
   - Go to the <b>Nodes</b> tab on the left bar, and under <b>Certificate Authorities</b>, choose your organization CA, <b>Voter CA</b>.
   - Click on <b>Register user</b>.
   - Give an <b>Enroll ID</b> and <b>Enroll Secret</b> to administer your application users, `app-admin` and `app-adminpw`.
-  - Choose `client` as <b>Type</b>.
-  - You can leave the <b>Maximum enrollments</b> blank.
+  - Choose `client` as <b>Type</b>.  We can specify to Use root affiliation or uncheck this field and select from any of the affiliated organizations from the drop-down list. We will leave the Maximum enrollments field blank. Click Next.
   - Under <b>Attributes</b>, click on <b>Add attribute</b>.  Give attribute as `hf.Registrar.Roles` = `*`.  This will allow this identity to act as registrar and issues identities for our app.  Click <b>Add-attribute</b>.
-  - Click <b>Register</b>.
+  - Click <b>Register user</b>.
 
 <br>
 <p align="center">
@@ -388,13 +415,14 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 
 * #### Update application connection
-  - Copy the connection profile you downloaded into [server folder](server)
+  - Copy the connection profile you downloaded into [server folder](./web-app/server)
   - Rename the connection profile you downloaded **ibpConnection.json**
   - Update the [config.json](server/config.json) file with:
     - `ibpConnection.json`.
     - The <b>enroll id</b> and <b>enroll secret</b> for your app admin, which we earlier provided as `app-admin` and `app-adminpw`.
     - The orgMSP ID, which we provided as `votermsp`.
-    - The caName, which can be found in your connection json file under "organization" -> "org1msp" -> certificateAuthorities". This would be like an IP address and a port. This is circled in red above.
+    - The caName, which can be found in your connection json file under "organization" -> "votermsp" -> certificateAuthorities". This would be like an IP address and a port. You should also use the `https` version of the certificateAuthorities line.
+    - The peerName, which can be found in your connection json file under "organization" -> "votermsp" -> peers". This would be like an IP address and a port.
     - The username you would like to register.
     - Update gateway discovery to `{ enabled: true, asLocalhost: false }` to connect to IBP.
 
