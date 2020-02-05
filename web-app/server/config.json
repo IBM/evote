@@ -3,7 +3,7 @@
   "appAdmin": "app-admin",
   "appAdminSecret": "app-adminpw",
   "orgMSPID": "votermsp",
-  "caName": "https://173.193.112.109:31674",
+  "caName": "https://50.23.5.248:32087",
   "userName": "V1",
   "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }
