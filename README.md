@@ -262,7 +262,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
 
 <br>
 <p align="center">
-  <img src="docs/doc-gifs/associate-ca-identity.gif">
+  <img src="docs/doc-gifs/assoociate-ca-identity.gif">
 </p>
 <br>
 
