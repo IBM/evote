@@ -89,12 +89,18 @@ Leave the arguments blank, and hit *enter*
 
 ## Step 5. Export Connection Details
 
-- Under *LOCAL FABRIC OPS* and Nodes, right-click on `peer0.org1.example.com` and select
+- Under *FABRIC GATEWAYS* click on *Local Fabric - Org1* and then once it asks you for an identity 
+to connect with - choose admin. Once you are connected - click on the three dot icon, 
+to the right of FABRIC GATEWAYS
+
+![fabgate](https://user-images.githubusercontent.com/10428517/74991599-2d4ae080-53fb-11ea-902b-0d605d5df5ac.png)
+
+and then 
   *Export Connection Profile* and then choose the `evote/web-app/server` directory. 
 
 #### Export Wallet
 
-- Under *FABRIC WALLETS* and Nodes, right-click on `local_fabric_wallet` and select
+- Under *FABRIC WALLETS* right-click on `Local Fabric - Org1 Wallet` and select
   *Export Wallet*. 
 
 <p align="center">
