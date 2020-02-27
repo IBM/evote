@@ -96,8 +96,8 @@ to the right of FABRIC GATEWAYS
 ![fabgate](https://user-images.githubusercontent.com/10428517/74991599-2d4ae080-53fb-11ea-902b-0d605d5df5ac.png)
 
 and then 
-  *Export Connection Profile* and then choose the `evote/web-app/server` directory. 
-
+  *Export Connection Profile* and then choose the `evote/web-app/server` directory. 🚨🚨🚨Make sure to save the file as 
+  `local_fabric_connection.json`. The default name is `Local Fabric - Org1_connection.json` but we need to change it to match our `config.json` file below. 
 #### Export Wallet
 
 - Under *FABRIC WALLETS* right-click on `Local Fabric - Org1 Wallet` and select
