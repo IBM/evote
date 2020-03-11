@@ -43,7 +43,7 @@ version to work.
 ![importContract](https://user-images.githubusercontent.com/10428517/76371236-e0ba3d00-62f6-11ea-82a1-bfa4798985b9.gif)
 - Next, we have to import our contract before we can install it. Click on 
 **View -> Open Command Pallette -> Import Smart Contract**. Next, click 
-on the `voterContract@7.0.0.cds` file that is at the root of our directory. Note that the gif has a different smart contract
+on the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. Note that the gif has a different smart contract
 This will be where you cloned this repo.
 
 
