@@ -49,7 +49,7 @@ This will be where you cloned this repo.
 
 ![installAndInstantiate](https://user-images.githubusercontent.com/10428517/76371514-bae16800-62f7-11ea-9038-039b0fac6967.gif)
 - Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
- install. Choose *voterContract@7.0.0.cds* which is in your root directory which you just cloned.
+ install. Choose *voterContract@7.0.0.cds*.
 - Lastly, we need to instantiate the contract to be able to submit transactions 
 on our network. Click on *+ Instantiate* and then choose *voterContract@7.0.0.cds*.
 - When promted for a function, a private data collection, or and endorsement 
