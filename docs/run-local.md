@@ -25,94 +25,50 @@ HoreaPorutiu$ git clone https://github.com/IBM/evote
 ```
 
 ## Step 2. Start the Fabric Runtime
+![startRuntime](https://user-images.githubusercontent.com/10428517/76370968-dea3ae80-62f5-11ea-8793-d04610e8bf30.gif)
+
+- If you get errors like the gRPC error, you may need to download an earlier version of VSCode (1.39) (here)[https://code.visualstudio.com/updates/v1_39]. Note that if you are using Mac, make sure the VSCode in your ~/Applications
+folder shows version 1.39 when you click on show details. You may need to 
+move newer version into the trash, and then empty the trash for the older 
+version to work.
+
 - First, we need to go to our IBM Blockchain Extension. Click on the IBM Blockchain icon
   in the left side of VSCode (It looks like a square). 
-- Next, start your local fabric by clicking on the 
-  *three dot symbol* to the right of *LOCAL FABRIC OPS*
-  and then *Start Fabric Runtime*.
-  <p align="center">
-    <img src="startFabric.png">
-  </p>
+- Next, start your local fabric by clicking on 
+  *1 Org Local Fabric* in the **FABRIC ENVIRONMENTS** pane.
   
-- Once the runtime is finished starting (this might take a couple of minutes), under *Local Fabric 
-  Ops* you should see *Smart Contracts* and a section for both *installed* and *instantiated*.
+- Once the runtime is finished starting (this might take a couple of minutes), under *Local Fabric* you should see *Smart Contracts* and a section for both *installed* and *instantiated*.
 
-  <p align="center">
-    <img src="contracts.png">
-  </p>
-
-
-## Step 3. Install Contract
-
- Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
- install. Choose *voterContract@7.0.0* which is in your `evote/contract` directory which you just cloned.
- 
-If all goes well, you should get a notification as shown 
- below.
-
-![packageFile](/docs/successInstall.png)
+## Step 3. Import Install and Instantiate Contract
+![importContract](https://user-images.githubusercontent.com/10428517/76371236-e0ba3d00-62f6-11ea-82a1-bfa4798985b9.gif)
+- Next, we have to import our contract before we can install it. Click on 
+**View -> Open Command Pallette -> Import Smart Contract**. Next, click 
+on the `voterContract@7.0.0.cds` file that is at the root of our directory. Note that the gif has a different smart contract
+This will be where you cloned this repo.
 
 
-## Step 4. Instantiate Contract
-You guessed it. Next, it's time to instantiate. 
- 
-  Click on *+ Instantiate* 
+![installAndInstantiate](https://user-images.githubusercontent.com/10428517/76371514-bae16800-62f7-11ea-9038-039b0fac6967.gif)
+- Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
+ install. Choose *gensupplychainnet@0.0.1.cds* which is in your root directory which you just cloned.
+- Lastly, we need to instantiate the contract to be able to submit transactions 
+on our network. Click on *+ Instantiate* and then choose *gensupplychainnet@0.0.1*.
+- When promted for a function, a private data collection, or and endorsement 
+policy, hit `enter` on your keyboard, which will take all of the defaults.
+- This will instantiate the smart contract. This may take some time. You should see the contract under the *instantiated* tab on the left-hand side, once it 
+is finished instantiating.
 
-<p align="center">
-  <img src="instantiate.png">
-</p>
+## Step 4. Export Connection Details
+![export](https://user-images.githubusercontent.com/10428517/76371002-fd09aa00-62f5-11ea-9f6b-cc25e68c410e.gif)
 
-and then choose 
- *mychannel* for the channel to instantiate the contract on.
-
-![packageFile](/docs/channel.png)
-
-Next, the extension will ask you 
- to choose a smart contract and version to instantiate. Click on *voterContract@6.0.0*.
-
- Next, for the optional function, type in *init*.
-![packageFile](/docs/function.png)
+- Connect to the "Local Fabric - Org1" gateway as `admin`.  Right click on the 3 dot menu on the **FABRIC GATEWAYS** pane and `Export Connection Profile` Save this file to <git_tree>/Blockchain-GenSupplychain/src/gateway/local/fabric_connection.json. 
 
 
-Leave the arguments blank, and hit *enter* 
- on your keyboard. 
-![packageFile](/docs/blank.png)
-
-
- This will instantiate the smart contract. You should see the contract 
- under the *instantiated* tab on the left-hand side, as shown in the picture. Note: excuse 
- the version number on the picture.
-
-<p align="center">
-  <img src="instantiated.png">
-</p>
-
-## Step 5. Export Connection Details
-
-- Under *FABRIC GATEWAYS* click on *Local Fabric - Org1* and then once it asks you for an identity 
-to connect with - choose admin. Once you are connected - click on the three dot icon, 
-to the right of FABRIC GATEWAYS
-
-![fabgate](https://user-images.githubusercontent.com/10428517/74991599-2d4ae080-53fb-11ea-902b-0d605d5df5ac.png)
-
-and then 
-  *Export Connection Profile* and then choose the `evote/web-app/server` directory. 🚨🚨🚨Make sure to save the file as 
-  `local_fabric_connection.json`. The default name is `Local Fabric - Org1_connection.json` but we need to change it to match our `config.json` file below. 
-#### Export Wallet
-
-- Under *FABRIC WALLETS* right-click on `Local Fabric - Org1 Wallet` and select
-  *Export Wallet*. 
-
-<p align="center">
-  <img src="wallet.png">
-</p>
-
-- When asked what to save the wallet as, save it as `wallet`, and save it in the 
-  `evote/web-app/server`, the same place we saved our connection profile from earlier.
-
-<p align="center">
-  <img src="saveWallet.png">
-</p>
+## Step 5. Export Local Wallet
+![wallet](https://user-images.githubusercontent.com/10428517/76375176-65f71f00-6302-11ea-8071-d68192905a91.gif)
+- 🚨Under the `FABRIC WALLETS` pane, click on `1 Org Local Fabric - Org1 Wallet`. Note this is very important, if you click on the Orderer wallet at the top, 
+the application will not work! 🚨
+- Export the and save the wallet as `gen_local_wallet` to 
+<git_tree>/Blockchain-GenSupplychain/src/gateway/local/gen_local_wallet.json.
 
 #### Update Config
 
@@ -120,7 +76,7 @@ Next, update the `config.json` file so it looks like this:
 
 ```json
 {
-  "connection_file": "local_fabric_connection.json",
+  "connection_file": "local_gen_wallet.json",
   "appAdmin": "admin",
   "appAdminSecret": "adminpw",
   "orgMSPID": "Org1MSP",
