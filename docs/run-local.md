@@ -49,9 +49,9 @@ This will be where you cloned this repo.
 
 ![installAndInstantiate](https://user-images.githubusercontent.com/10428517/76371514-bae16800-62f7-11ea-9038-039b0fac6967.gif)
 - Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
- install. Choose *gensupplychainnet@0.0.1.cds* which is in your root directory which you just cloned.
+ install. Choose *voterContract@7.0.0.cds* which is in your root directory which you just cloned.
 - Lastly, we need to instantiate the contract to be able to submit transactions 
-on our network. Click on *+ Instantiate* and then choose *gensupplychainnet@0.0.1*.
+on our network. Click on *+ Instantiate* and then choose *voterContract@7.0.0.cds*.
 - When promted for a function, a private data collection, or and endorsement 
 policy, hit `enter` on your keyboard, which will take all of the defaults.
 - This will instantiate the smart contract. This may take some time. You should see the contract under the *instantiated* tab on the left-hand side, once it 
@@ -60,15 +60,14 @@ is finished instantiating.
 ## Step 4. Export Connection Details
 ![export](https://user-images.githubusercontent.com/10428517/76371002-fd09aa00-62f5-11ea-9f6b-cc25e68c410e.gif)
 
-- Connect to the "Local Fabric - Org1" gateway as `admin`.  Right click on the 3 dot menu on the **FABRIC GATEWAYS** pane and `Export Connection Profile` Save this file to <git_tree>/Blockchain-GenSupplychain/src/gateway/local/fabric_connection.json. 
+- Connect to the "Local Fabric - Org1" gateway as `admin`.  Right click on the 3 dot menu on the **FABRIC GATEWAYS** pane and `Export Connection Profile` Save this file to <git_tree>/evote/web-app/server/fabric_connection.json. 
 
 
 ## Step 5. Export Local Wallet
-![wallet](https://user-images.githubusercontent.com/10428517/76375176-65f71f00-6302-11ea-8071-d68192905a91.gif)
 - 🚨Under the `FABRIC WALLETS` pane, click on `1 Org Local Fabric - Org1 Wallet`. Note this is very important, if you click on the Orderer wallet at the top, 
 the application will not work! 🚨
-- Export the and save the wallet as `gen_local_wallet` to 
-<git_tree>/Blockchain-GenSupplychain/src/gateway/local/gen_local_wallet.json.
+- Export the and save the wallet as `wallet` to 
+<git_tree>/evote/web-app/server/wallet
 
 #### Update Config
 
@@ -76,7 +75,7 @@ Next, update the `config.json` file so it looks like this:
 
 ```json
 {
-  "connection_file": "local_gen_wallet.json",
+  "connection_file": "fabric_connection.json",
   "appAdmin": "admin",
   "appAdminSecret": "adminpw",
   "orgMSPID": "Org1MSP",
