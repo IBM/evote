@@ -70,7 +70,9 @@ is finished instantiating.
 - 🚨Under the `FABRIC WALLETS` pane, click on `1 Org Local Fabric - Org1 Wallet`. Note this is very important, if you click on the Orderer wallet at the top, 
 the application will not work! 🚨
 - Export the and save the wallet as `wallet` to 
-<git_tree>/evote/web-app/server/wallet
+<git_tree>/evote/web-app/server/wallet.
+- Your final directory structure should look like the image below:
+![dirStruct](https://user-images.githubusercontent.com/10428517/76990922-fbe40880-6905-11ea-8695-d0f7f6dbbd3b.png)
 
 #### Update Config
 
