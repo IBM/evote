@@ -40,7 +40,7 @@ version to work.
 - Once the runtime is finished starting (this might take a couple of minutes), under *Local Fabric* you should see *Smart Contracts* and a section for both *installed* and *instantiated*.
 
 ## Step 3. Import Install and Instantiate Contract
-🚨🚨🚨Note that the gif shows the process for importing, installing, and instantiating, but uses a different smart contract. The process is the same, so use the gifs for help, but know that we are using the voterContract.🚨🚨🚨
+🚨🚨🚨Note that the gif shows the process for importing a contract, but uses a different smart contract. The process is the same, so use the gifs for help, but know that we are using the voterContract.🚨🚨🚨
 ![importContract](https://user-images.githubusercontent.com/10428517/76371236-e0ba3d00-62f6-11ea-82a1-bfa4798985b9.gif)
 - Next, we have to import our contract before we can install it. Click on 
 **View -> Open Command Pallette -> Import Smart Contract**. Next, click 
