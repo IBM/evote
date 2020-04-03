@@ -40,11 +40,11 @@ version to work.
 - Once the runtime is finished starting (this might take a couple of minutes), under *Local Fabric* you should see *Smart Contracts* and a section for both *installed* and *instantiated*.
 
 ## Step 3. Import Install and Instantiate Contract
+🚨🚨🚨Note that the gif shows the process for importing, installing, and instantiating, but uses a different smart contract. The process is the same, so use the gifs for help, but know that we are using the voterContract.🚨🚨🚨
 ![importContract](https://user-images.githubusercontent.com/10428517/76371236-e0ba3d00-62f6-11ea-82a1-bfa4798985b9.gif)
 - Next, we have to import our contract before we can install it. Click on 
 **View -> Open Command Pallette -> Import Smart Contract**. Next, click 
-on the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. Note that the gif has a different smart contract
-This will be where you cloned this repo.
+on the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. 
 
 
 ![installAndInstantiate](https://user-images.githubusercontent.com/10428517/76371514-bae16800-62f7-11ea-9038-039b0fac6967.gif)
@@ -52,7 +52,10 @@ This will be where you cloned this repo.
  install. Choose *voterContract@7.0.0.cds*.
 - Lastly, we need to instantiate the contract to be able to submit transactions 
 on our network. Click on *+ Instantiate* and then choose *voterContract@7.0.0.cds*.
-- When promted for a function, a private data collection, or and endorsement 
+- When promted for a function enter init, as shown below.
+![packageFile](/docs/function.png)
+
+- When prompted for a private data collection, or and endorsement 
 policy, hit `enter` on your keyboard, which will take all of the defaults.
 - This will instantiate the smart contract. This may take some time. You should see the contract under the *instantiated* tab on the left-hand side, once it 
 is finished instantiating.
