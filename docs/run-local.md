@@ -46,9 +46,7 @@ version to work.
 **View -> Open Command Pallette -> Import Smart Contract**. Next, click 
 on the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. 
 
-
-![installAndInstantiate](https://user-images.githubusercontent.com/10428517/76371514-bae16800-62f7-11ea-9038-039b0fac6967.gif)
-- Now, let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
+- Under **FABRIC ENVIRONMENTS** let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
  install. Choose *voterContract@7.0.0.cds*.
 - Lastly, we need to instantiate the contract to be able to submit transactions 
 on our network. Click on *+ Instantiate* and then choose *voterContract@7.0.0.cds*.
