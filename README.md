@@ -440,7 +440,7 @@ We will build a network as provided by the IBM Blockchain Platform [documentatio
     "appAdmin": "app-admin",
     "appAdminSecret": "app-adminpw",
     "orgMSPID": "votermsp",
-    "caName": "173.193.106.28:32634",
+    "caName": "https://173.193.106.28:32634",
     "userName": "V1",
     "gatewayDiscovery": { "enabled": true, "asLocalhost": false }
 }
