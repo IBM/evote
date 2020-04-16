@@ -211,7 +211,7 @@ exports.registerVoter = async function (voterId, registrarId, firstName, lastNam
     console.log(`AdminIdentity: + ${adminIdentity}`);
 
     // Register the user, enroll the user, and import the new identity into the wallet.
-    const secret = await ca.register({ affiliation: 'org1', enrollmentID: voterId, role: 'client' }, adminIdentity);
+    const secret = await ca.register({ affiliation: '', enrollmentID: voterId, role: 'client' }, adminIdentity);
 
     const enrollment = await ca.enroll({ enrollmentID: voterId, enrollmentSecret: secret });
     const userIdentity = await X509WalletMixin.createIdentity(orgMSPID, enrollment.certificate, enrollment.key.toBytes());
