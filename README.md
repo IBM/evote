@@ -105,7 +105,7 @@ IBM Blockchain Platform extension.
 - [Install VSCode version 1.39](https://code.visualstudio.com/updates/v1_39)
 - [Install IBM Blockchain Platform Extension for VSCode](https://github.com/IBM-Blockchain/blockchain-vscode-extension)
 - [Node v8.9.0](https://nodejs.org/en/download/)
-- [npm v5.x or greater](https://nodejs.org/en/download/)
+- [npm v6.11.3](https://nodejs.org/en/download/)
 
 **🚧🚧Note: you will need Node 8.x to run this pattern!🚧🚧**
 
