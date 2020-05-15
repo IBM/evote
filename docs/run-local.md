@@ -43,8 +43,8 @@ version to work.
 🚨🚨🚨Note that the gif shows the process for importing a contract, but uses a different smart contract. The process is the same, so use the gifs for help, but know that we are using the voterContract.🚨🚨🚨
 ![importContract](https://user-images.githubusercontent.com/10428517/76371236-e0ba3d00-62f6-11ea-82a1-bfa4798985b9.gif)
 - Next, we have to import our contract before we can install it. Click on 
-**View -> Open Command Pallette -> Import Smart Contract**. Next, click 
-on the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. 
+**View -> Command Palette... -> >IBM Blockchain Platform: Import a Package**. Next, click 
+on Browse and then select the `voterContract@7.0.0.cds` file that is in the `evote/contract` folder. 
 
 - Under **FABRIC ENVIRONMENTS** let's click on *+ Install* and choose the peer that is available. Then the extension will ask you which package to 
  install. Choose *voterContract@7.0.0.cds*.
@@ -53,24 +53,26 @@ on our network. Click on *+ Instantiate* and then choose *voterContract@7.0.0.cd
 - When promted for a function enter init, as shown below.
 ![packageFile](/docs/function.png)
 
-- When prompted for a private data collection, or and endorsement 
-policy, hit `enter` on your keyboard, which will take all of the defaults.
+- Now, for any additional information asked, just hit `enter` on your keyboard, which will take all of the defaults.
+
 - This will instantiate the smart contract. This may take some time. You should see the contract under the *instantiated* tab on the left-hand side, once it 
 is finished instantiating.
 
 ## Step 4. Export Connection Details
 ![export](https://user-images.githubusercontent.com/10428517/76371002-fd09aa00-62f5-11ea-9f6b-cc25e68c410e.gif)
 
-- Connect to the "Local Fabric - Org1" gateway as `admin`.  Right click on the 3 dot menu on the **FABRIC GATEWAYS** pane and `Export Connection Profile` Save this file to <git_tree>/evote/web-app/server/fabric_connection.json. **Note that this gif is here to show you the VSCode interface, it saves the files somewhere else.**
+- Click on `1 Org Local Fabric- Org1` in the **FABRIC GATEWAYS** pane and then select `admin`. **This will choose the `admin` identity to connect with the gateway.**
+
+- Right click on the 3 dot menu on the **FABRIC GATEWAYS** pane and `Export Connection Profile`. Save this file to <git_tree>/evote/web-app/server/fabric_connection.json. **Note that this gif is here to show you the VSCode interface, it saves the files somewhere else.**
 
 
 ## Step 5. Export Local Wallet
 
 ![wallet](https://user-images.githubusercontent.com/10428517/76375176-65f71f00-6302-11ea-8071-d68192905a91.gif)
 
-- 🚨Under the `FABRIC WALLETS` pane, click on `1 Org Local Fabric - Org1 Wallet`. Note this is very important, if you click on the Orderer wallet at the top, 
+- 🚨Under the `FABRIC WALLETS` pane, right click on `1 Org Local Fabric - Org1`. Note this is very important, if you click on the Orderer wallet at the top, 
 the application will not work! 🚨
-- Export the and save the wallet as `wallet` to 
+- Export Wallet and save it as `wallet` to 
 <git_tree>/evote/web-app/server/wallet.
 - Your final directory structure should look like the image below:
 ![dirStruct](https://user-images.githubusercontent.com/10428517/76990922-fbe40880-6905-11ea-8695-d0f7f6dbbd3b.png)
