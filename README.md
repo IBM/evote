@@ -1,3 +1,7 @@
+# WARNING: This repository is no longer maintained :warning:
+
+> This repository will not be updated. I will check periodically for pull requests, but do not expect a quick response. 
+
 # Create a fair evoting application to ensure correct election results with Hyperledger Fabric and IBM Blockchain Platform
 
 > **NOTE**: This developer pattern creates a blockchain network on *IBM Blockchain Platform version **2.5*** using the *Hyperledger Fabric version **1.4***.
